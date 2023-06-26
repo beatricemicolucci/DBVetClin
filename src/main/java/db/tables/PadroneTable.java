@@ -142,4 +142,28 @@ public class PadroneTable implements Table<Padrone, String> {
             throw new IllegalStateException(e);
         }
     }
+
+    public float showTotalExpenseOfOwner(final String cf) {
+        final String query = "SELECT SUM(Spesa) AS SpesaTotale" +
+                "FROM" + TABLE_NAME +  "p" +
+                "JOIN fattura f ON p.CF = f.CF_Padrone" +
+                "WHERE p.CF = ?";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setString(1, cf);
+            final ResultSet resultSet = statement.executeQuery();
+            return readTotalExpense(resultSet);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private float readTotalExpense(final ResultSet resultSet) {
+        float expense = 0;
+        try {
+            while (resultSet.next()) {
+                expense = resultSet.getFloat("SpesaTotale");
+            }
+        } catch (final SQLException e) {}
+        return expense;
+    }
 }
