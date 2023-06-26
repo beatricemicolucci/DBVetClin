@@ -55,25 +55,25 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextField layoutX="26.0" layoutY="36.0" prefHeight="26.0" prefWidth="158.0" promptText="Microchip" />
-                  <TextField layoutX="26.0" layoutY="68.0" prefHeight="26.0" prefWidth="158.0" promptText="Nome" />
-                  <TextField layoutX="26.0" layoutY="101.0" prefHeight="26.0" prefWidth="157.0" promptText="Razza" />
-                  <TextField layoutX="26.0" layoutY="200.0" prefHeight="26.0" prefWidth="159.0" promptText="CF Padrone" />
-                  <DatePicker layoutX="26.0" layoutY="134.0" prefHeight="26.0" prefWidth="158.0" promptText="Data di Nascita" />
-                  <ChoiceBox layoutX="26.0" layoutY="167.0" prefHeight="26.0" prefWidth="158.0" />
-                  <Button layoutX="26.0" layoutY="233.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="158.0" text="Inserisci nuovo paziente" />
+                  <TextField fx:id="microchipInsert" layoutX="26.0" layoutY="36.0" prefHeight="26.0" prefWidth="158.0" promptText="Microchip" />
+                  <TextField fx:id="animalName" layoutX="26.0" layoutY="68.0" prefHeight="26.0" prefWidth="158.0" promptText="Nome" />
+                  <TextField fx:id="animalRace" layoutX="26.0" layoutY="101.0" prefHeight="26.0" prefWidth="157.0" promptText="Razza" />
+                  <TextField fx:id="cfInsert" layoutX="26.0" layoutY="200.0" prefHeight="26.0" prefWidth="159.0" promptText="CF Padrone" />
+                  <DatePicker fx:id="animalBirthDate" layoutX="26.0" layoutY="134.0" prefHeight="26.0" prefWidth="158.0" promptText="Data di Nascita" />
+                  <ChoiceBox fx:id="animalGender" layoutX="26.0" layoutY="167.0" prefHeight="26.0" prefWidth="158.0" />
+                  <Button layoutX="26.0" layoutY="233.0" mnemonicParsing="false" onAction="#onAnimalInsert" prefHeight="26.0" prefWidth="158.0" text="Inserisci nuovo paziente" />
                   <Separator layoutX="16.0" layoutY="270.0" prefHeight="3.0" prefWidth="180.0" />
-                  <Button layoutX="25.0" layoutY="280.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="158.0" text="Visualizza i 10 animali con il maggior numero di visite" wrapText="true" />
+                  <Button layoutX="25.0" layoutY="280.0" mnemonicParsing="false" onAction="#onAnimalView" prefHeight="49.0" prefWidth="158.0" text="Visualizza i 10 animali con il maggior numero di visite" wrapText="true" />
                   <Separator layoutX="18.0" layoutY="339.0" prefHeight="5.0" prefWidth="182.0" />
-                  <Button layoutX="26.0" layoutY="390.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="158.0" text="Visualizza la data della prossima visita di un paziente" textAlignment="CENTER" wrapText="true" />
-                  <TextField layoutX="24.0" layoutY="351.0" prefHeight="26.0" prefWidth="160.0" promptText="Microchip" />
-                  <TableView layoutX="204.0" layoutY="34.0" prefHeight="438.0" prefWidth="541.0">
+                  <Button layoutX="26.0" layoutY="390.0" mnemonicParsing="false" onAction="#onAnimalVisitDayView" prefHeight="66.0" prefWidth="158.0" text="Visualizza la data della prossima visita di un paziente" textAlignment="CENTER" wrapText="true" />
+                  <TextField fx:id="microchipView" layoutX="24.0" layoutY="351.0" prefHeight="26.0" prefWidth="160.0" promptText="Microchip" />
+                  <TableView fx:id="animalTable" layoutX="204.0" layoutY="34.0" prefHeight="438.0" prefWidth="541.0">
                     <columns>
-                      <TableColumn prefWidth="124.80006408691406" text="Microchip" />
-                      <TableColumn prefWidth="96.79998779296875" text="Nome" />
-                        <TableColumn prefWidth="104.0" text="Razza" />
-                        <TableColumn prefWidth="109.60003662109375" text="Data di Nascita" />
-                        <TableColumn prefWidth="107.20001220703125" text="CF Padrone" />
+                      <TableColumn prefWidth="101.60005187988281" text="Microchip" />
+                      <TableColumn prefWidth="108.79998779296875" text="Nome" />
+                        <TableColumn prefWidth="110.39996337890625" text="Razza" />
+                        <TableColumn prefWidth="110.39996337890625" text="Data di Nascita" />
+                        <TableColumn prefWidth="113.5999755859375" text="CF Padrone" />
                     </columns>
                   </TableView>
                </children></AnchorPane>

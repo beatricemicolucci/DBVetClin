@@ -1,10 +1,7 @@
 package view;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TabPane;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.scene.control.TabPane;
 
 public class DBView extends AbstractView{
 
@@ -12,8 +9,10 @@ public class DBView extends AbstractView{
     private TabPane tabPane;
 
     private TabPadroni tabPadroniController;
+    private TabAnimali tabAnimaliController;
 
     public void init(){
         tabPadroniController = (TabPadroni) tabPane.getTabs().get(0).getUserData();
+        tabAnimaliController = (TabAnimali) tabPane.getTabs().get(1).getUserData();
     }
 }
