@@ -4,18 +4,17 @@ import db.ConnectionProvider;
 import db.tables.AnimaleTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import model.Animale;
 import utils.Utils;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class TabAnimali {
 
@@ -56,7 +55,7 @@ public class TabAnimali {
         animalGender.setValue("F");
     }
 
-    public void onAnimalInsert(ActionEvent e) {
+    public void onAnimalInsertClick(final ActionEvent e) {
         int microchip = Integer.valueOf(microchipInsert.getText()).intValue();
         String name = animalName.getText();
         String race = animalRace.getText();
@@ -75,11 +74,34 @@ public class TabAnimali {
 
     }
 
-    public void onAnimalView(final ActionEvent e) {
-
+    public void onAnimalViewClick(final ActionEvent e) {
+        animalsList = animaleTable.showTopTen();
+        animalTable.getItems().setAll(animalsList);
     }
 
-    public void onAnimalVisitDayView(final ActionEvent e) {
+    public void onAnimalVisitDayViewClick(final ActionEvent e) {
+
+        if (microchipView.getText().isEmpty()) {
+            return;
+        }
+
+        int microchip = Integer.valueOf(microchipView.getText());
+        Optional<Animale> animale = animaleTable.findByPrimaryKey(microchip);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Spesa Totale");
+        alert.setHeaderText(null);
+
+        if (animale.isPresent()) {
+            Date visitDay = animaleTable.showNextVisit(microchip);
+            alert.setContentText("Prossima visita: " + Utils.buildDate(visitDay.getDay(), visitDay.getMonth(), visitDay.getYear()));
+        } else {
+            alert.setContentText("Animale non trovato.");
+        }
+
+        alert.showAndWait();
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.close();
 
     }
 

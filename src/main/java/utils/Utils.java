@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.Locale;
 import java.util.Optional;
+import java.time.format.DateTimeFormatter;
 
 public final class Utils {
     private Utils() {}
@@ -44,4 +45,13 @@ public final class Utils {
         }
         return null;
     }
+
+    public String toString(LocalTime time) {
+        return time.format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
+    public LocalTime fromString(String string) {
+        return LocalTime.parse(string, DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
 }

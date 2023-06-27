@@ -151,4 +151,5 @@ public class InterventoTable implements Table<Intervento, ThreeKeys<Date, LocalT
             throw new IllegalStateException(e);
         }
     }
+
 }

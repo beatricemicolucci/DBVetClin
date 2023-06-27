@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
@@ -10,93 +9,65 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="757.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DBView">
   <tabs>
-    <Tab text="Padroni">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="522.0" prefWidth="756.0">
-               <children>
-                  <TableView fx:id="ownersTable" layoutX="193.0" layoutY="32.0" prefHeight="415.0" prefWidth="549.0">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="CF" />
-                      <TableColumn prefWidth="75.0" text="Nome" />
-                        <TableColumn prefWidth="75.0" text="Cognome" />
-                        <TableColumn minWidth="8.800048828125" prefWidth="90.39999389648438" text="Data di Nascita" />
-                        <TableColumn minWidth="0.0" prefWidth="72.79998779296875" text="Indirizzo" />
-                        <TableColumn minWidth="6.4000244140625" prefWidth="78.39996337890625" text="Telefono" />
-                        <TableColumn prefWidth="81.5999755859375" text="E-mail" />
-                    </columns>
-                  </TableView>
-                  <Pane layoutX="4.0" layoutY="5.0" prefHeight="495.0" prefWidth="192.0">
-                     <children>
-                        <TextField fx:id="ownerName" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="163.0" promptText="Nome" />
-                        <TextField fx:id="ownerLastName" layoutX="14.0" layoutY="45.0" prefHeight="25.0" prefWidth="163.0" promptText="Cognome" />
-                        <TextField fx:id="ownerCFInsert" layoutX="14.0" layoutY="77.0" prefHeight="25.0" prefWidth="164.0" promptText="Codice Fiscale" />
-                        <TextField fx:id="ownerAddress" layoutX="15.0" layoutY="141.0" prefHeight="25.0" prefWidth="163.0" promptText="Indirizzo" />
-                        <TextField fx:id="ownerTelephone" layoutX="14.0" layoutY="177.0" prefHeight="25.0" prefWidth="164.0" promptText="Telefono" />
-                        <TextField fx:id="ownerEmail" layoutX="14.0" layoutY="210.0" prefHeight="25.0" prefWidth="164.0" promptText="E-mail (opzionale)" />
-                        <DatePicker fx:id="ownerBirthDate" layoutX="16.0" layoutY="108.0" prefHeight="25.0" prefWidth="159.0" promptText="Data di nascita" />
-                        <Button layoutX="15.0" layoutY="248.0" mnemonicParsing="false" onAction="#onInsertOwnerClick" prefHeight="25.0" prefWidth="164.0" text="Inserisci un nuovo padrone" />
-                        <TextField fx:id="ownerCFExpenditure" layoutX="16.0" layoutY="294.0" prefHeight="25.0" prefWidth="161.0" promptText="Codice Fiscale" />
-                        <Separator layoutX="9.0" layoutY="283.0" prefHeight="4.0" prefWidth="173.0" />
-                        <Button layoutX="17.0" layoutY="329.0" mnemonicParsing="false" onAction="#onViewOwnerClick" prefHeight="25.0" prefWidth="151.0" text="Visualizza spesa totale" />
-                        <Separator layoutX="9.0" layoutY="361.0" prefHeight="4.0" prefWidth="173.0" />
-                        <TextField fx:id="ownerCFUpdate" layoutX="14.0" layoutY="371.0" prefHeight="25.0" prefWidth="163.0" promptText="Codice Fiscale" />
-                        <TextField fx:id="newAddress" layoutX="14.0" layoutY="407.0" prefHeight="25.0" prefWidth="163.0" promptText="Nuovo Indirizzo" />
-                        <Button layoutX="13.0" layoutY="441.0" mnemonicParsing="false" onAction="#onUpdateOwnerClick" prefHeight="25.0" prefWidth="165.0" text="Aggiorna Indirizzo Padrone" />
-                     </children>
-                  </Pane>
-               </children></AnchorPane>
-      </content>
+    <Tab text="Padroni" >
+        <fx:include source="Padroni.fxml" />
     </Tab>
     <Tab text="Pazienti">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <TextField fx:id="microchipInsert" layoutX="26.0" layoutY="36.0" prefHeight="26.0" prefWidth="158.0" promptText="Microchip" />
-                  <TextField fx:id="animalName" layoutX="26.0" layoutY="68.0" prefHeight="26.0" prefWidth="158.0" promptText="Nome" />
-                  <TextField fx:id="animalRace" layoutX="26.0" layoutY="101.0" prefHeight="26.0" prefWidth="157.0" promptText="Razza" />
-                  <TextField fx:id="cfInsert" layoutX="26.0" layoutY="200.0" prefHeight="26.0" prefWidth="159.0" promptText="CF Padrone" />
-                  <DatePicker fx:id="animalBirthDate" layoutX="26.0" layoutY="134.0" prefHeight="26.0" prefWidth="158.0" promptText="Data di Nascita" />
-                  <ChoiceBox fx:id="animalGender" layoutX="26.0" layoutY="167.0" prefHeight="26.0" prefWidth="158.0" />
-                  <Button layoutX="26.0" layoutY="233.0" mnemonicParsing="false" onAction="#onAnimalInsert" prefHeight="26.0" prefWidth="158.0" text="Inserisci nuovo paziente" />
-                  <Separator layoutX="16.0" layoutY="270.0" prefHeight="3.0" prefWidth="180.0" />
-                  <Button layoutX="25.0" layoutY="280.0" mnemonicParsing="false" onAction="#onAnimalView" prefHeight="49.0" prefWidth="158.0" text="Visualizza i 10 animali con il maggior numero di visite" wrapText="true" />
-                  <Separator layoutX="18.0" layoutY="339.0" prefHeight="5.0" prefWidth="182.0" />
-                  <Button layoutX="26.0" layoutY="390.0" mnemonicParsing="false" onAction="#onAnimalVisitDayView" prefHeight="66.0" prefWidth="158.0" text="Visualizza la data della prossima visita di un paziente" textAlignment="CENTER" wrapText="true" />
-                  <TextField fx:id="microchipView" layoutX="24.0" layoutY="351.0" prefHeight="26.0" prefWidth="160.0" promptText="Microchip" />
-                  <TableView fx:id="animalTable" layoutX="204.0" layoutY="34.0" prefHeight="438.0" prefWidth="541.0">
-                    <columns>
-                      <TableColumn prefWidth="101.60005187988281" text="Microchip" />
-                      <TableColumn prefWidth="108.79998779296875" text="Nome" />
-                        <TableColumn prefWidth="110.39996337890625" text="Razza" />
-                        <TableColumn prefWidth="110.39996337890625" text="Data di Nascita" />
-                        <TableColumn prefWidth="113.5999755859375" text="CF Padrone" />
-                    </columns>
-                  </TableView>
-               </children></AnchorPane>
-      </content>
+        <fx:include source="Animali.fxml" />
     </Tab>
-      <Tab text="Veterinari">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
-      </Tab>
-      <Tab text="Fatture">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-        </content>
+      <Tab text="Interventi">
+        <fx:include source="Interventi.fxml" />
       </Tab>
       <Tab text="Visite">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField layoutX="46.0" layoutY="187.0" promptText="Codice Veterinario" />
+                  <DatePicker layoutX="45.0" layoutY="219.0" prefHeight="26.0" prefWidth="150.0" promptText="Data" />
+                  <Button layoutX="86.0" layoutY="259.0" mnemonicParsing="false" text="Visualizza" />
+                  <Text layoutX="37.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il codice del veterinario e la data desiderata per visualizzare le visite effettuate o da effettuare in una giornata" textAlignment="CENTER" wrappingWidth="166.86953735351562">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Text>
+                  <TableView layoutX="287.0" layoutY="69.0" prefHeight="351.0" prefWidth="406.0">
+                    <columns>
+                      <TableColumn prefWidth="111.20002746582031" text="Data" />
+                      <TableColumn prefWidth="86.39996337890625" text="Ora Inizio" />
+                        <TableColumn prefWidth="91.20001220703125" text="Ora Fine" />
+                        <TableColumn prefWidth="115.20001220703125" text="Tipo Visita" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
         </content>
       </Tab>
-      <Tab text="Untitled Tab">
+      <Tab text="Terapie">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField layoutX="63.0" layoutY="85.0" promptText="Codice Terapia" />
+                  <TextField layoutX="63.0" layoutY="117.0" promptText="Malattia da curare" />
+                  <TextField layoutX="63.0" layoutY="149.0" promptText="Codice Veterinario" />
+                  <TextField layoutX="63.0" layoutY="181.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
+                  <Button layoutX="108.0" layoutY="216.0" mnemonicParsing="false" text="Inserisci" />
+                  <Button layoutX="70.0" layoutY="346.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="136.0" text="Visualizza terapie prescritte al paziente per una malattia" textAlignment="CENTER" wrapText="true" />
+                  <TextField layoutX="63.0" layoutY="274.0" prefHeight="26.0" prefWidth="150.0" promptText="Microchip" />
+                  <TextField layoutX="63.0" layoutY="308.0" prefHeight="26.0" prefWidth="150.0" promptText="Malattia da curare" />
+                  <Separator layoutX="38.0" layoutY="257.0" prefWidth="200.0" />
+                  <TableView layoutX="283.0" layoutY="86.0" prefHeight="342.0" prefWidth="422.0">
+                    <columns>
+                      <TableColumn prefWidth="100.00006103515625" text="Codice Terapia" />
+                      <TableColumn prefWidth="95.199951171875" text="Malattia" />
+                        <TableColumn prefWidth="121.60003662109375" text="Codice Veterinario" />
+                        <TableColumn minWidth="0.0" prefWidth="103.19998779296873" text="Codice C.Clinica" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
         </content>
       </Tab>
   </tabs>

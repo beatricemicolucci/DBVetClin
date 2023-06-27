@@ -6,7 +6,6 @@ public class SalaOperatoria {
 
     private final int id;
 
-
     public SalaOperatoria(int id) {
         this.id = id;
     }

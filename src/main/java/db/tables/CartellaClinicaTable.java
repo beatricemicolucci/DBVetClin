@@ -284,5 +284,19 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
         return esami;
     }
 
+    public List<Intervento> showAnimalOperations(final int microchip) {
+        final String query = "SELECT *" +
+                "FROM" + TABLE_NAME +  "cc" +
+                "LEFT JOIN intervento i ON cc.CodiceCartella = i.CodiceCartella" +
+                "WHERE cc.CodAnimale = ?";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, microchip);
+            final ResultSet resultSet = statement.executeQuery();
+            return readInterventiFromResultSet(resultSet);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
 
 }

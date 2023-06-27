@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 public class AnimaleTable implements Table<Animale, Integer> {
 
@@ -145,6 +146,66 @@ public class AnimaleTable implements Table<Animale, Integer> {
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, microchip);
             return statement.executeUpdate() > 0;
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public Date showNextVisit(final Integer microchip) {
+        final String query = "SELECT MIN(Giorno) AS ProssimaVisita" +
+                "FROM" + TABLE_NAME + "a" +
+                "JOIN cartella_clinica cc ON cc.CodAnimale = a.Microchip" +
+                "JOIN (\n" +
+                "  SELECT CodiceCartella, Giorno FROM controllo" +
+                "  UNION ALL" +
+                "  SELECT CodiceCartella, Giorno FROM intervento" +
+                "  UNION ALL" +
+                "  SELECT CodiceCartella, Giorno FROM vaccinazione" +
+                "  UNION ALL" +
+                "  SELECT CodiceCartella, Giorno FROM esame" +
+                ") AS v ON v.CodiceCartella = cc.CodiceCartella" +
+                "WHERE a.Microchip = ?" +
+                "WHERE v.Giorno > CURDATE()" +
+                "ORDER BY ProssimaVisita" +
+                "LIMIT 1";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, microchip);
+            final ResultSet resultSet = statement.executeQuery();
+            return readNextVisit(resultSet);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private Date readNextVisit(final ResultSet resultSet) {
+        Date nextVisit = null;
+        try {
+            while (resultSet.next()) {
+                nextVisit = Utils.sqlDateToDate(resultSet.getDate("ProssimaVisita"));
+            }
+        } catch (final SQLException e) {}
+        return nextVisit;
+    }
+
+    public List<Animale> showTopTen() {
+        final String query = "SELECT a.Microchip, a.Nome, COUNT(*) AS NumeroVisite" +
+                "FROM" + TABLE_NAME + "a" +
+                "JOIN cartella_clinica cc ON cc.CodAnimale = a.Microchip" +
+                "JOIN (" +
+                "  SELECT CodiceCartella FROM controllo" +
+                "  UNION ALL" +
+                "  SELECT CodiceCartella FROM intervento" +
+                "  UNION ALL" +
+                "  SELECT CodiceCartella FROM vaccinazione" +
+                "  UNION ALL" +
+                "  SELECT CodiceCartella FROM esame" +
+                ") AS v ON v.CodiceCartella = cc.CodiceCartella" +
+                "GROUP BY a.Microchip, a.Nome" +
+                "ORDER BY NumeroVisite DESC" +
+                "LIMIT 10";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            final ResultSet resultSet = statement.executeQuery();
+            return readAnimaliFromResultSet(resultSet);
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }

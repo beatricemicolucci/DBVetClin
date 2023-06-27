@@ -8,14 +8,15 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
 import model.Padrone;
 import utils.Utils;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 
 public class TabPadroni {
 
@@ -121,5 +122,4 @@ public class TabPadroni {
             }
         }
     }
-
 }
