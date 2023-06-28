@@ -2,9 +2,11 @@ package db.tables;
 
 import db.Table;
 import model.Veterinario;
+import model.Visita;
 import utils.Utils;
 
 import java.sql.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -148,5 +150,57 @@ public class VeterinarioTable implements Table<Veterinario, Integer> {
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    public List<Visita> showVetVisits(final int idVet, final java.util.Date day) {
+        final String query = "SELECT *" +
+                "FROM (" +
+                "    SELECT Giorno, OraInizio, OraFine, 'Intervento' AS TipoVisita" +
+                "    FROM intervento" +
+                "    WHERE Giorno = ? AND CodVeterinario = ?" +
+                "    UNION ALL" +
+                "    SELECT Giorno, OraInizio, OraFine, 'Esame' AS TipoVisita" +
+                "    FROM esame" +
+                "    WHERE Giorno = ? AND CodVeterinario = ?" +
+                "    UNION ALL" +
+                "    SELECT Giorno, OraInizio, OraFine, 'Vaccinazione' AS TipoVisita" +
+                "    FROM vaccinazione" +
+                "    WHERE Giorno = ? AND CodVeterinario = ?" +
+                "    UNION ALL" +
+                "    SELECT Giorno, OraInizio, OraFine, 'Controllo' AS TipoVisita" +
+                "    FROM controllo" +
+                "    WHERE Giorno = ? AND CodVeterinaio = ?" +
+                "    ) AS Visite" +
+                "ORDER BY OraInizio;";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, idVet);
+            statement.setDate(2, Utils.dateToSqlDate(day));
+            statement.setInt(3, idVet);
+            statement.setDate(4, Utils.dateToSqlDate(day));
+            statement.setInt(5, idVet);
+            statement.setDate(6, Utils.dateToSqlDate(day));
+            statement.setInt(7, idVet);
+            statement.setDate(8, Utils.dateToSqlDate(day));
+            final ResultSet resultSet = statement.executeQuery();
+            return readVisits(resultSet);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private List<Visita> readVisits(ResultSet resultSet) {
+        List<Visita> visite = new ArrayList<>();
+        try {
+            while (resultSet.next()) {
+                final Date day = (Date) Utils.sqlDateToDate(resultSet.getDate("Giorno"));
+                final LocalTime startTime = Utils.sqlTimeToTime(resultSet.getTime("oraInizio"));
+                final LocalTime endTime = Utils.sqlTimeToTime(resultSet.getTime("oraFine"));
+                final String type = resultSet.getString("TipoVisita");
+                // After retrieving all the data we create a Student object
+                final Visita visita = new Visita(day, startTime, endTime, type);
+                visite.add(visita);
+            }
+        } catch (final SQLException e) {}
+        return visite;
     }
 }

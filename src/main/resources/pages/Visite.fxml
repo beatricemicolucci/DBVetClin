@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefHeight="180.0" prefWidth="200.0" fx:controller="view.TabVisite">
+    <children>
+        <TextField fx:id="idVetVisits" layoutX="46.0" layoutY="187.0" promptText="Codice Veterinario" />
+        <DatePicker fx:id="dateVisits" layoutX="45.0" layoutY="219.0" prefHeight="26.0" prefWidth="150.0" promptText="Data" />
+        <Button layoutX="86.0" layoutY="259.0" mnemonicParsing="false" onAction="#onShowVetVisitsClick" text="Visualizza" />
+        <Text layoutX="37.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il codice del veterinario e la data desiderata per visualizzare le visite effettuate o da effettuare in una giornata" textAlignment="CENTER" wrappingWidth="166.86953735351562">
+            <font>
+                <Font name="System Italic" size="12.0" />
+            </font>
+        </Text>
+        <TableView fx:id="visitsTable" layoutX="287.0" layoutY="69.0" prefHeight="351.0" prefWidth="406.0">
+            <columns>
+                <TableColumn prefWidth="111.20002746582031" text="Data" />
+                <TableColumn prefWidth="86.39996337890625" text="Ora Inizio" />
+                <TableColumn prefWidth="91.20001220703125" text="Ora Fine" />
+                <TableColumn prefWidth="115.20001220703125" text="Tipo Visita" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>
