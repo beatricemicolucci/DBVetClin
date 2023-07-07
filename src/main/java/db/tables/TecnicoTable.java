@@ -45,7 +45,7 @@ public class TecnicoTable implements Table<Tecnico, Integer> {
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             // 3. Fill in the "?" with actual data
             statement.setInt(1, id);
-            // 4. Execute the query, this operations returns a ResultSet
+            // 4. Execute the query, this operation returns a ResultSet
             final ResultSet resultSet = statement.executeQuery();
             // 5. Do something with the result of the query execution;
             //    here we extract the first (and only) student from the ResultSet

@@ -15,7 +15,8 @@ public class App extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        primaryStage.setResizable(true);
+        System.out.println("ciao");
+        //primaryStage.setResizable(true);
         primaryStage.setTitle("DBVetClin");
 
         final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("pages/WelcomePage.fxml"));
@@ -35,7 +36,7 @@ public class App extends Application {
 
         final WelcomePage view = loader.getController();
         view.setStage(primaryStage);
-        view.init();
+        view.init(primaryStage);
         primaryStage.show();
     }
 }

@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class ControlloTable implements Table<Controllo, ThreeKeys<Integer, Date, LocalTime>> {
 
-    public static final String TABLE_NAME = "assistenza";
+    public static final String TABLE_NAME = "controllo";
 
     private final Connection connection;
 
@@ -51,7 +51,7 @@ public class ControlloTable implements Table<Controllo, ThreeKeys<Integer, Date,
             statement.setInt(1, id.getX());
             statement.setDate(2, Utils.dateToSqlDate(id.getY()));
             statement.setTime(3, Utils.timeToSqlTime(id.getZ()));
-            // 4. Execute the query, this operations returns a ResultSet
+            // 4. Execute the query, this operation returns a ResultSet
             final ResultSet resultSet = statement.executeQuery();
             // 5. Do something with the result of the query execution;
             //    here we extract the first (and only) student from the ResultSet

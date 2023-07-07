@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("org.openjfx.javafxplugin") version "0.0.7"
+    id("org.openjfx.javafxplugin") version "0.0.9"
 }
 
 group = "org.example"
@@ -30,6 +30,7 @@ dependencies {
             implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
         }
     }
+    implementation("mysql:mysql-connector-java:8.0.26")
 }
 
 tasks.test {

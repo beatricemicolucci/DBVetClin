@@ -47,7 +47,7 @@ public class VeterinarioTable implements Table<Veterinario, Integer> {
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             // 3. Fill in the "?" with actual data
             statement.setInt(1, id);
-            // 4. Execute the query, this operations returns a ResultSet
+            // 4. Execute the query, this operation returns a ResultSet
             final ResultSet resultSet = statement.executeQuery();
             // 5. Do something with the result of the query execution;
             //    here we extract the first (and only) student from the ResultSet
@@ -169,9 +169,9 @@ public class VeterinarioTable implements Table<Veterinario, Integer> {
                 "    UNION ALL" +
                 "    SELECT Giorno, OraInizio, OraFine, 'Controllo' AS TipoVisita" +
                 "    FROM controllo" +
-                "    WHERE Giorno = ? AND CodVeterinaio = ?" +
+                "    WHERE Giorno = ? AND CodVeterinario = ?" +
                 "    ) AS Visite" +
-                "ORDER BY OraInizio;";
+                " ORDER BY OraInizio;";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, idVet);
             statement.setDate(2, Utils.dateToSqlDate(day));

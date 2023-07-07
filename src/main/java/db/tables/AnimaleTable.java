@@ -151,42 +151,6 @@ public class AnimaleTable implements Table<Animale, Integer> {
         }
     }
 
-    public Date showNextVisit(final Integer microchip) {
-        final String query = "SELECT MIN(Giorno) AS ProssimaVisita" +
-                "FROM" + TABLE_NAME + "a" +
-                "JOIN cartella_clinica cc ON cc.CodAnimale = a.Microchip" +
-                "JOIN (\n" +
-                "  SELECT CodiceCartella, Giorno FROM controllo" +
-                "  UNION ALL" +
-                "  SELECT CodiceCartella, Giorno FROM intervento" +
-                "  UNION ALL" +
-                "  SELECT CodiceCartella, Giorno FROM vaccinazione" +
-                "  UNION ALL" +
-                "  SELECT CodiceCartella, Giorno FROM esame" +
-                ") AS v ON v.CodiceCartella = cc.CodiceCartella" +
-                "WHERE a.Microchip = ?" +
-                "WHERE v.Giorno > CURDATE()" +
-                "ORDER BY ProssimaVisita" +
-                "LIMIT 1";
-        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setInt(1, microchip);
-            final ResultSet resultSet = statement.executeQuery();
-            return readNextVisit(resultSet);
-        } catch (final SQLException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-    private Date readNextVisit(final ResultSet resultSet) {
-        Date nextVisit = null;
-        try {
-            while (resultSet.next()) {
-                nextVisit = Utils.sqlDateToDate(resultSet.getDate("ProssimaVisita"));
-            }
-        } catch (final SQLException e) {}
-        return nextVisit;
-    }
-
     public List<Animale> showTopTen() {
         final String query = "SELECT a.Microchip, a.Nome, COUNT(*) AS NumeroVisite" +
                 "FROM" + TABLE_NAME + "a" +

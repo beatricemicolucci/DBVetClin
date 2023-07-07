@@ -1,7 +1,6 @@
 package db.tables;
 
 import db.Table;
-import model.AllergieCartella;
 import model.Assistenza;
 import utils.TwoKeys;
 
@@ -47,7 +46,7 @@ public class AssistenzaTable implements Table<Assistenza, TwoKeys<Integer,Intege
             // 3. Fill in the "?" with actual data
             statement.setInt(1, id.getX());
             statement.setInt(2, id.getY());
-            // 4. Execute the query, this operations returns a ResultSet
+            // 4. Execute the query, this operation returns a ResultSet
             final ResultSet resultSet = statement.executeQuery();
             // 5. Do something with the result of the query execution;
             //    here we extract the first (and only) student from the ResultSet

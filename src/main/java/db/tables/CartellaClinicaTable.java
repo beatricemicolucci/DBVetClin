@@ -90,7 +90,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
         if (this.animalExists(cartellaClinica.getCodAnimal())) {
             return false;
         }
-        final String query = "INSERT INTO " + TABLE_NAME + "(CodCartella, CodAnimale, DataCreazione) VALUES (?,?,?,?)";
+        final String query = "INSERT INTO " + TABLE_NAME + "(CodiceCartella, CodAnimale, DataCreazione) VALUES (?,?,?,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, cartellaClinica.getCodMedicalRec());
             statement.setInt(2, cartellaClinica.getCodAnimal());
@@ -114,7 +114,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
         final String query = "UPDATE " + TABLE_NAME + " SET " +
                 "CodAnimale = ?," +
                 "DataCreazione = ? " +
-                "WHERE CodCartella = ?";
+                "WHERE CodiceCartella = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, cartellaClinica.getCodAnimal());
             statement.setDate(2, Utils.dateToSqlDate(cartellaClinica.getCreationDate()));
@@ -137,7 +137,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
     }
 
     public List<Controllo> findControlliByAnimale(final int idAnimal) {
-        final String query = "SELECT cc.CodiceCartella, c.* FROM" + TABLE_NAME + "AS cc" +
+        final String query = "SELECT cc.CodiceCartella, c.* FROM " + TABLE_NAME + " AS cc " +
                 "LEFT JOIN controllo AS c ON cc.CodiceCartella = c.CodiceCartella " +
                 "WHERE cc.CodAnimale = ?";
 
@@ -173,7 +173,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
     }
 
     public List<Intervento> findInterventiByAnimale(final int idAnimal) {
-        final String query = "SELECT cc.CodiceCartella, i.* FROM" + TABLE_NAME + "AS cc" +
+        final String query = "SELECT cc.CodiceCartella, i.* FROM " + TABLE_NAME + " AS cc " +
                 "LEFT JOIN intervento AS i ON cc.CodiceCartella = i.CodiceCartella " +
                 "WHERE cc.CodAnimale = ?";
 
@@ -211,7 +211,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
     }
 
     public List<Vaccinazione> findVaccinazioniByAnimale(final int idAnimal) {
-        final String query = "SELECT cc.CodiceCartella, v.* FROM" + TABLE_NAME + "AS cc" +
+        final String query = "SELECT cc.CodiceCartella, v.* FROM " + TABLE_NAME + " AS cc " +
                 "LEFT JOIN vaccinazione AS v ON cc.CodiceCartella = v.CodiceCartella " +
                 "WHERE cc.CodAnimale = ?";
 
@@ -247,7 +247,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
     }
 
     public List<Esame> findEsamiByAnimale(final int idAnimal) {
-        final String query = "SELECT cc.CodiceCartella, e.* FROM" + TABLE_NAME + "AS cc" +
+        final String query = "SELECT cc.CodiceCartella, e.* FROM " + TABLE_NAME + " AS cc " +
                 "LEFT JOIN esame AS e ON cc.CodiceCartella = e.CodiceCartella " +
                 "WHERE cc.CodAnimale = ?";
 
@@ -286,8 +286,8 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
 
     public List<Intervento> showAnimalOperations(final int microchip) {
         final String query = "SELECT *" +
-                "FROM" + TABLE_NAME +  "cc" +
-                "LEFT JOIN intervento i ON cc.CodiceCartella = i.CodiceCartella" +
+                "FROM " + TABLE_NAME +  " cc " +
+                "LEFT JOIN intervento i ON cc.CodiceCartella = i.CodiceCartella " +
                 "WHERE cc.CodAnimale = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, microchip);
@@ -296,6 +296,64 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    public java.util.Date showNextVisit(final Integer microchip) {
+        final String query = "SELECT MIN(Giorno) AS ProssimaVisita " +
+                "FROM " +
+                "(SELECT Giorno " +
+                " FROM controllo" +
+                " WHERE CodiceCartella IN (" +
+                "      SELECT CodiceCartella" +
+                "      FROM " + TABLE_NAME +
+                "      WHERE CodAnimale = (SELECT CodAnimale FROM animale WHERE Microchip = ?)" +
+                ")" +
+                " UNION" +
+                " SELECT Giorno" +
+                " FROM intervento" +
+                " WHERE CodiceCartella IN (" +
+                "       SELECT CodiceCartella" +
+                "       FROM " + TABLE_NAME +
+                "       WHERE CodAnimale = (SELECT CodAnimale FROM animale WHERE Microchip = ?)" +
+                " )" +
+                " UNION" +
+                " SELECT Giorno " +
+                " FROM esame" +
+                " WHERE CodiceCartella IN (" +
+                "       SELECT CodiceCartella" +
+                "       FROM " + TABLE_NAME +
+                "       WHERE CodAnimale = (SELECT Microchip FROM animale WHERE Microchip = ?)" +
+                " )" +
+                " UNION" +
+                " SELECT Giorno " +
+                " FROM vaccinazione " +
+                " WHERE CodiceCartella IN (" +
+                "       SELECT CodiceCartella"+
+                "       FROM " + TABLE_NAME +
+                "        WHERE CodAnimale = (SELECT Microchip FROM animale WHERE Microchip = ?)" +
+                " ) " +
+                ") AS visite " +
+                "WHERE visite.Giorno > CURDATE();";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, microchip);
+            statement.setInt(2, microchip);
+            statement.setInt(3, microchip);
+            statement.setInt(4, microchip);
+            final ResultSet resultSet = statement.executeQuery();
+            return readNextVisit(resultSet);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private java.util.Date readNextVisit(final ResultSet resultSet) {
+        java.util.Date nextVisit = null;
+        try {
+            while (resultSet.next()) {
+                nextVisit = Utils.sqlDateToDate(resultSet.getDate("ProssimaVisita"));
+            }
+        } catch (final SQLException e) {}
+        return nextVisit;
     }
 
 

@@ -50,7 +50,7 @@ public class VaccinazioneTable implements Table<Vaccinazione, ThreeKeys<Integer,
             statement.setInt(1, id.getX());
             statement.setDate(2, Utils.dateToSqlDate(id.getY()));
             statement.setTime(3, Utils.timeToSqlTime(id.getZ()));
-            // 4. Execute the query, this operations returns a ResultSet
+            // 4. Execute the query, this operation returns a ResultSet
             final ResultSet resultSet = statement.executeQuery();
             // 5. Do something with the result of the query execution;
             //    here we extract the first (and only) student from the ResultSet
@@ -77,6 +77,7 @@ public class VaccinazioneTable implements Table<Vaccinazione, ThreeKeys<Integer,
                 final int idMedRecord = resultSet.getInt("CodiceCartella");
                 // After retrieving all the data we create a Student object
                 final Vaccinazione vaccinazione = new Vaccinazione(idVet, day, time, idInvoice, endTime, disease, idMedRecord);
+                vaccinazioni.add(vaccinazione);
             }
         } catch (final SQLException e) {}
         return vaccinazioni;

@@ -1,7 +1,6 @@
 package db.tables;
 
 import db.Table;
-import model.Competenza;
 import model.Composizione;
 import utils.TwoKeys;
 
@@ -41,13 +40,13 @@ public class ComposizioneTable implements Table<Composizione, TwoKeys<Integer, I
     @Override
     public Optional<Composizione> findByPrimaryKey(final TwoKeys<Integer, Integer> id) {
         // 1. Define the query with the "?" placeholder(s)
-        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE CodFarmaco = ? AND CodTerapia = ?";
+        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE CodFarmaco = ? AND CodiceTerapia = ?";
         // 2. Prepare a statement inside a try-with-resources
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             // 3. Fill in the "?" with actual data
             statement.setInt(1, id.getX());
             statement.setInt(2, id.getY());
-            // 4. Execute the query, this operations returns a ResultSet
+            // 4. Execute the query, this operation returns a ResultSet
             final ResultSet resultSet = statement.executeQuery();
             // 5. Do something with the result of the query execution;
             //    here we extract the first (and only) student from the ResultSet
@@ -87,7 +86,7 @@ public class ComposizioneTable implements Table<Composizione, TwoKeys<Integer, I
 
     @Override
     public boolean save(final Composizione composizione) {
-        final String query = "INSERT INTO " + TABLE_NAME + "(CodFarmaco, CodTerapia) VALUES (?,?)";
+        final String query = "INSERT INTO " + TABLE_NAME + "(CodFarmaco, CodiceTerapia) VALUES (?,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, composizione.getCodMed());
             statement.setInt(2, composizione.getCodTherapy());
@@ -107,7 +106,7 @@ public class ComposizioneTable implements Table<Composizione, TwoKeys<Integer, I
 
     @Override
     public boolean delete(final TwoKeys<Integer, Integer> id) {
-        final String query = "DELETE FROM " + TABLE_NAME + " WHERE CodFarmaco = ? AND CodTerapia = ?";
+        final String query = "DELETE FROM " + TABLE_NAME + " WHERE CodFarmaco = ? AND CodiceTerapia = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, id.getX());
             statement.setInt(2, id.getY());

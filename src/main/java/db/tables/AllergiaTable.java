@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class AllergiaTable implements Table<Allergia, Integer> {
 
-    public static final String TABLE_NAME = "animale";
+    public static final String TABLE_NAME = "allergia";
 
     private final Connection connection;
 
@@ -106,7 +106,7 @@ public class AllergiaTable implements Table<Allergia, Integer> {
 
     @Override
     public boolean delete(final Integer id) {
-        final String query = "DELETE FROM " + TABLE_NAME + " WHERE idAllergia = ?";
+        final String query = "DELETE FROM " + TABLE_NAME + " WHERE IdAllergia = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, id);
             return statement.executeUpdate() > 0;

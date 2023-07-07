@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class SpecializzazioneTable implements Table<Specializzazione, String> {
 
-    public static final String TABLE_NAME = "ingrediente";
+    public static final String TABLE_NAME = "specializzazione";
 
     private final Connection connection;
 

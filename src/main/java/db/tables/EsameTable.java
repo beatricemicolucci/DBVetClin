@@ -1,8 +1,6 @@
 package db.tables;
 
 import db.Table;
-import model.Animale;
-import model.CartellaClinica;
 import model.Esame;
 import utils.Utils;
 
@@ -10,12 +8,11 @@ import java.sql.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 public class EsameTable implements Table<Esame, Integer> {
 
-    public static final String TABLE_NAME = "Esame";
+    public static final String TABLE_NAME = "esame";
 
     private final Connection connection;
 
@@ -49,7 +46,7 @@ public class EsameTable implements Table<Esame, Integer> {
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             // 3. Fill in the "?" with actual data
             statement.setInt(1, id);
-            // 4. Execute the query, this operations returns a ResultSet
+            // 4. Execute the query, this operation returns a ResultSet
             final ResultSet resultSet = statement.executeQuery();
             // 5. Do something with the result of the query execution;
             //    here we extract the first (and only) student from the ResultSet
@@ -71,8 +68,8 @@ public class EsameTable implements Table<Esame, Integer> {
                 final int idInvoice = resultSet.getInt("NumeroFattura");
                 final String type = resultSet.getString("Tipologia");
                 final Date day = (Date) Utils.sqlDateToDate(resultSet.getDate("Giorno"));
-                final LocalTime startTime = (LocalTime) Utils.sqlTimeToTime(resultSet.getTime("OraInizio"));
-                final LocalTime endTime = (LocalTime) Utils.sqlTimeToTime(resultSet.getTime("OraFine"));
+                final LocalTime startTime = Utils.sqlTimeToTime(resultSet.getTime("OraInizio"));
+                final LocalTime endTime = Utils.sqlTimeToTime(resultSet.getTime("OraFine"));
                 final int idVet = resultSet.getInt("CodVeterinario");
                 final int idMedRecord = resultSet.getInt("CodiceCartella");
                 // After retrieving all the data we create a Student object
@@ -98,7 +95,7 @@ public class EsameTable implements Table<Esame, Integer> {
         if (!vetAndMedRecordExist(esame.getCodVet(), esame.getCodMedicalRecord())) {
             return false;
         }
-        final String query = "INSERT INTO " + TABLE_NAME + "(CodEsame, NumeroFattura, Tipologia, Giorno, OraInizio, OraFine, CodVeterinario, CodCartella) VALUES (?,?,?,?,?,?,?,?)";
+        final String query = "INSERT INTO " + TABLE_NAME + "(CodEsame, NumeroFattura, Tipologia, Giorno, OraInizio, OraFine, CodVeterinario, CodiceCartella) VALUES (?,?,?,?,?,?,?,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, esame.getCodExam());
             statement.setInt(2, esame.getCodMedicalRecord());
@@ -132,7 +129,7 @@ public class EsameTable implements Table<Esame, Integer> {
                 "OraInizio = ?," +
                 "OraFine = ?," +
                 "CodVeterinario = ?," +
-                "CodCartella = ?" +
+                "CodiceCartella = ?" +
                 "WHERE CodEsame = ?";
         if (!vetAndMedRecordExist(esame.getCodVet(), esame.getCodMedicalRecord())) {
             return false;

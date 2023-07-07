@@ -2,7 +2,6 @@ package db.tables;
 
 import db.Table;
 import model.Fattura;
-import model.Padrone;
 import utils.Utils;
 
 import java.sql.*;

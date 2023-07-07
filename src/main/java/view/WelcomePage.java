@@ -27,10 +27,10 @@ public class WelcomePage extends AbstractView{
     @FXML
     private ImageView welcomeImage;
 
-    public void init() {
+    public void init(Stage stage) {
         welcomeImage.setImage(new Image("/images/dogs.jpg"));
-
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        this.stage = stage;
+        /*try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement()) {
 
             String scriptPath = "src/main/resources/scriptSQL/PROGETTO_CLINICA.ddl";
@@ -49,7 +49,7 @@ public class WelcomePage extends AbstractView{
 
         } catch (Exception e) {
             System.out.println("Error executing script: " + e.getMessage());
-        }
+        }*/
 
     }
 

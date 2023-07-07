@@ -42,12 +42,12 @@ public class RicoveroTable implements Table<Ricovero, Integer> {
     @Override
     public Optional<Ricovero> findByPrimaryKey(final Integer id) {
         // 1. Define the query with the "?" placeholder(s)
-        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE CodRicovero = ?";
+        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE CodiceRicovero = ?";
         // 2. Prepare a statement inside a try-with-resources
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             // 3. Fill in the "?" with actual data
             statement.setInt(1, id);
-            // 4. Execute the query, this operations returns a ResultSet
+            // 4. Execute the query, this operation returns a ResultSet
             final ResultSet resultSet = statement.executeQuery();
             // 5. Do something with the result of the query execution;
             //    here we extract the first (and only) student from the ResultSet

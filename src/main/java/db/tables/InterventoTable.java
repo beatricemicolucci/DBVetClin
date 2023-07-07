@@ -50,7 +50,7 @@ public class InterventoTable implements Table<Intervento, ThreeKeys<Date, LocalT
             statement.setDate(1, Utils.dateToSqlDate(id.getX()));
             statement.setTime(2, Utils.timeToSqlTime(id.getY()));
             statement.setInt(3, id.getZ());
-            // 4. Execute the query, this operations returns a ResultSet
+            // 4. Execute the query, this operation returns a ResultSet
             final ResultSet resultSet = statement.executeQuery();
             // 5. Do something with the result of the query execution;
             //    here we extract the first (and only) student from the ResultSet
