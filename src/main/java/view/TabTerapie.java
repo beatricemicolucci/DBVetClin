@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TabTerapie {
+public class TabTerapie extends TabController {
 
     private ConnectionProvider connectionProvider;
     private TerapiaTable terapiaTable;

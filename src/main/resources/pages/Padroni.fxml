@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" minHeight="0.0" minWidth="0.0" prefHeight="522.0" prefWidth="756.0" fx:controller="view.TabPadroni">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="529.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabPadroni">
     <children>
-        <TableView fx:id="ownersTable" layoutX="193.0" layoutY="32.0" prefHeight="415.0" prefWidth="549.0">
+        <TableView fx:id="ownersTable" layoutX="193.0" layoutY="32.0" prefHeight="446.0" prefWidth="758.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="CF" />
-                <TableColumn prefWidth="75.0" text="Nome" />
-                <TableColumn prefWidth="75.0" text="Cognome" />
-                <TableColumn minWidth="8.800048828125" prefWidth="90.39999389648438" text="Data di Nascita" />
-                <TableColumn minWidth="0.0" prefWidth="72.79998779296875" text="Indirizzo" />
-                <TableColumn minWidth="6.4000244140625" prefWidth="78.39996337890625" text="Telefono" />
-                <TableColumn prefWidth="81.5999755859375" text="E-mail" />
+                <TableColumn fx:id="cfOwner" prefWidth="129.6000213623047" text="CF" />
+                <TableColumn fx:id="nameOwner" prefWidth="113.5999755859375" text="Nome" />
+                <TableColumn fx:id="lastNameOwner" prefWidth="77.5999755859375" text="Cognome" />
+                <TableColumn fx:id="birthDateOwner" minWidth="8.800048828125" prefWidth="100.79998779296875" text="Data di Nascita" />
+                <TableColumn fx:id="addressOwner" minWidth="0.0" prefWidth="90.4000244140625" text="Indirizzo" />
+                <TableColumn fx:id="telephoneOwner" minWidth="6.4000244140625" prefWidth="88.0001220703125" text="Telefono" />
+                <TableColumn fx:id="emailOwner" minWidth="0.0" prefWidth="160.0001220703125" text="E-mail" />
             </columns>
         </TableView>
         <Pane layoutX="4.0" layoutY="5.0" prefHeight="495.0" prefWidth="192.0">
@@ -40,4 +42,3 @@
             </children>
         </Pane>
     </children></AnchorPane>
-

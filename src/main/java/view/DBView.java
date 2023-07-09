@@ -1,25 +1,57 @@
 package view;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.TabPane;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Tab;
+
+import java.io.IOException;
 
 public class DBView extends AbstractView{
 
     @FXML
-    private TabPane tabPane;
+    private Tab tabPadroni;
 
-    private TabPadroni tabPadroniController;
-    private TabAnimali tabAnimaliController;
-    private TabInterventi tabInterventiController;
-    private TabVisite tabVisiteController;
-    private TabTerapie tabTerapieController;
+    @FXML
+    private Tab tabAnimali;
 
-    public void init(){
+    @FXML
+    private Tab tabInterventi;
+
+    @FXML
+    private Tab tabVisite;
+
+    @FXML
+    private Tab tabTerapie;
+
+    private FXMLLoader loader;
+
+    @FXML
+    public void init() throws IOException {
         super.getStage().sizeToScene();
-        tabPadroniController = (TabPadroni) tabPane.getTabs().get(0).getUserData();
-        tabAnimaliController = (TabAnimali) tabPane.getTabs().get(1).getUserData();
-        tabInterventiController = (TabInterventi) tabPane.getTabs().get(2).getUserData();
-        tabVisiteController = (TabVisite) tabPane.getTabs().get(3).getUserData();
-        tabTerapieController = (TabTerapie) tabPane.getTabs().get(4).getUserData();
+        loader = new FXMLLoader(getClass().getResource("/pages/Padroni.fxml"));
+        tabPadroni.setContent(loader.load());
+        TabPadroni padroniController = loader.getController();
+        padroniController.init();
+
+        loader = new FXMLLoader(getClass().getResource("/pages/Animali.fxml"));
+        tabAnimali.setContent(loader.load());
+        TabAnimali animaliController = loader.getController();
+        animaliController.init();
+
+        loader = new FXMLLoader(getClass().getResource("/pages/Interventi.fxml"));
+        tabInterventi.setContent(loader.load());
+        TabInterventi interventiController = loader.getController();
+        interventiController.init();
+
+        loader = new FXMLLoader(getClass().getResource("/pages/Visite.fxml"));
+        tabVisite.setContent(loader.load());
+        TabVisite visiteController = loader.getController();
+        visiteController.init();
+
+        loader = new FXMLLoader(getClass().getResource("/pages/Terapie.fxml"));
+        tabTerapie.setContent(loader.load());
+        TabTerapie terapieController = loader.getController();
+        terapieController.init();
     }
+
 }

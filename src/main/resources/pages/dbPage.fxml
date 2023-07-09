@@ -3,21 +3,21 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 
-<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="757.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DBView">
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="968.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.DBView">
   <tabs>
-    <Tab text="Padroni">
+    <Tab fx:id="tabPadroni" text="Padroni">
         <fx:include source="Padroni.fxml" />
     </Tab>
-    <Tab text="Pazienti">
+    <Tab fx:id="tabAnimali" text="Pazienti">
         <fx:include source="Animali.fxml" />
     </Tab>
-      <Tab text="Interventi">
+      <Tab fx:id="tabInterventi" text="Interventi">
         <fx:include source="Interventi.fxml" />
       </Tab>
-      <Tab text="Visite">
+      <Tab fx:id="tabVisite" text="Visite">
         <fx:include source="Visite.fxml" />
       </Tab>
-      <Tab text="Terapie">
+      <Tab fx:id="tabTerapie" text="Terapie">
         <fx:include source="Terapie.fxml" />
       </Tab>
   </tabs>

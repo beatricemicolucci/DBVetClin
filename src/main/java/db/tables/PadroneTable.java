@@ -6,6 +6,7 @@ import utils.Utils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,7 +67,7 @@ public class PadroneTable implements Table<Padrone, String> {
                 final String cf = resultSet.getString("CF");
                 final String firstName = resultSet.getString("Nome");
                 final String lastName = resultSet.getString("Cognome");
-                final Date birthdayDate = (Date) Utils.sqlDateToDate(resultSet.getDate("DataNascita"));
+                final Date birthdayDate = Utils.sqlDateToDate(resultSet.getDate("DataNascita"));
                 final String address = resultSet.getString("Indirizzo");
                 final String telephone = resultSet.getString("Telefono");
                 final Optional<String> email = Optional.ofNullable(resultSet.getString("IndirizzoEmail"));

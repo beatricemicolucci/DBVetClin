@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
-public class TabVisite {
+public class TabVisite extends TabController {
 
     private ConnectionProvider connectionProvider;
     private VeterinarioTable veterinarioTable;

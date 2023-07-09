@@ -13,28 +13,28 @@
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="503.0" prefWidth="753.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabInterventi">
     <children>
-        <TextField fx:id="operatingRoomInsert" layoutX="21.0" layoutY="60.0" promptText="Sala Operatoria" />
-        <TextField fx:id="typeInsert" layoutX="22.0" layoutY="94.0" promptText="Tipo di Intervento" />
-        <Spinner fx:id="startHour" layoutX="22.0" layoutY="266.0" prefHeight="26.0" prefWidth="70.0" />
-        <Spinner fx:id="startMin" layoutX="101.0" layoutY="266.0" prefHeight="26.0" prefWidth="70.0" />
-        <Label layoutX="44.0" layoutY="292.0" prefHeight="28.0" prefWidth="116.0" text="Ora di Inizio: HH:mm" wrapText="true">
+        <TextField fx:id="operatingRoomInsert" layoutX="23.0" layoutY="22.0" prefHeight="26.0" prefWidth="150.0" promptText="Sala Operatoria" />
+        <TextField fx:id="typeInsert" layoutX="23.0" layoutY="53.0" prefHeight="26.0" prefWidth="150.0" promptText="Tipo di Intervento" />
+        <Spinner fx:id="startHour" layoutX="22.0" layoutY="192.0" prefHeight="26.0" prefWidth="70.0" />
+        <Spinner fx:id="startMin" layoutX="101.0" layoutY="192.0" prefHeight="26.0" prefWidth="70.0" />
+        <Label layoutX="44.0" layoutY="218.0" prefHeight="28.0" prefWidth="116.0" text="Ora di Inizio: HH:mm" wrapText="true">
             <font>
                 <Font name="System Italic" size="12.0" />
             </font>
         </Label>
-        <DatePicker fx:id="dayInsert" layoutX="21.0" layoutY="130.0" prefHeight="26.0" prefWidth="149.0" promptText="Data Intervento" />
-        <Spinner fx:id="endHour" layoutX="25.0" layoutY="318.0" prefHeight="26.0" prefWidth="70.0" />
-        <Label layoutX="41.0" layoutY="345.0" prefHeight="26.0" prefWidth="116.0" text="Ora di Fine: HH:mm" wrapText="true">
+        <DatePicker fx:id="dayInsert" layoutX="23.0" layoutY="89.0" prefHeight="26.0" prefWidth="149.0" promptText="Data Intervento" />
+        <Spinner fx:id="endHour" layoutX="25.0" layoutY="244.0" prefHeight="26.0" prefWidth="70.0" />
+        <Label layoutX="41.0" layoutY="271.0" prefHeight="26.0" prefWidth="116.0" text="Ora di Fine: HH:mm" wrapText="true">
             <font>
                 <Font name="System Italic" size="12.0" />
             </font>
         </Label>
-        <Spinner fx:id="endMin" layoutX="103.0" layoutY="318.0" prefHeight="26.0" prefWidth="70.0" />
-        <TextField fx:id="invoiceOperation" layoutX="21.0" layoutY="165.0" prefHeight="26.0" prefWidth="149.0" promptText="Numero Fattura" />
-        <TextField fx:id="medRecordInsert" layoutX="22.0" layoutY="198.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
-        <TextField fx:id="vetInsert" layoutX="22.0" layoutY="231.0" promptText="Codice Veterinario" />
-        <TextField fx:id="microchipOperation" layoutX="201.0" layoutY="366.0" promptText="Microchip" />
-        <Button layoutX="208.0" layoutY="400.0" mnemonicParsing="false" onAction="#onShowOperationsClick" prefHeight="60.0" prefWidth="136.0" text="Visualizza gli interventi a cui è stato sottoposto un animale" textAlignment="CENTER" wrapText="true" />
+        <Spinner fx:id="endMin" layoutX="103.0" layoutY="244.0" prefHeight="26.0" prefWidth="70.0" />
+        <TextField fx:id="invoiceOperation" layoutX="22.0" layoutY="297.0" prefHeight="26.0" prefWidth="149.0" promptText="Numero Fattura" />
+        <TextField fx:id="medRecordInsert" layoutX="23.0" layoutY="125.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
+        <TextField fx:id="vetInsert" layoutX="22.0" layoutY="159.0" promptText="Codice Veterinario" />
+        <TextField fx:id="microchipOperation" layoutX="364.0" layoutY="368.0" promptText="Microchip" />
+        <Button layoutX="371.0" layoutY="407.0" mnemonicParsing="false" onAction="#onShowOperationsClick" prefHeight="60.0" prefWidth="136.0" text="Visualizza gli interventi a cui è stato sottoposto un animale" textAlignment="CENTER" wrapText="true" />
         <TableView fx:id="operationsTable" layoutX="190.0" layoutY="39.0" prefHeight="307.0" prefWidth="551.0">
             <columns>
                 <TableColumn prefWidth="66.39997863769531" text="Sala " />
@@ -47,13 +47,11 @@
                 <TableColumn prefWidth="59.199951171875" text="OraF" />
             </columns>
         </TableView>
-        <Button layoutX="70.0" layoutY="371.0" mnemonicParsing="false" onAction="#onInsertOperationClick" text="Inserisci" />
-        <TextField fx:id="invoiceInsert" layoutX="399.0" layoutY="366.0" promptText="Numero Fattura" />
-        <TextField fx:id="amountInsert" layoutX="400.0" layoutY="433.0" prefHeight="26.0" prefWidth="151.0" promptText="Spesa" />
-        <TextField fx:id="servicesInsert" layoutX="576.0" layoutY="366.0" promptText="Servizi" />
-        <TextField fx:id="cfInvoice" layoutX="576.0" layoutY="397.0" promptText="CF Padrone" />
-        <DatePicker fx:id="dateInvoice" layoutX="400.0" layoutY="397.0" prefHeight="26.0" prefWidth="149.0" promptText="Data Fattura" />
-        <Button layoutX="576.0" layoutY="434.0" mnemonicParsing="false" onAction="#onInvoiceInsertClick" prefHeight="26.0" prefWidth="150.0" text="Inserisci Fattura" />
-        <Separator layoutX="373.0" layoutY="357.0" orientation="VERTICAL" prefHeight="134.0" prefWidth="0.0" />
+        <Button layoutX="196.0" layoutY="379.0" mnemonicParsing="false" onAction="#onInsertOperationClick" prefHeight="48.0" prefWidth="116.0" text="Inserisci Intervento" textAlignment="CENTER" wrapText="true" />
+        <TextField fx:id="amountInsert" layoutX="24.0" layoutY="368.0" prefHeight="26.0" prefWidth="150.0" promptText="Spesa" />
+        <TextField fx:id="servicesInsert" layoutX="24.0" layoutY="403.0" prefHeight="26.0" prefWidth="150.0" promptText="Servizi" />
+        <TextField fx:id="cfInvoice" layoutX="26.0" layoutY="437.0" promptText="CF Padrone" />
+        <DatePicker fx:id="dateInvoice" layoutX="23.0" layoutY="334.0" prefHeight="26.0" prefWidth="149.0" promptText="Data Fattura" />
+        <Separator layoutX="341.0" layoutY="359.0" orientation="VERTICAL" prefHeight="134.0" prefWidth="0.0" />
     </children>
 </AnchorPane>

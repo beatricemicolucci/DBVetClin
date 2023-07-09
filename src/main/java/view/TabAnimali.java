@@ -2,6 +2,7 @@ package view;
 
 import db.ConnectionProvider;
 import db.tables.AnimaleTable;
+import db.tables.CartellaClinicaTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,10 +17,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-public class TabAnimali {
+public class TabAnimali extends TabController {
 
     private AnimaleTable animaleTable;
-    private ConnectionProvider connectionProvider;
+    private CartellaClinicaTable cartellaClinicaTable;
     private List<Animale> animalsList;
 
     @FXML
@@ -47,8 +48,9 @@ public class TabAnimali {
     private TableView animalTable;
 
     public void init() {
-        connectionProvider = new ConnectionProvider();
+        ConnectionProvider connectionProvider = new ConnectionProvider();
         animaleTable = new AnimaleTable(connectionProvider.getMySQLConnection());
+        cartellaClinicaTable = new CartellaClinicaTable(connectionProvider.getMySQLConnection());
         animalsList = new ArrayList<>();
         ObservableList<String> choicesList = FXCollections.observableArrayList("F", "M");
         animalGender.setItems(choicesList);
@@ -93,7 +95,7 @@ public class TabAnimali {
         alert.setHeaderText(null);
 
         if (animale.isPresent()) {
-            Date visitDay = animaleTable.showNextVisit(microchip);
+            Date visitDay = cartellaClinicaTable.showNextVisit(microchip);
             alert.setContentText("Prossima visita: " + Utils.buildDate(visitDay.getDay(), visitDay.getMonth(), visitDay.getYear()));
         } else {
             alert.setContentText("Animale non trovato.");

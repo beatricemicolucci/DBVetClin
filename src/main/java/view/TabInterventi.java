@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class TabInterventi {
+public class TabInterventi extends TabController {
 
     private ConnectionProvider connectionProvider;
     private InterventoTable interventoTable;
@@ -44,22 +44,19 @@ public class TabInterventi {
     private TextField vetInsert;
 
     @FXML
-    private Spinner startHour;
+    private Spinner<Integer> startHour;
 
     @FXML
-    private Spinner startMin;
+    private Spinner<Integer> startMin;
 
     @FXML
-    private Spinner endHour;
+    private Spinner<Integer> endHour;
 
     @FXML
-    private Spinner endMin;
+    private Spinner<Integer> endMin;
 
     @FXML
     private TextField microchipOperation;
-
-    @FXML
-    private TextField invoiceInsert;
 
     @FXML
     private DatePicker dateInvoice;
@@ -74,7 +71,7 @@ public class TabInterventi {
     private TextField cfInvoice;
 
     @FXML
-    private TableView operationsTable;
+    private TableView<List<Intervento>> operationsTable;
 
     public void init() {
         connectionProvider = new ConnectionProvider();
@@ -82,12 +79,18 @@ public class TabInterventi {
         cartellaClinicaTable = new CartellaClinicaTable(connectionProvider.getMySQLConnection());
         fatturaTable = new FatturaTable(connectionProvider.getMySQLConnection());
         operationsList = new ArrayList<>();
-        SpinnerValueFactory<Integer> valueHoursFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
-        SpinnerValueFactory<Integer> valueMinutesFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
-        startHour.setValueFactory(valueHoursFactory);
-        startMin.setValueFactory(valueMinutesFactory);
-        endHour.setValueFactory(valueHoursFactory);
-        endMin.setValueFactory(valueMinutesFactory);
+        SpinnerValueFactory<Integer> valueStartHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
+        SpinnerValueFactory<Integer> valueEndHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
+        SpinnerValueFactory<Integer> valueStartMinutesFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
+        SpinnerValueFactory<Integer> valueEndMinutesFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
+        valueStartHourFactory.setValue(0);
+        valueStartMinutesFactory.setValue(0);
+        valueEndHourFactory.setValue(0);
+        valueEndMinutesFactory.setValue(0);
+        startHour.setValueFactory(valueStartHourFactory);
+        startMin.setValueFactory(valueStartMinutesFactory);
+        endHour.setValueFactory(valueEndHourFactory);
+        endMin.setValueFactory(valueEndMinutesFactory);
     }
 
     public void onInsertOperationClick(final ActionEvent e) {
@@ -99,6 +102,13 @@ public class TabInterventi {
         int vet = Integer.valueOf(vetInsert.getText());
         LocalTime startTime = LocalTime.of((int) startHour.getValue() ,(int) startMin.getValue());
         LocalTime endTime = LocalTime.of((int) endHour.getValue(), (int) endMin.getValue());
+        Date invoiceDate = Utils.buildDate(dateInvoice.getValue().getDayOfMonth(), dateInvoice.getValue().getMonthValue(), dateInvoice.getValue().getYear()).get();
+        float amount = Float.valueOf(amountInsert.getText());
+        String services = servicesInsert.getText();
+        String cf = cfInvoice.getText();
+
+        Fattura fattura = new Fattura(invoice, invoiceDate, amount, services, cf);
+        fatturaTable.save(fattura);
 
         Intervento intervento = new Intervento(operationRoom, type, operationDate, startTime, invoice, endTime, medRecord, vet);
         interventoTable.save(intervento);
@@ -109,16 +119,6 @@ public class TabInterventi {
     public void onShowOperationsClick(final ActionEvent e) {
         operationsList = cartellaClinicaTable.showAnimalOperations(Integer.valueOf(microchipOperation.getText()));
         operationsTable.getItems().setAll(operationsList);
-    }
-
-    public void onInvoiceInsertClick(final ActionEvent e) {
-        int idInvoice = Integer.valueOf(invoiceInsert.getText());
-        Date invoiceDate = Utils.buildDate(dateInvoice.getValue().getDayOfMonth(), dateInvoice.getValue().getMonthValue(), dateInvoice.getValue().getYear()).get();
-        float amount = Float.valueOf(amountInsert.getText());
-        String services = servicesInsert.getText();
-        String cf = cfInvoice.getText();
-        Fattura fattura = new Fattura(idInvoice, invoiceDate, amount, services, cf);
-        fatturaTable.save(fattura);
     }
 
 
