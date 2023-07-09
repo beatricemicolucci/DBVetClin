@@ -3,13 +3,17 @@ package view;
 import db.ConnectionProvider;
 import db.tables.AnimaleTable;
 import db.tables.CartellaClinicaTable;
+import db.tables.PadroneTable;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Animale;
+import model.Padrone;
 import utils.Utils;
 
 import java.util.ArrayList;
@@ -20,8 +24,9 @@ import java.util.Optional;
 public class TabAnimali extends TabController {
 
     private AnimaleTable animaleTable;
+    private PadroneTable padroneTable;
     private CartellaClinicaTable cartellaClinicaTable;
-    private List<Animale> animalsList;
+    private ObservableList<Animale> animalsList;
 
     @FXML
     private TextField microchipInsert;
@@ -39,45 +44,82 @@ public class TabAnimali extends TabController {
     private TextField cfInsert;
 
     @FXML
-    private ChoiceBox animalGender;
+    private ChoiceBox<String> animalGender;
 
     @FXML
     private TextField microchipView;
 
     @FXML
-    private TableView animalTable;
+    private TableView<Animale> animalTable;
+
+    @FXML
+    private TableColumn<Animale, Integer> microchipAnimal;
+
+    @FXML
+    private TableColumn<Animale, String> nameAnimal;
+
+    @FXML
+    private TableColumn<Animale, String> raceAnimal;
+
+    @FXML
+    private TableColumn<Animale, java.sql.Date> birthDateAnimal;
+
+    @FXML
+    private TableColumn<Animale, String> genderAnimal;
+
+    @FXML
+    private TableColumn<Animale, String> cfOwner;
 
     public void init() {
         ConnectionProvider connectionProvider = new ConnectionProvider();
         animaleTable = new AnimaleTable(connectionProvider.getMySQLConnection());
+        padroneTable = new PadroneTable(connectionProvider.getMySQLConnection());
         cartellaClinicaTable = new CartellaClinicaTable(connectionProvider.getMySQLConnection());
-        animalsList = new ArrayList<>();
+        animalsList = FXCollections.observableArrayList();
         ObservableList<String> choicesList = FXCollections.observableArrayList("F", "M");
         animalGender.setItems(choicesList);
         animalGender.setValue("F");
+        microchipAnimal.setCellValueFactory(new PropertyValueFactory<>("microchip"));
+        nameAnimal.setCellValueFactory(new PropertyValueFactory<>("name"));
+        raceAnimal.setCellValueFactory(new PropertyValueFactory<>("race"));
+        birthDateAnimal.setCellValueFactory(cellData -> {
+            Animale animale = cellData.getValue();
+            Date birthDate = animale.getBirthDate();
+            return new SimpleObjectProperty<>(Utils.dateToSqlDate(birthDate));
+        });
+        genderAnimal.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        cfOwner.setCellValueFactory(new PropertyValueFactory<>("cfOwner"));
     }
 
     public void onAnimalInsertClick(final ActionEvent e) {
-        int microchip = Integer.valueOf(microchipInsert.getText()).intValue();
+        int microchip = Integer.parseInt(microchipInsert.getText());
         String name = animalName.getText();
         String race = animalRace.getText();
-        Date birthDate = Utils.buildDate(animalBirthDate.getValue().getDayOfMonth(), animalBirthDate.getValue().getMonthValue(), animalBirthDate.getValue().getYear()).get();
-        String gender = (String) animalGender.getValue();
+        String gender = animalGender.getValue();
         String cf = cfInsert.getText();
 
-        if ( name.isEmpty() || microchipInsert.getText().isEmpty() || race.isEmpty() || birthDate == null || cf.isEmpty()) {
-            return;
+        if ( name.isEmpty() || microchipInsert.getText().isEmpty() || race.isEmpty() || animalBirthDate.getValue() == null || cf.isEmpty()) {
+            showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
+        } else {
+            if (padroneTable.findByPrimaryKey(cf).isEmpty()) {
+                showPopUp("Padrone non esistente, perfavore registralo nella sezione Padroni!", null, Alert.AlertType.WARNING);
+            } else {
+                if (animaleTable.findByPrimaryKey(microchip).isPresent()) {
+                    showPopUp("Animale già registrato!", null, Alert.AlertType.WARNING);
+                } else {
+                    Date birthDate = Utils.buildDate(animalBirthDate.getValue().getDayOfMonth(), animalBirthDate.getValue().getMonthValue(), animalBirthDate.getValue().getYear()).get();
+                    Animale animale = new Animale(microchip, name, race, birthDate, gender, cf);
+                    animaleTable.save(animale);
+                    animalsList = FXCollections.observableArrayList(animaleTable.findAll());
+                    animalTable.getItems().setAll(animalsList);
+                }
+            }
         }
-
-        Animale animale = new Animale(microchip, name, race, birthDate, gender, cf);
-        animaleTable.save(animale);
-        animalsList = animaleTable.findAll();
-        animalTable.getItems().setAll(animalsList);
 
     }
 
     public void onAnimalViewClick(final ActionEvent e) {
-        animalsList = animaleTable.showTopTen();
+        animalsList = FXCollections.observableArrayList(animaleTable.showTopTen());
         animalTable.getItems().setAll(animalsList);
     }
 
