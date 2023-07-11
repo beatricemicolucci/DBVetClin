@@ -4,26 +4,30 @@ import db.ConnectionProvider;
 import db.tables.CartellaClinicaTable;
 import db.tables.FatturaTable;
 import db.tables.InterventoTable;
+import db.tables.PadroneTable;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Fattura;
 import model.Intervento;
+import utils.ThreeKeys;
 import utils.Utils;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 public class TabInterventi extends TabController {
 
-    private ConnectionProvider connectionProvider;
     private InterventoTable interventoTable;
     private CartellaClinicaTable cartellaClinicaTable;
     private FatturaTable fatturaTable;
-    private List<Intervento> operationsList;
+    private PadroneTable padroneTable;
+    private ObservableList<Intervento> operationsList;
 
     @FXML
     private TextField operatingRoomInsert;
@@ -71,14 +75,39 @@ public class TabInterventi extends TabController {
     private TextField cfInvoice;
 
     @FXML
-    private TableView<List<Intervento>> operationsTable;
+    private TableView<Intervento> operationsTable;
+
+    @FXML
+    private TableColumn<Intervento, Integer> operatingRoomCol;
+
+    @FXML
+    private TableColumn<Intervento, String> typeCol;
+
+    @FXML
+    private TableColumn<Intervento, Date> dateCol;
+
+    @FXML
+    private TableColumn<Intervento, Integer> invoiceCol;
+
+    @FXML
+    private TableColumn<Intervento, Integer> medRecordCol;
+
+    @FXML
+    private TableColumn<Intervento, Integer> vetCol;
+
+    @FXML
+    private TableColumn<Intervento, LocalTime> startTimeCol;
+
+    @FXML
+    private TableColumn<Intervento, LocalTime> endTimeCol;
 
     public void init() {
-        connectionProvider = new ConnectionProvider();
+        ConnectionProvider connectionProvider = new ConnectionProvider();
         interventoTable = new InterventoTable(connectionProvider.getMySQLConnection());
         cartellaClinicaTable = new CartellaClinicaTable(connectionProvider.getMySQLConnection());
         fatturaTable = new FatturaTable(connectionProvider.getMySQLConnection());
-        operationsList = new ArrayList<>();
+        padroneTable = new PadroneTable(connectionProvider.getMySQLConnection());
+
         SpinnerValueFactory<Integer> valueStartHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
         SpinnerValueFactory<Integer> valueEndHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
         SpinnerValueFactory<Integer> valueStartMinutesFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
@@ -91,34 +120,76 @@ public class TabInterventi extends TabController {
         startMin.setValueFactory(valueStartMinutesFactory);
         endHour.setValueFactory(valueEndHourFactory);
         endMin.setValueFactory(valueEndMinutesFactory);
+
+        operationsList = FXCollections.observableArrayList();
+        operatingRoomCol.setCellValueFactory(new PropertyValueFactory<>("operatingRoom"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        dateCol.setCellValueFactory(cellData -> {
+            Intervento intervento = cellData.getValue();
+            Date date = intervento.getDate();
+            return new SimpleObjectProperty<>(Utils.dateToSqlDate(date));
+        });
+        invoiceCol.setCellValueFactory(new PropertyValueFactory<>("idInvoice"));
+        medRecordCol.setCellValueFactory(new PropertyValueFactory<>("codMedicalRecord"));
+        vetCol.setCellValueFactory(new PropertyValueFactory<>("codVet"));
+        startTimeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+
     }
 
     public void onInsertOperationClick(final ActionEvent e) {
-        int operationRoom = Integer.valueOf(operatingRoomInsert.getText());
+        int operationRoom = Integer.parseInt(operatingRoomInsert.getText());
         String type = typeInsert.getText();
-        Date operationDate = Utils.buildDate(dayInsert.getValue().getDayOfMonth(), dayInsert.getValue().getMonthValue(), dayInsert.getValue().getYear()).get();
-        int invoice = Integer.valueOf(invoiceOperation.getText());
-        int medRecord = Integer.valueOf(medRecordInsert.getText());
-        int vet = Integer.valueOf(vetInsert.getText());
-        LocalTime startTime = LocalTime.of((int) startHour.getValue() ,(int) startMin.getValue());
-        LocalTime endTime = LocalTime.of((int) endHour.getValue(), (int) endMin.getValue());
-        Date invoiceDate = Utils.buildDate(dateInvoice.getValue().getDayOfMonth(), dateInvoice.getValue().getMonthValue(), dateInvoice.getValue().getYear()).get();
-        float amount = Float.valueOf(amountInsert.getText());
+        int invoice = Integer.parseInt(invoiceOperation.getText());
+        int medRecord = Integer.parseInt(medRecordInsert.getText());
+        int vet = Integer.parseInt(vetInsert.getText());
+        LocalTime startTime = LocalTime.of(startHour.getValue(), startMin.getValue());
+        LocalTime endTime = LocalTime.of(endHour.getValue(), endMin.getValue());
+        float amount = Float.parseFloat(amountInsert.getText());
         String services = servicesInsert.getText();
         String cf = cfInvoice.getText();
 
-        Fattura fattura = new Fattura(invoice, invoiceDate, amount, services, cf);
-        fatturaTable.save(fattura);
+        if (operatingRoomInsert.getText().isEmpty() || type.isEmpty() || invoiceOperation.getText().isEmpty() || medRecordInsert.getText().isEmpty()
+            || vetInsert.getText().isEmpty() || amountInsert.getText().isEmpty() || services.isEmpty() || cf.isEmpty() || dayInsert.getValue() == null
+            || dateInvoice.getValue() == null) {
+            showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
+        } else {
+            Date operationDate = Utils.buildDate(dayInsert.getValue().getDayOfMonth(), dayInsert.getValue().getMonthValue(), dayInsert.getValue().getYear()).get();
+            Date invoiceDate = Utils.buildDate(dateInvoice.getValue().getDayOfMonth(), dateInvoice.getValue().getMonthValue(), dateInvoice.getValue().getYear()).get();
 
-        Intervento intervento = new Intervento(operationRoom, type, operationDate, startTime, invoice, endTime, medRecord, vet);
-        interventoTable.save(intervento);
-        operationsList = interventoTable.findAll();
-        operationsTable.getItems().setAll(operationsList);
+            if (fatturaTable.findByPrimaryKey(invoice).isPresent()) {
+                showPopUp("Fattura già registrata", null, Alert.AlertType.WARNING);
+            } else {
+                if (interventoTable.findByPrimaryKey(new ThreeKeys<>(operationDate, startTime, operationRoom)).isPresent()) {
+                    showPopUp("Intervento già registrato!", null, Alert.AlertType.WARNING);
+                } else {
+                    if (padroneTable.findByPrimaryKey(cf).isEmpty()) {
+                        showPopUp("Padrone non esistente!", null, Alert.AlertType.WARNING);
+                    } else if (cartellaClinicaTable.findByPrimaryKey(medRecord).isEmpty()) {
+                        showPopUp("Cartella Clinica non esistente!", null, Alert.AlertType.WARNING);
+                    } else {
+                        Fattura fattura = new Fattura(invoice, invoiceDate, amount, services, cf);
+                        fatturaTable.save(fattura);
+                        Intervento intervento = new Intervento(operationRoom, type, operationDate, startTime, invoice, endTime, medRecord, vet);
+                        interventoTable.save(intervento);
+                        operationsList = FXCollections.observableArrayList(interventoTable.findAll());
+                        operationsTable.getItems().setAll(operationsList);
+                    }
+                }
+            }
+        }
     }
 
     public void onShowOperationsClick(final ActionEvent e) {
-        operationsList = cartellaClinicaTable.showAnimalOperations(Integer.valueOf(microchipOperation.getText()));
-        operationsTable.getItems().setAll(operationsList);
+
+        if (microchipOperation.getText().isEmpty()) {
+            showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
+        } else {
+            int microchip = Integer.parseInt(microchipOperation.getText());
+            operationsList = FXCollections.observableArrayList(cartellaClinicaTable.showAnimalOperations(microchip));
+            operationsTable.getItems().setAll(operationsList);
+        }
+
     }
 
 

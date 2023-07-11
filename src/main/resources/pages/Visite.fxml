@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefHeight="180.0" prefWidth="200.0" fx:controller="view.TabVisite">
+<AnchorPane prefHeight="529.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabVisite">
     <children>
-        <TextField fx:id="idVetVisits" layoutX="46.0" layoutY="187.0" promptText="Codice Veterinario" />
-        <DatePicker fx:id="dateVisits" layoutX="45.0" layoutY="219.0" prefHeight="26.0" prefWidth="150.0" promptText="Data" />
-        <Button layoutX="86.0" layoutY="259.0" mnemonicParsing="false" onAction="#onShowVetVisitsClick" text="Visualizza" />
-        <Text layoutX="37.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il codice del veterinario e la data desiderata per visualizzare le visite effettuate o da effettuare in una giornata" textAlignment="CENTER" wrappingWidth="166.86953735351562">
+        <TextField fx:id="idVetVisits" layoutX="95.0" layoutY="205.0" promptText="Codice Veterinario" />
+        <DatePicker fx:id="dateVisits" layoutX="94.0" layoutY="237.0" prefHeight="26.0" prefWidth="150.0" promptText="Data" />
+        <Button layoutX="135.0" layoutY="277.0" mnemonicParsing="false" onAction="#onShowVetVisitsClick" text="Visualizza" />
+        <Text layoutX="86.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserisci il codice del veterinario e la data desiderata per visualizzare le visite effettuate o da effettuare in una giornata" textAlignment="CENTER" wrappingWidth="166.86953735351562">
             <font>
                 <Font name="System Italic" size="12.0" />
             </font>
         </Text>
-        <TableView fx:id="visitsTable" layoutX="287.0" layoutY="69.0" prefHeight="351.0" prefWidth="406.0">
+        <TableView fx:id="visitsTable" layoutX="332.0" layoutY="56.0" prefHeight="372.0" prefWidth="538.0">
             <columns>
-                <TableColumn prefWidth="111.20002746582031" text="Data" />
-                <TableColumn prefWidth="86.39996337890625" text="Ora Inizio" />
-                <TableColumn prefWidth="91.20001220703125" text="Ora Fine" />
-                <TableColumn prefWidth="115.20001220703125" text="Tipo Visita" />
+                <TableColumn prefWidth="140.0" text="Data" />
+                <TableColumn prefWidth="124.0" text="Ora Inizio" />
+                <TableColumn prefWidth="108.0" text="Ora Fine" />
+                <TableColumn prefWidth="165.60003662109375" text="Tipo Visita" />
             </columns>
         </TableView>
     </children>

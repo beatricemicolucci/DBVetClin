@@ -152,20 +152,20 @@ public class AnimaleTable implements Table<Animale, Integer> {
     }
 
     public List<Animale> showTopTen() {
-        final String query = "SELECT a.Microchip, a.Nome, COUNT(*) AS NumeroVisite" +
-                "FROM" + TABLE_NAME + "a" +
-                "JOIN cartella_clinica cc ON cc.CodAnimale = a.Microchip" +
+        final String query = "SELECT a.Microchip, a.Nome, COUNT(*) AS NumeroVisite " +
+                "FROM " + TABLE_NAME + " a " +
+                "JOIN cartella_clinica cc ON cc.CodAnimale = a.Microchip " +
                 "JOIN (" +
-                "  SELECT CodiceCartella FROM controllo" +
+                "  SELECT CodiceCartella FROM controllo " +
                 "  UNION ALL" +
-                "  SELECT CodiceCartella FROM intervento" +
+                "  SELECT CodiceCartella FROM intervento " +
                 "  UNION ALL" +
-                "  SELECT CodiceCartella FROM vaccinazione" +
+                "  SELECT CodiceCartella FROM vaccinazione " +
                 "  UNION ALL" +
-                "  SELECT CodiceCartella FROM esame" +
-                ") AS v ON v.CodiceCartella = cc.CodiceCartella" +
-                "GROUP BY a.Microchip, a.Nome" +
-                "ORDER BY NumeroVisite DESC" +
+                "  SELECT CodiceCartella FROM esame " +
+                ") AS v ON v.CodiceCartella = cc.CodiceCartella " +
+                "GROUP BY a.Microchip, a.Nome " +
+                "ORDER BY NumeroVisite DESC " +
                 "LIMIT 10";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             final ResultSet resultSet = statement.executeQuery();

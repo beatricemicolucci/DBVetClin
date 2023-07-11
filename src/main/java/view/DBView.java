@@ -23,12 +23,10 @@ public class DBView extends AbstractView{
     @FXML
     private Tab tabTerapie;
 
-    private FXMLLoader loader;
-
     @FXML
     public void init() throws IOException {
         super.getStage().sizeToScene();
-        loader = new FXMLLoader(getClass().getResource("/pages/Padroni.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/Padroni.fxml"));
         tabPadroni.setContent(loader.load());
         TabPadroni padroniController = loader.getController();
         padroniController.init();

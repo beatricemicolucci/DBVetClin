@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,47 +10,46 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="503.0" prefWidth="753.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabInterventi">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="529.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabInterventi">
     <children>
-        <TextField fx:id="operatingRoomInsert" layoutX="23.0" layoutY="22.0" prefHeight="26.0" prefWidth="150.0" promptText="Sala Operatoria" />
-        <TextField fx:id="typeInsert" layoutX="23.0" layoutY="53.0" prefHeight="26.0" prefWidth="150.0" promptText="Tipo di Intervento" />
-        <Spinner fx:id="startHour" layoutX="22.0" layoutY="192.0" prefHeight="26.0" prefWidth="70.0" />
-        <Spinner fx:id="startMin" layoutX="101.0" layoutY="192.0" prefHeight="26.0" prefWidth="70.0" />
-        <Label layoutX="44.0" layoutY="218.0" prefHeight="28.0" prefWidth="116.0" text="Ora di Inizio: HH:mm" wrapText="true">
+        <TextField fx:id="operatingRoomInsert" layoutX="22.0" layoutY="14.0" prefHeight="26.0" prefWidth="150.0" promptText="Sala Operatoria" />
+        <TextField fx:id="typeInsert" layoutX="22.0" layoutY="45.0" prefHeight="26.0" prefWidth="150.0" promptText="Tipo di Intervento" />
+        <Spinner fx:id="startHour" layoutX="21.0" layoutY="184.0" prefHeight="26.0" prefWidth="70.0" />
+        <Spinner fx:id="startMin" layoutX="100.0" layoutY="184.0" prefHeight="26.0" prefWidth="70.0" />
+        <Label layoutX="43.0" layoutY="210.0" prefHeight="28.0" prefWidth="116.0" text="Ora di Inizio: HH:mm" wrapText="true">
             <font>
                 <Font name="System Italic" size="12.0" />
             </font>
         </Label>
-        <DatePicker fx:id="dayInsert" layoutX="23.0" layoutY="89.0" prefHeight="26.0" prefWidth="149.0" promptText="Data Intervento" />
-        <Spinner fx:id="endHour" layoutX="25.0" layoutY="244.0" prefHeight="26.0" prefWidth="70.0" />
-        <Label layoutX="41.0" layoutY="271.0" prefHeight="26.0" prefWidth="116.0" text="Ora di Fine: HH:mm" wrapText="true">
+        <DatePicker fx:id="dayInsert" layoutX="22.0" layoutY="81.0" prefHeight="26.0" prefWidth="149.0" promptText="Data Intervento" />
+        <Spinner fx:id="endHour" layoutX="24.0" layoutY="236.0" prefHeight="26.0" prefWidth="70.0" />
+        <Label layoutX="40.0" layoutY="263.0" prefHeight="26.0" prefWidth="116.0" text="Ora di Fine: HH:mm" wrapText="true">
             <font>
                 <Font name="System Italic" size="12.0" />
             </font>
         </Label>
-        <Spinner fx:id="endMin" layoutX="103.0" layoutY="244.0" prefHeight="26.0" prefWidth="70.0" />
-        <TextField fx:id="invoiceOperation" layoutX="22.0" layoutY="297.0" prefHeight="26.0" prefWidth="149.0" promptText="Numero Fattura" />
-        <TextField fx:id="medRecordInsert" layoutX="23.0" layoutY="125.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
-        <TextField fx:id="vetInsert" layoutX="22.0" layoutY="159.0" promptText="Codice Veterinario" />
-        <TextField fx:id="microchipOperation" layoutX="364.0" layoutY="368.0" promptText="Microchip" />
-        <Button layoutX="371.0" layoutY="407.0" mnemonicParsing="false" onAction="#onShowOperationsClick" prefHeight="60.0" prefWidth="136.0" text="Visualizza gli interventi a cui è stato sottoposto un animale" textAlignment="CENTER" wrapText="true" />
-        <TableView fx:id="operationsTable" layoutX="190.0" layoutY="39.0" prefHeight="307.0" prefWidth="551.0">
+        <Spinner fx:id="endMin" layoutX="102.0" layoutY="236.0" prefHeight="26.0" prefWidth="70.0" />
+        <TextField fx:id="invoiceOperation" layoutX="21.0" layoutY="289.0" prefHeight="26.0" prefWidth="149.0" promptText="Numero Fattura" />
+        <TextField fx:id="medRecordInsert" layoutX="22.0" layoutY="117.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
+        <TextField fx:id="vetInsert" layoutX="21.0" layoutY="151.0" promptText="Codice Veterinario" />
+        <TextField fx:id="microchipOperation" layoutX="484.0" layoutY="382.0" promptText="Microchip" />
+        <Button layoutX="491.0" layoutY="421.0" mnemonicParsing="false" onAction="#onShowOperationsClick" prefHeight="60.0" prefWidth="136.0" text="Visualizza gli interventi a cui è stato sottoposto un animale" textAlignment="CENTER" wrapText="true" />
+        <TableView fx:id="operationsTable" layoutX="208.0" layoutY="24.0" prefHeight="346.0" prefWidth="739.0">
             <columns>
-                <TableColumn prefWidth="66.39997863769531" text="Sala " />
-                <TableColumn prefWidth="76.79998779296875" text="Tipo" />
-                <TableColumn prefWidth="78.4000244140625" text="Data" />
-                <TableColumn prefWidth="69.5999755859375" text="Fattura" />
-                <TableColumn prefWidth="71.20001220703125" text="C.Clinica" />
-                <TableColumn prefWidth="80.800048828125" text="Veterinario" />
-                <TableColumn prefWidth="51.2000732421875" text="OraIn" />
-                <TableColumn prefWidth="59.199951171875" text="OraF" />
+                <TableColumn fx:id="operatingRoomCol" prefWidth="66.39997863769531" text="Sala " />
+                <TableColumn fx:id="typeCol" prefWidth="135.99993896484375" text="Tipo" />
+                <TableColumn fx:id="dateCol" prefWidth="107.20001220703125" text="Data" />
+                <TableColumn fx:id="invoiceCol" prefWidth="72.0" text="Fattura" />
+                <TableColumn fx:id="medRecordCol" prefWidth="79.99993896484375" text="C.Clinica" />
+                <TableColumn fx:id="vetCol" prefWidth="105.60003662109375" text="Veterinario" />
+                <TableColumn fx:id="startTimeCol" prefWidth="82.4000244140625" text="Ora Inizio" />
+                <TableColumn fx:id="endTimeCol" prefWidth="86.4000122070313" text="Ora Fine" />
             </columns>
         </TableView>
-        <Button layoutX="196.0" layoutY="379.0" mnemonicParsing="false" onAction="#onInsertOperationClick" prefHeight="48.0" prefWidth="116.0" text="Inserisci Intervento" textAlignment="CENTER" wrapText="true" />
-        <TextField fx:id="amountInsert" layoutX="24.0" layoutY="368.0" prefHeight="26.0" prefWidth="150.0" promptText="Spesa" />
-        <TextField fx:id="servicesInsert" layoutX="24.0" layoutY="403.0" prefHeight="26.0" prefWidth="150.0" promptText="Servizi" />
-        <TextField fx:id="cfInvoice" layoutX="26.0" layoutY="437.0" promptText="CF Padrone" />
-        <DatePicker fx:id="dateInvoice" layoutX="23.0" layoutY="334.0" prefHeight="26.0" prefWidth="149.0" promptText="Data Fattura" />
-        <Separator layoutX="341.0" layoutY="359.0" orientation="VERTICAL" prefHeight="134.0" prefWidth="0.0" />
+        <Button layoutX="39.0" layoutY="463.0" mnemonicParsing="false" onAction="#onInsertOperationClick" prefHeight="28.0" prefWidth="116.0" text="Inserisci Intervento" textAlignment="CENTER" wrapText="true" />
+        <TextField fx:id="amountInsert" layoutX="23.0" layoutY="360.0" prefHeight="26.0" prefWidth="150.0" promptText="Spesa" />
+        <TextField fx:id="servicesInsert" layoutX="23.0" layoutY="395.0" prefHeight="26.0" prefWidth="150.0" promptText="Servizi" />
+        <TextField fx:id="cfInvoice" layoutX="25.0" layoutY="429.0" promptText="CF Padrone" />
+        <DatePicker fx:id="dateInvoice" layoutX="22.0" layoutY="326.0" prefHeight="26.0" prefWidth="149.0" promptText="Data Fattura" />
     </children>
 </AnchorPane>

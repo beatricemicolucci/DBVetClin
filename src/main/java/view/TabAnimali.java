@@ -11,14 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import model.Animale;
-import model.Padrone;
 import utils.Utils;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 public class TabAnimali extends TabController {
@@ -126,26 +122,24 @@ public class TabAnimali extends TabController {
     public void onAnimalVisitDayViewClick(final ActionEvent e) {
 
         if (microchipView.getText().isEmpty()) {
-            return;
+            showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
         }
 
         int microchip = Integer.valueOf(microchipView.getText());
         Optional<Animale> animale = animaleTable.findByPrimaryKey(microchip);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Spesa Totale");
-        alert.setHeaderText(null);
-
         if (animale.isPresent()) {
             Date visitDay = cartellaClinicaTable.showNextVisit(microchip);
-            alert.setContentText("Prossima visita: " + Utils.buildDate(visitDay.getDay(), visitDay.getMonth(), visitDay.getYear()));
+            if (visitDay == null) {
+                showPopUp("Non ci sono visite registrate relative a questo animale!", null, Alert.AlertType.INFORMATION);
+            } else {
+                showPopUp("Prossima visita: " + Utils.dateToSqlDate(visitDay), null, Alert.AlertType.INFORMATION);
+            }
+
         } else {
-            alert.setContentText("Animale non trovato.");
+            showPopUp("Animale non trovato!", null, Alert.AlertType.WARNING);
         }
 
-        alert.showAndWait();
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.close();
 
     }
 
