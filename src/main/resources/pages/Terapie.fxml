@@ -1,30 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Separator?>
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefHeight="180.0" prefWidth="200.0" fx:controller="view.TabTerapie">
-    <children>
-        <TextField fx:id="idTherapyField" layoutX="63.0" layoutY="85.0" promptText="Codice Terapia" />
-        <TextField fx:id="diseaseField" layoutX="63.0" layoutY="117.0" promptText="Malattia da curare" />
-        <TextField fx:id="idVetField" layoutX="63.0" layoutY="149.0" promptText="Codice Veterinario" />
-        <TextField fx:id="idMedRecField" layoutX="63.0" layoutY="181.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
-        <Button layoutX="108.0" layoutY="216.0" mnemonicParsing="false" onAction="#onInsertClick" text="Inserisci" />
-        <Button layoutX="70.0" layoutY="346.0" mnemonicParsing="false" onAction="#onShowTherapiesClick" prefHeight="68.0" prefWidth="136.0" text="Visualizza terapie prescritte al paziente per una malattia" textAlignment="CENTER" wrapText="true" />
-        <TextField fx:id="microchipField" layoutX="63.0" layoutY="274.0" prefHeight="26.0" prefWidth="150.0" promptText="Microchip" />
-        <TextField fx:id="diseaseShowField" layoutX="63.0" layoutY="308.0" prefHeight="26.0" prefWidth="150.0" promptText="Malattia da curare" />
-        <Separator layoutX="38.0" layoutY="257.0" prefWidth="200.0" />
-        <TableView fx:id="therapiesTable" layoutX="283.0" layoutY="86.0" prefHeight="342.0" prefWidth="422.0">
-            <columns>
-                <TableColumn prefWidth="100.00006103515625" text="Codice Terapia" />
-                <TableColumn prefWidth="95.199951171875" text="Malattia" />
-                <TableColumn prefWidth="121.60003662109375" text="Codice Veterinario" />
-                <TableColumn minWidth="0.0" prefWidth="103.19998779296873" text="Codice C.Clinica" />
-            </columns>
-        </TableView>
-    </children>
+<AnchorPane prefHeight="529.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabTerapie">
+    <TextField fx:id="idTherapyField" layoutX="100.0" layoutY="76.0" promptText="Codice Terapia" />
+    <TextField fx:id="diseaseField" layoutX="100.0" layoutY="108.0" promptText="Malattia da curare" />
+    <TextField fx:id="idVetField" layoutX="100.0" layoutY="140.0" promptText="Codice Veterinario" />
+    <TextField fx:id="idMedRecField" layoutX="100.0" layoutY="172.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
+    <Button layoutX="145.0" layoutY="207.0" mnemonicParsing="false" onAction="#onInsertClick" text="Inserisci" />
+    <Button layoutX="107.0" layoutY="337.0" mnemonicParsing="false" onAction="#onShowTherapiesClick" prefHeight="68.0" prefWidth="136.0" text="Visualizza terapie prescritte al paziente per una malattia" textAlignment="CENTER" wrapText="true" />
+    <TextField fx:id="microchipField" layoutX="100.0" layoutY="265.0" prefHeight="26.0" prefWidth="150.0" promptText="Microchip" />
+    <TextField fx:id="diseaseShowField" layoutX="100.0" layoutY="299.0" prefHeight="26.0" prefWidth="150.0" promptText="Malattia da curare" />
+    <Separator layoutX="75.0" layoutY="248.0" prefWidth="200.0" />
+    <TableView fx:id="therapiesTable" layoutX="325.0" layoutY="63.0" prefHeight="342.0" prefWidth="522.0">
+        <columns>
+            <TableColumn fx:id="idTherapyCol" prefWidth="112.79998779296875" text="Codice Terapia" />
+            <TableColumn fx:id="diseaseCol" prefWidth="161.5999755859375" text="Malattia" />
+            <TableColumn fx:id="idVetCol" prefWidth="128.0" text="Codice Veterinario" />
+            <TableColumn fx:id="idMedRecCol" minWidth="0.0" prefWidth="124.0" text="Codice C.Clinica" />
+        </columns>
+    </TableView>
 </AnchorPane>
