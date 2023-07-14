@@ -24,6 +24,9 @@ public class DBView extends AbstractView{
     private Tab tabTerapie;
 
     @FXML
+    private Tab tabVeterinari;
+
+    @FXML
     public void init() throws IOException {
         super.getStage().sizeToScene();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/Padroni.fxml"));
@@ -50,6 +53,12 @@ public class DBView extends AbstractView{
         tabTerapie.setContent(loader.load());
         TabTerapie terapieController = loader.getController();
         terapieController.init();
+
+        loader = new FXMLLoader(getClass().getResource("/pages/Veterinari.fxml"));
+        tabVeterinari.setContent(loader.load());
+        TabVeterinari veterinariController = loader.getController();
+        veterinariController.init();
+
     }
 
 }

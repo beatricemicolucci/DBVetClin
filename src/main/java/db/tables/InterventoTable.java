@@ -152,4 +152,18 @@ public class InterventoTable implements Table<Intervento, ThreeKeys<Date, LocalT
         }
     }
 
+    public List<Intervento> showAnimalOperations(final int microchip) {
+        final String query = "SELECT i.* " +
+                "FROM " + TABLE_NAME +  " i " +
+                "LEFT JOIN cartella_clinica cc on i.CodiceCartella = cc.CodiceCartella " +
+                "WHERE cc.CodAnimale = ?";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, microchip);
+            final ResultSet resultSet = statement.executeQuery();
+            return readInterventiFromResultSet(resultSet);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
 }

@@ -1,28 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="529.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabTerapie">
-    <TextField fx:id="idTherapyField" layoutX="100.0" layoutY="76.0" promptText="Codice Terapia" />
-    <TextField fx:id="diseaseField" layoutX="100.0" layoutY="108.0" promptText="Malattia da curare" />
-    <TextField fx:id="idVetField" layoutX="100.0" layoutY="140.0" promptText="Codice Veterinario" />
-    <TextField fx:id="idMedRecField" layoutX="100.0" layoutY="172.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
-    <Button layoutX="145.0" layoutY="207.0" mnemonicParsing="false" onAction="#onInsertClick" text="Inserisci" />
-    <Button layoutX="107.0" layoutY="337.0" mnemonicParsing="false" onAction="#onShowTherapiesClick" prefHeight="68.0" prefWidth="136.0" text="Visualizza terapie prescritte al paziente per una malattia" textAlignment="CENTER" wrapText="true" />
-    <TextField fx:id="microchipField" layoutX="100.0" layoutY="265.0" prefHeight="26.0" prefWidth="150.0" promptText="Microchip" />
-    <TextField fx:id="diseaseShowField" layoutX="100.0" layoutY="299.0" prefHeight="26.0" prefWidth="150.0" promptText="Malattia da curare" />
-    <Separator layoutX="75.0" layoutY="248.0" prefWidth="200.0" />
-    <TableView fx:id="therapiesTable" layoutX="325.0" layoutY="63.0" prefHeight="342.0" prefWidth="522.0">
+<AnchorPane prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabTerapie">
+    <TableView fx:id="therapiesTable" layoutX="805.0" layoutY="43.0" prefHeight="576.0" prefWidth="522.0">
         <columns>
             <TableColumn fx:id="idTherapyCol" prefWidth="112.79998779296875" text="Codice Terapia" />
             <TableColumn fx:id="diseaseCol" prefWidth="161.5999755859375" text="Malattia" />
             <TableColumn fx:id="idVetCol" prefWidth="128.0" text="Codice Veterinario" />
-            <TableColumn fx:id="idMedRecCol" minWidth="0.0" prefWidth="124.0" text="Codice C.Clinica" />
+            <TableColumn fx:id="idMedRecCol" minWidth="0.0" prefWidth="119.19998779296873" text="Codice C.Clinica" />
         </columns>
     </TableView>
+   <AnchorPane layoutX="31.0" layoutY="14.0" prefHeight="301.0" prefWidth="386.0">
+      <children>
+         <TextField fx:id="idVetFieldCheckUp" layoutX="15.0" layoutY="14.0" promptText="Codice Veterinario" />
+         <DatePicker fx:id="checkUpDate" layoutX="15.0" layoutY="47.0" prefHeight="26.0" prefWidth="150.0" promptText="Data Controllo" />
+         <TextField fx:id="idInvoiceField" layoutX="194.0" layoutY="14.0" promptText="Numero Fattura" />
+         <TextField fx:id="idMedRecFieldCheckUp" layoutX="22.0" layoutY="191.0" prefHeight="26.0" prefWidth="150.0" promptText="Cod Cartella Clinica" />
+         <Spinner fx:id="startHourCheckUp" layoutX="22.0" layoutY="87.0" prefHeight="26.0" prefWidth="58.0" />
+         <Spinner fx:id="startMinCheckUp" layoutX="92.0" layoutY="87.0" prefHeight="26.0" prefWidth="58.0" />
+         <Spinner fx:id="endHourCheckUp" layoutX="22.0" layoutY="138.0" prefHeight="26.0" prefWidth="58.0" />
+         <Spinner fx:id="endMinCheckUp" layoutX="92.0" layoutY="138.0" prefHeight="26.0" prefWidth="58.0" />
+         <DatePicker fx:id="invoiceDate" layoutX="195.0" layoutY="48.0" prefHeight="26.0" prefWidth="150.0" promptText="Data Fattura" />
+         <TextField fx:id="amountField" layoutX="196.0" layoutY="88.0" promptText="Spesa" />
+         <TextField fx:id="servicesField" layoutX="197.0" layoutY="126.0" promptText="Servizi" />
+         <TextField fx:id="cfField" layoutX="197.0" layoutY="164.0" promptText="CF padrone" />
+         <TextField fx:id="diseaseFieldCheckUp" layoutX="22.0" layoutY="228.0" prefHeight="26.0" prefWidth="212.0" promptText="Malattia Diagnosticata (opzionale)" />
+         <Label layoutX="35.0" layoutY="117.0" prefHeight="18.0" prefWidth="108.0" text="Ora inizio (HH:mm)">
+            <font>
+               <Font name="System Italic" size="12.0" />
+            </font>
+         </Label>
+         <Label layoutX="41.0" layoutY="168.0" prefHeight="18.0" prefWidth="97.0" text="Ora fine (HH:mm)">
+            <font>
+               <Font name="System Italic" size="12.0" />
+            </font>
+         </Label>
+         <Button layoutX="106.0" layoutY="270.0" mnemonicParsing="false" onAction="#onInsertCheckUpClick" text="Inserisci nuovo controllo" />
+      </children>
+   </AnchorPane>
+   <AnchorPane layoutX="31.0" layoutY="327.0" prefHeight="354.0" prefWidth="386.0">
+      <children>
+         <TextField fx:id="idVetFieldExam" layoutX="14.0" layoutY="50.0" promptText="Codice Veterinario" />
+         <DatePicker fx:id="examDate" layoutX="14.0" layoutY="83.0" prefHeight="26.0" prefWidth="150.0" promptText="Data Esame" />
+         <TextField fx:id="idInvoiceField2" layoutX="194.0" layoutY="14.0" promptText="Numero Fattura" />
+         <TextField fx:id="idMedRecordFieldExam" layoutX="21.0" layoutY="227.0" prefHeight="26.0" prefWidth="150.0" promptText="Cod Cartella Clinica" />
+         <Spinner fx:id="startHourExam" layoutX="21.0" layoutY="123.0" prefHeight="26.0" prefWidth="58.0" />
+         <Spinner fx:id="startMinExam" layoutX="91.0" layoutY="123.0" prefHeight="26.0" prefWidth="58.0" />
+         <Spinner fx:id="endHourExam" layoutX="21.0" layoutY="174.0" prefHeight="26.0" prefWidth="58.0" />
+         <Spinner fx:id="endMinExam" layoutX="91.0" layoutY="174.0" prefHeight="26.0" prefWidth="58.0" />
+         <DatePicker fx:id="invoiceDate2" layoutX="195.0" layoutY="48.0" prefHeight="26.0" prefWidth="150.0" promptText="Data Fattura" />
+         <TextField fx:id="amountField2" layoutX="196.0" layoutY="88.0" promptText="Spesa" />
+         <TextField fx:id="servicesField2" layoutX="197.0" layoutY="126.0" promptText="Servizi" />
+         <TextField fx:id="cfField2" layoutX="197.0" layoutY="164.0" promptText="CF padrone" />
+         <TextField fx:id="diseaseFieldExam" layoutX="21.0" layoutY="266.0" prefHeight="26.0" prefWidth="212.0" promptText="Malattia Diagnosticata (opzionale)" />
+         <Label layoutX="34.0" layoutY="153.0" prefHeight="18.0" prefWidth="108.0" text="Ora inizio (HH:mm)">
+            <font>
+               <Font name="System Italic" size="12.0" />
+            </font>
+         </Label>
+         <Label layoutX="40.0" layoutY="204.0" prefHeight="18.0" prefWidth="97.0" text="Ora fine (HH:mm)">
+            <font>
+               <Font name="System Italic" size="12.0" />
+            </font>
+         </Label>
+         <Button layoutX="113.0" layoutY="302.0" mnemonicParsing="false" onAction="#onInsertExamClick" text="Inserisci nuovo esame" />
+         <TextField fx:id="typeField" layoutX="197.0" layoutY="203.0" promptText="Tipologia esame" />
+         <TextField fx:id="idExamField" layoutX="14.0" layoutY="14.0" promptText="Codice Esame" />
+      </children>
+   </AnchorPane>
+   <Separator layoutX="21.0" layoutY="328.0" prefHeight="3.0" prefWidth="386.0" />
+   <AnchorPane layoutX="499.0" layoutY="114.0" prefHeight="374.0" prefWidth="286.0">
+      <children>
+          <TextField fx:id="idTherapyField" layoutX="69.0" layoutY="14.0" promptText="Codice Terapia" />
+          <TextField fx:id="diseaseField" layoutX="69.0" layoutY="46.0" promptText="Malattia da curare" />
+          <TextField fx:id="idVetField" layoutX="69.0" layoutY="78.0" promptText="Codice Veterinario" />
+          <TextField fx:id="idMedRecField" layoutX="68.0" layoutY="112.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
+          <Button layoutX="93.0" layoutY="148.0" mnemonicParsing="false" onAction="#onInsertClick" text="Inserisci Terapia" />
+          <Separator layoutX="43.0" layoutY="189.0" prefWidth="200.0" />
+          <TextField fx:id="microchipField" layoutX="68.0" layoutY="207.0" prefHeight="26.0" prefWidth="150.0" promptText="Microchip" />
+          <TextField fx:id="diseaseShowField" layoutX="68.0" layoutY="241.0" prefHeight="26.0" prefWidth="150.0" promptText="Malattia da curare" />
+          <Button layoutX="76.0" layoutY="275.0" mnemonicParsing="false" onAction="#onShowTherapiesClick" prefHeight="68.0" prefWidth="136.0" text="Visualizza terapie prescritte al paziente per una malattia" textAlignment="CENTER" wrapText="true" />
+      </children>
+   </AnchorPane>
+   <Separator layoutX="479.0" layoutY="34.0" orientation="VERTICAL" prefHeight="641.0" prefWidth="0.0" />
 </AnchorPane>

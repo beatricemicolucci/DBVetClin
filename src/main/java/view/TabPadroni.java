@@ -158,6 +158,7 @@ public class TabPadroni extends TabController {
         } else {
             Optional<Padrone> padrone = padroneTable.findByPrimaryKey(cf);
             if (padrone.isPresent()) {
+                padrone.get().setAddress(newOwnerAddress);
                 if (padroneTable.update(padrone.get())) {
                     ownersList = FXCollections.observableArrayList(padroneTable.findAll());
                     ownersTable.getItems().setAll(ownersList);

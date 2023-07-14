@@ -1,10 +1,7 @@
 package view;
 
 import db.ConnectionProvider;
-import db.tables.CartellaClinicaTable;
-import db.tables.FatturaTable;
-import db.tables.InterventoTable;
-import db.tables.PadroneTable;
+import db.tables.*;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Fattura;
 import model.Intervento;
+import model.SalaOperatoria;
 import utils.ThreeKeys;
 import utils.Utils;
 
@@ -27,6 +25,8 @@ public class TabInterventi extends TabController {
     private CartellaClinicaTable cartellaClinicaTable;
     private FatturaTable fatturaTable;
     private PadroneTable padroneTable;
+    private SalaOperatoriaTable salaOperatoriaTable;
+    private AnimaleTable animaleTable;
     private ObservableList<Intervento> operationsList;
 
     @FXML
@@ -107,6 +107,8 @@ public class TabInterventi extends TabController {
         cartellaClinicaTable = new CartellaClinicaTable(connectionProvider.getMySQLConnection());
         fatturaTable = new FatturaTable(connectionProvider.getMySQLConnection());
         padroneTable = new PadroneTable(connectionProvider.getMySQLConnection());
+        salaOperatoriaTable = new SalaOperatoriaTable(connectionProvider.getMySQLConnection());
+        animaleTable = new AnimaleTable(connectionProvider.getMySQLConnection());
 
         SpinnerValueFactory<Integer> valueStartHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
         SpinnerValueFactory<Integer> valueEndHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
@@ -168,6 +170,10 @@ public class TabInterventi extends TabController {
                     } else if (cartellaClinicaTable.findByPrimaryKey(medRecord).isEmpty()) {
                         showPopUp("Cartella Clinica non esistente!", null, Alert.AlertType.WARNING);
                     } else {
+                        if (salaOperatoriaTable.findByPrimaryKey(operationRoom).isEmpty()) {
+                            SalaOperatoria salaOperatoria = new SalaOperatoria(operationRoom);
+                            salaOperatoriaTable.save(salaOperatoria);
+                        }
                         Fattura fattura = new Fattura(invoice, invoiceDate, amount, services, cf);
                         fatturaTable.save(fattura);
                         Intervento intervento = new Intervento(operationRoom, type, operationDate, startTime, invoice, endTime, medRecord, vet);
@@ -186,8 +192,15 @@ public class TabInterventi extends TabController {
             showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
         } else {
             int microchip = Integer.parseInt(microchipOperation.getText());
-            operationsList = FXCollections.observableArrayList(cartellaClinicaTable.showAnimalOperations(microchip));
-            operationsTable.getItems().setAll(operationsList);
+            if (animaleTable.findByPrimaryKey(microchip).isEmpty()) {
+                showPopUp("Animale non esistente!", null, Alert.AlertType.WARNING);
+            } else {
+                operationsList = FXCollections.observableArrayList(interventoTable.showAnimalOperations(microchip));
+                if (operationsList.isEmpty()) {
+                    showPopUp("Non ci sono interventi!", null, Alert.AlertType.INFORMATION);
+                }
+                operationsTable.getItems().setAll(operationsList);
+            }
         }
 
     }

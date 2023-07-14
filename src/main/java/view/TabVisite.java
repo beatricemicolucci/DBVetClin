@@ -64,9 +64,12 @@ public class TabVisite extends TabController {
             final int idVet = Integer.parseInt(idVetVisits.getText());
             final Date date = Utils.buildDate(dateVisits.getValue().getDayOfMonth(), dateVisits.getValue().getMonthValue(), dateVisits.getValue().getYear()).get();
             if (veterinarioTable.findByPrimaryKey(idVet).isEmpty()) {
-                showPopUp("Padrone non esistente!", null, Alert.AlertType.WARNING);
+                showPopUp("Veterinario non esistente!", null, Alert.AlertType.WARNING);
             } else {
                 visitsList = FXCollections.observableArrayList(veterinarioTable.showVetVisits(idVet, date));
+                if (visitsList.isEmpty()) {
+                    showPopUp("Nessuna visita!", null, Alert.AlertType.INFORMATION);
+                }
                 visitsTable.getItems().setAll(visitsList);
             }
         }

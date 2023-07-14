@@ -9,27 +9,28 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="529.0" prefWidth="968.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabAnimali">
-    <TextField fx:id="microchipInsert" layoutX="26.0" layoutY="36.0" prefHeight="26.0" prefWidth="158.0" promptText="Microchip" />
-    <TextField fx:id="animalName" layoutX="26.0" layoutY="68.0" prefHeight="26.0" prefWidth="158.0" promptText="Nome" />
-    <TextField fx:id="animalRace" layoutX="26.0" layoutY="101.0" prefHeight="26.0" prefWidth="157.0" promptText="Razza" />
-    <TextField fx:id="cfInsert" layoutX="26.0" layoutY="200.0" prefHeight="26.0" prefWidth="159.0" promptText="CF Padrone" />
-    <DatePicker fx:id="animalBirthDate" layoutX="26.0" layoutY="134.0" prefHeight="26.0" prefWidth="158.0" promptText="Data di Nascita" />
-    <ChoiceBox fx:id="animalGender" layoutX="26.0" layoutY="167.0" prefHeight="26.0" prefWidth="158.0" />
-    <Button layoutX="26.0" layoutY="233.0" mnemonicParsing="false" onAction="#onAnimalInsertClick" prefHeight="26.0" prefWidth="158.0" text="Inserisci nuovo paziente" />
-    <Separator layoutX="16.0" layoutY="270.0" prefHeight="3.0" prefWidth="180.0" />
-    <Button layoutX="25.0" layoutY="280.0" mnemonicParsing="false" onAction="#onAnimalViewClick" prefHeight="49.0" prefWidth="158.0" text="Visualizza i 10 animali con il maggior numero di visite" wrapText="true" />
-    <Separator layoutX="18.0" layoutY="339.0" prefHeight="5.0" prefWidth="176.0" />
-    <Button layoutX="26.0" layoutY="390.0" mnemonicParsing="false" onAction="#onAnimalVisitDayViewClick" prefHeight="66.0" prefWidth="158.0" text="Visualizza la data della prossima visita di un paziente" textAlignment="CENTER" wrapText="true" />
-    <TextField fx:id="microchipView" layoutX="24.0" layoutY="351.0" prefHeight="26.0" prefWidth="160.0" promptText="Microchip" />
-    <TableView fx:id="animalTable" layoutX="213.0" layoutY="40.0" prefHeight="438.0" prefWidth="726.0">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabAnimali">
+    <TextField fx:id="microchipInsert" layoutX="81.0" layoutY="87.0" prefHeight="26.0" prefWidth="176.0" promptText="Microchip" />
+    <TextField fx:id="animalName" layoutX="81.0" layoutY="119.0" prefHeight="26.0" prefWidth="176.0" promptText="Nome" />
+    <TextField fx:id="animalRace" layoutX="81.0" layoutY="152.0" prefHeight="26.0" prefWidth="176.0" promptText="Razza" />
+    <TextField fx:id="cfInsert" layoutX="81.0" layoutY="251.0" prefHeight="26.0" prefWidth="176.0" promptText="CF Padrone" />
+    <DatePicker fx:id="animalBirthDate" layoutX="81.0" layoutY="185.0" prefHeight="26.0" prefWidth="176.0" promptText="Data di Nascita" />
+    <ChoiceBox fx:id="animalGender" layoutX="81.0" layoutY="218.0" prefHeight="26.0" prefWidth="176.0" />
+    <Button layoutX="83.0" layoutY="329.0" mnemonicParsing="false" onAction="#onAnimalInsertClick" prefHeight="26.0" prefWidth="176.0" text="Inserisci nuovo paziente" />
+    <Separator layoutX="56.0" layoutY="378.0" prefHeight="6.0" prefWidth="230.0" />
+    <Button layoutX="83.0" layoutY="402.0" mnemonicParsing="false" onAction="#onAnimalViewClick" prefHeight="50.0" prefWidth="176.0" text="Visualizza i 10 animali con il maggior numero di visite" wrapText="true" />
+    <Separator layoutX="56.0" layoutY="475.0" prefHeight="6.0" prefWidth="230.0" />
+    <Button layoutX="80.0" layoutY="540.0" mnemonicParsing="false" onAction="#onAnimalVisitDayViewClick" prefHeight="66.0" prefWidth="176.0" text="Visualizza la data della prossima visita di un paziente" textAlignment="CENTER" wrapText="true" />
+    <TextField fx:id="microchipView" layoutX="80.0" layoutY="503.0" prefHeight="26.0" prefWidth="176.0" promptText="Microchip" />
+    <TableView fx:id="animalTable" layoutX="420.0" layoutY="71.0" prefHeight="528.0" prefWidth="758.0">
         <columns>
             <TableColumn fx:id="microchipAnimal" prefWidth="95.20001220703125" text="Microchip" />
-            <TableColumn fx:id="nameAnimal" prefWidth="127.2000732421875" text="Nome" />
-            <TableColumn fx:id="raceAnimal" prefWidth="111.20001220703125" text="Razza" />
-            <TableColumn fx:id="birthDateAnimal" prefWidth="128.79998779296875" text="Data di Nascita" />
-         <TableColumn fx:id="genderAnimal" prefWidth="91.2000732421875" text="Sesso" />
-            <TableColumn fx:id="cfOwner" minWidth="0.0" prefWidth="174.39990234375" resizable="false" text="CF Padrone" />
+            <TableColumn fx:id="nameAnimal" prefWidth="121.5999755859375" text="Nome" />
+            <TableColumn fx:id="raceAnimal" prefWidth="145.5999755859375" text="Razza" />
+            <TableColumn fx:id="birthDateAnimal" prefWidth="144.0" text="Data di Nascita" />
+         <TableColumn fx:id="genderAnimal" prefWidth="123.99993896484375" text="Sesso" />
+            <TableColumn fx:id="cfOwner" minWidth="0.0" prefWidth="129.59991455078125" resizable="false" text="CF Padrone" />
         </columns>
     </TableView>
+   <TextField fx:id="medRecordField" layoutX="83.0" layoutY="288.0" prefHeight="26.0" prefWidth="176.0" promptText="Codice Cartella Clinica" />
 </AnchorPane>

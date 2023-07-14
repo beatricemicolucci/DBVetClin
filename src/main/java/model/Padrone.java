@@ -24,7 +24,7 @@ public class Padrone {
     private  final String name;
     private final String lastName;
     private final Date birthDate;
-    private final String address;
+    private String address;
     private final String telephone;
     private final Optional<String> email;
 
@@ -68,6 +68,10 @@ public class Padrone {
 
     public Optional<String> getEmail() {
         return email;
+    }
+
+    public void setAddress(final String address) {
+        this.address = address;
     }
 
     @Override

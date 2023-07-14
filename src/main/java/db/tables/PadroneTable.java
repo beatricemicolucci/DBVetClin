@@ -145,9 +145,9 @@ public class PadroneTable implements Table<Padrone, String> {
     }
 
     public float showTotalExpenseOfOwner(final String cf) {
-        final String query = "SELECT SUM(Spesa) AS SpesaTotale" +
-                "FROM" + TABLE_NAME +  "p" +
-                "JOIN fattura f ON p.CF = f.CF_Padrone" +
+        final String query = "SELECT SUM(Spesa) AS SpesaTotale " +
+                "FROM " + TABLE_NAME +  " p " +
+                "JOIN fattura f ON p.CF = f.CF_Padrone " +
                 "WHERE p.CF = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, cf);

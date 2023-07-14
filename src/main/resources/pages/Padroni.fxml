@@ -9,36 +9,36 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="529.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabPadroni">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabPadroni">
     <children>
-        <TableView fx:id="ownersTable" layoutX="193.0" layoutY="32.0" prefHeight="446.0" prefWidth="758.0">
+        <TableView fx:id="ownersTable" layoutX="327.0" layoutY="69.0" prefHeight="541.0" prefWidth="1034.0">
             <columns>
                 <TableColumn fx:id="cfOwner" prefWidth="129.6000213623047" text="CF" />
-                <TableColumn fx:id="nameOwner" prefWidth="113.5999755859375" text="Nome" />
-                <TableColumn fx:id="lastNameOwner" prefWidth="77.5999755859375" text="Cognome" />
-                <TableColumn fx:id="birthDateOwner" minWidth="8.800048828125" prefWidth="100.79998779296875" text="Data di Nascita" />
-                <TableColumn fx:id="addressOwner" minWidth="0.0" prefWidth="90.4000244140625" text="Indirizzo" />
-                <TableColumn fx:id="telephoneOwner" minWidth="6.4000244140625" prefWidth="88.0001220703125" text="Telefono" />
-                <TableColumn fx:id="emailOwner" minWidth="0.0" prefWidth="160.0001220703125" text="E-mail" />
+                <TableColumn fx:id="nameOwner" prefWidth="144.7999267578125" text="Nome" />
+                <TableColumn fx:id="lastNameOwner" prefWidth="140.00006103515625" text="Cognome" />
+                <TableColumn fx:id="birthDateOwner" minWidth="8.800048828125" prefWidth="135.2000732421875" text="Data di Nascita" />
+                <TableColumn fx:id="addressOwner" minWidth="0.0" prefWidth="168.0" text="Indirizzo" />
+                <TableColumn fx:id="telephoneOwner" minWidth="6.4000244140625" prefWidth="154.40008544921875" text="Telefono" />
+                <TableColumn fx:id="emailOwner" minWidth="0.0" prefWidth="162.4000244140625" text="E-mail" />
             </columns>
         </TableView>
-        <Pane layoutX="4.0" layoutY="5.0" prefHeight="495.0" prefWidth="192.0">
+        <Pane layoutX="67.0" layoutY="69.0" prefHeight="522.0" prefWidth="228.0">
             <children>
-                <TextField fx:id="ownerName" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="163.0" promptText="Nome" />
-                <TextField fx:id="ownerLastName" layoutX="14.0" layoutY="45.0" prefHeight="25.0" prefWidth="163.0" promptText="Cognome" />
-                <TextField fx:id="ownerCFInsert" layoutX="14.0" layoutY="77.0" prefHeight="25.0" prefWidth="164.0" promptText="Codice Fiscale" />
-                <TextField fx:id="ownerAddress" layoutX="15.0" layoutY="141.0" prefHeight="25.0" prefWidth="163.0" promptText="Indirizzo" />
-                <TextField fx:id="ownerTelephone" layoutX="14.0" layoutY="177.0" prefHeight="25.0" prefWidth="164.0" promptText="Telefono" />
-                <TextField fx:id="ownerEmail" layoutX="14.0" layoutY="210.0" prefHeight="25.0" prefWidth="164.0" promptText="E-mail (opzionale)" />
-                <DatePicker fx:id="ownerBirthDate" layoutX="16.0" layoutY="108.0" prefHeight="25.0" prefWidth="159.0" promptText="Data di nascita" />
-                <Button layoutX="15.0" layoutY="248.0" mnemonicParsing="false" onAction="#onInsertOwnerClick" prefHeight="25.0" prefWidth="164.0" text="Inserisci un nuovo padrone" />
-                <TextField fx:id="ownerCFExpenditure" layoutX="16.0" layoutY="294.0" prefHeight="25.0" prefWidth="161.0" promptText="Codice Fiscale" />
-                <Separator layoutX="9.0" layoutY="283.0" prefHeight="4.0" prefWidth="173.0" />
-                <Button layoutX="17.0" layoutY="329.0" mnemonicParsing="false" onAction="#onViewOwnerClick" prefHeight="25.0" prefWidth="151.0" text="Visualizza spesa totale" />
-                <Separator layoutX="9.0" layoutY="361.0" prefHeight="4.0" prefWidth="173.0" />
-                <TextField fx:id="ownerCFUpdate" layoutX="14.0" layoutY="371.0" prefHeight="25.0" prefWidth="163.0" promptText="Codice Fiscale" />
-                <TextField fx:id="newAddress" layoutX="14.0" layoutY="407.0" prefHeight="25.0" prefWidth="163.0" promptText="Nuovo Indirizzo" />
-                <Button layoutX="13.0" layoutY="441.0" mnemonicParsing="false" onAction="#onUpdateOwnerClick" prefHeight="25.0" prefWidth="165.0" text="Aggiorna Indirizzo Padrone" />
+                <TextField fx:id="ownerName" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="189.0" promptText="Nome" />
+                <TextField fx:id="ownerLastName" layoutX="14.0" layoutY="45.0" prefHeight="25.0" prefWidth="189.0" promptText="Cognome" />
+                <TextField fx:id="ownerCFInsert" layoutX="14.0" layoutY="77.0" prefHeight="25.0" prefWidth="189.0" promptText="Codice Fiscale" />
+                <TextField fx:id="ownerAddress" layoutX="15.0" layoutY="141.0" prefHeight="25.0" prefWidth="189.0" promptText="Indirizzo" />
+                <TextField fx:id="ownerTelephone" layoutX="14.0" layoutY="177.0" prefHeight="25.0" prefWidth="189.0" promptText="Telefono" />
+                <TextField fx:id="ownerEmail" layoutX="14.0" layoutY="210.0" prefHeight="25.0" prefWidth="189.0" promptText="E-mail (opzionale)" />
+                <DatePicker fx:id="ownerBirthDate" layoutX="16.0" layoutY="108.0" prefHeight="25.0" prefWidth="189.0" promptText="Data di nascita" />
+                <Button layoutX="15.0" layoutY="248.0" mnemonicParsing="false" onAction="#onInsertOwnerClick" prefHeight="25.0" prefWidth="189.0" text="Inserisci un nuovo padrone" />
+                <TextField fx:id="ownerCFExpenditure" layoutX="17.0" layoutY="309.0" prefHeight="25.0" prefWidth="189.0" promptText="Codice Fiscale" />
+                <Separator layoutX="10.0" layoutY="292.0" prefHeight="4.0" prefWidth="202.0" />
+                <Button layoutX="16.0" layoutY="343.0" mnemonicParsing="false" onAction="#onViewOwnerClick" prefHeight="25.0" prefWidth="189.0" text="Visualizza spesa totale" />
+                <Separator layoutX="9.0" layoutY="379.0" prefHeight="4.0" prefWidth="202.0" />
+                <TextField fx:id="ownerCFUpdate" layoutX="17.0" layoutY="397.0" prefHeight="25.0" prefWidth="189.0" promptText="Codice Fiscale" />
+                <TextField fx:id="newAddress" layoutX="14.0" layoutY="429.0" prefHeight="25.0" prefWidth="189.0" promptText="Nuovo Indirizzo" />
+                <Button layoutX="14.0" layoutY="465.0" mnemonicParsing="false" onAction="#onUpdateOwnerClick" prefHeight="25.0" prefWidth="189.0" text="Aggiorna Indirizzo Padrone" />
             </children>
         </Pane>
     </children></AnchorPane>

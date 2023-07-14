@@ -1,15 +1,15 @@
 package db.tables;
 
 import db.Table;
+import model.Specializzazione;
 import model.Veterinario;
 import model.Visita;
 import utils.Utils;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class VeterinarioTable implements Table<Veterinario, Integer> {
 
@@ -70,7 +70,7 @@ public class VeterinarioTable implements Table<Veterinario, Integer> {
                 final String cf = resultSet.getString("CF");
                 final String firstName = resultSet.getString("Nome");
                 final String lastName = resultSet.getString("Cognome");
-                final Date birthdayDate = (Date) Utils.sqlDateToDate(resultSet.getDate("DataNascita"));
+                final java.util.Date birthdayDate = Utils.sqlDateToDate(resultSet.getDate("DataNascita"));
                 final String address = resultSet.getString("Indirizzo");
                 final String telephone = resultSet.getString("Telefono");
                 final Optional<String> email = Optional.ofNullable(resultSet.getString("IndirizzoEmail"));
@@ -103,7 +103,8 @@ public class VeterinarioTable implements Table<Veterinario, Integer> {
             statement.setString(5, veterinario.getLastName());
             statement.setDate(6, Utils.dateToSqlDate(veterinario.getBirthDate()));
             statement.setString(7, veterinario.getAddress());
-            statement.setString(8, veterinario.getEmail().orElse(null));
+            statement.setString(8, veterinario.getTelephone());
+            statement.setString(9, veterinario.getEmail().orElse(null));
             statement.executeUpdate();
             return true;
         } catch (final SQLIntegrityConstraintViolationException e) {
@@ -153,34 +154,35 @@ public class VeterinarioTable implements Table<Veterinario, Integer> {
     }
 
     public List<Visita> showVetVisits(final int idVet, final java.util.Date day) {
-        final String query = "SELECT *" +
+        final String query = "SELECT * " +
                 "FROM (" +
-                "    SELECT Giorno, OraInizio, OraFine, 'Intervento' AS TipoVisita" +
-                "    FROM intervento" +
-                "    WHERE Giorno = ? AND CodVeterinario = ?" +
-                "    UNION ALL" +
-                "    SELECT Giorno, OraInizio, OraFine, 'Esame' AS TipoVisita" +
-                "    FROM esame" +
-                "    WHERE Giorno = ? AND CodVeterinario = ?" +
-                "    UNION ALL" +
-                "    SELECT Giorno, OraInizio, OraFine, 'Vaccinazione' AS TipoVisita" +
-                "    FROM vaccinazione" +
-                "    WHERE Giorno = ? AND CodVeterinario = ?" +
-                "    UNION ALL" +
-                "    SELECT Giorno, OraInizio, OraFine, 'Controllo' AS TipoVisita" +
-                "    FROM controllo" +
-                "    WHERE Giorno = ? AND CodVeterinario = ?" +
-                "    ) AS Visite" +
+                "    SELECT Giorno, OraInizio, OraFine, 'Intervento' AS TipoVisita " +
+                "    FROM intervento " +
+                "    WHERE Giorno = ? AND CodVeterinario = ? " +
+                "    UNION ALL " +
+                "    SELECT Giorno, OraInizio, OraFine, 'Esame' AS TipoVisita " +
+                "    FROM esame " +
+                "    WHERE Giorno = ? AND CodVeterinario = ? " +
+                "    UNION ALL " +
+                "    SELECT Giorno, OraInizio, OraFine, 'Vaccinazione' AS TipoVisita " +
+                "    FROM vaccinazione " +
+                "    WHERE Giorno = ? AND CodVeterinario = ? " +
+                "    UNION ALL " +
+                "    SELECT Giorno, OraInizio, OraFine, 'Controllo' AS TipoVisita " +
+                "    FROM controllo " +
+                "    WHERE Giorno = ? AND CodVeterinario = ? " +
+                "    ) AS Visite " +
                 " ORDER BY OraInizio;";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setInt(1, idVet);
-            statement.setDate(2, Utils.dateToSqlDate(day));
-            statement.setInt(3, idVet);
-            statement.setDate(4, Utils.dateToSqlDate(day));
-            statement.setInt(5, idVet);
-            statement.setDate(6, Utils.dateToSqlDate(day));
-            statement.setInt(7, idVet);
-            statement.setDate(8, Utils.dateToSqlDate(day));
+            statement.setDate(1, Utils.dateToSqlDate(day));
+            statement.setInt(2, idVet);
+            statement.setDate(3, Utils.dateToSqlDate(day));
+            statement.setInt(4, idVet);
+            statement.setDate(5, Utils.dateToSqlDate(day));
+            statement.setInt(6, idVet);
+            statement.setDate(7, Utils.dateToSqlDate(day));
+            statement.setInt(8, idVet);
+
             final ResultSet resultSet = statement.executeQuery();
             return readVisits(resultSet);
         } catch (final SQLException e) {
@@ -192,7 +194,7 @@ public class VeterinarioTable implements Table<Veterinario, Integer> {
         List<Visita> visite = new ArrayList<>();
         try {
             while (resultSet.next()) {
-                final Date day = (Date) Utils.sqlDateToDate(resultSet.getDate("Giorno"));
+                final java.util.Date day = Utils.sqlDateToDate(resultSet.getDate("Giorno"));
                 final LocalTime startTime = Utils.sqlTimeToTime(resultSet.getTime("oraInizio"));
                 final LocalTime endTime = Utils.sqlTimeToTime(resultSet.getTime("oraFine"));
                 final String type = resultSet.getString("TipoVisita");
@@ -203,4 +205,21 @@ public class VeterinarioTable implements Table<Veterinario, Integer> {
         } catch (final SQLException e) {}
         return visite;
     }
+
+    public List<Veterinario> getVetBySpecialization(final String specialization) {
+
+        final String query = "SELECT v.*" +
+                             "FROM " + TABLE_NAME + " v, specializzazione s, competenza c " +
+                             "WHERE v.CodImpiegato = c.CodVeterinario " +
+                             "AND s.Ambito = c.AmbitoSpecializzazione " +
+                             "AND s.Ambito = ?";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setString(1, specialization);
+            final ResultSet resultSet = statement.executeQuery();
+            return readVeterinariFromResultSet(resultSet);
+        } catch (final SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
 }

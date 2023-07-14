@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Animale;
+import model.CartellaClinica;
 import utils.Utils;
 
 import java.util.Date;
@@ -43,6 +44,9 @@ public class TabAnimali extends TabController {
     private ChoiceBox<String> animalGender;
 
     @FXML
+    private TextField medRecordField;
+
+    @FXML
     private TextField microchipView;
 
     @FXML
@@ -71,7 +75,7 @@ public class TabAnimali extends TabController {
         animaleTable = new AnimaleTable(connectionProvider.getMySQLConnection());
         padroneTable = new PadroneTable(connectionProvider.getMySQLConnection());
         cartellaClinicaTable = new CartellaClinicaTable(connectionProvider.getMySQLConnection());
-        animalsList = FXCollections.observableArrayList();
+        //animalsList = FXCollections.observableArrayList(animaleTable.findAll());
         ObservableList<String> choicesList = FXCollections.observableArrayList("F", "M");
         animalGender.setItems(choicesList);
         animalGender.setValue("F");
@@ -85,27 +89,36 @@ public class TabAnimali extends TabController {
         });
         genderAnimal.setCellValueFactory(new PropertyValueFactory<>("gender"));
         cfOwner.setCellValueFactory(new PropertyValueFactory<>("cfOwner"));
+        //animalTable.getItems().setAll(animalsList);
     }
 
+    @FXML
     public void onAnimalInsertClick(final ActionEvent e) {
-        int microchip = Integer.parseInt(microchipInsert.getText());
         String name = animalName.getText();
         String race = animalRace.getText();
         String gender = animalGender.getValue();
         String cf = cfInsert.getText();
 
-        if ( name.isEmpty() || microchipInsert.getText().isEmpty() || race.isEmpty() || animalBirthDate.getValue() == null || cf.isEmpty()) {
+        if ( name.isEmpty() || microchipInsert.getText().isEmpty() || race.isEmpty() || animalBirthDate.getValue() == null || cf.isEmpty() || medRecordField.getText().isEmpty()) {
             showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
         } else {
+            int microchip = Integer.parseInt(microchipInsert.getText());
+            int medRecord = Integer.parseInt(medRecordField.getText());
             if (padroneTable.findByPrimaryKey(cf).isEmpty()) {
                 showPopUp("Padrone non esistente, perfavore registralo nella sezione Padroni!", null, Alert.AlertType.WARNING);
             } else {
                 if (animaleTable.findByPrimaryKey(microchip).isPresent()) {
                     showPopUp("Animale già registrato!", null, Alert.AlertType.WARNING);
+                } else if (cartellaClinicaTable.findByPrimaryKey(medRecord).isPresent()) {
+                    showPopUp("Cartella Clinica già registrata!", null, Alert.AlertType.WARNING);
                 } else {
                     Date birthDate = Utils.buildDate(animalBirthDate.getValue().getDayOfMonth(), animalBirthDate.getValue().getMonthValue(), animalBirthDate.getValue().getYear()).get();
                     Animale animale = new Animale(microchip, name, race, birthDate, gender, cf);
                     animaleTable.save(animale);
+
+                    CartellaClinica cartellaClinica = new CartellaClinica(medRecord, microchip, new Date());
+                    cartellaClinicaTable.save(cartellaClinica);
+
                     animalsList = FXCollections.observableArrayList(animaleTable.findAll());
                     animalTable.getItems().setAll(animalsList);
                 }
@@ -114,18 +127,20 @@ public class TabAnimali extends TabController {
 
     }
 
+    @FXML
     public void onAnimalViewClick(final ActionEvent e) {
         animalsList = FXCollections.observableArrayList(animaleTable.showTopTen());
         animalTable.getItems().setAll(animalsList);
     }
 
+    @FXML
     public void onAnimalVisitDayViewClick(final ActionEvent e) {
 
         if (microchipView.getText().isEmpty()) {
             showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
         }
 
-        int microchip = Integer.valueOf(microchipView.getText());
+        int microchip = Integer.parseInt(microchipView.getText());
         Optional<Animale> animale = animaleTable.findByPrimaryKey(microchip);
 
         if (animale.isPresent()) {
@@ -139,8 +154,6 @@ public class TabAnimali extends TabController {
         } else {
             showPopUp("Animale non trovato!", null, Alert.AlertType.WARNING);
         }
-
-
     }
 
 }

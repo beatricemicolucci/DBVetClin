@@ -59,18 +59,13 @@ public class AnimaleTable implements Table<Animale, Integer> {
     private List<Animale> readAnimaliFromResultSet(final ResultSet resultSet) {
         final List<Animale> animali = new ArrayList<>();
         try {
-            // ResultSet encapsulate a pointer to a table with the results: it starts with the pointer
-            // before the first row. With next the pointer advances to the following row and returns
-            // true if it has not advanced past the last row
             while (resultSet.next()) {
-                // To get the values of the columns of the row currently pointed we use the get method
                 final int microchip = resultSet.getInt("Microchip");
                 final String name = resultSet.getString("Nome");
                 final String race = resultSet.getString("Razza");
-                final Date birthdayDate = (Date) Utils.sqlDateToDate(resultSet.getDate("DataNascita"));
+                final Date birthdayDate = Utils.sqlDateToDate(resultSet.getDate("DataNascita"));
                 final String gender = resultSet.getString("Sesso");
                 final String cfOwner = resultSet.getString("CF_Padrone");
-                // After retrieving all the data we create a Student object
                 final Animale animale = new Animale(microchip, name, race, birthdayDate, gender, cfOwner);
                 animali.add(animale);
             }
@@ -90,10 +85,7 @@ public class AnimaleTable implements Table<Animale, Integer> {
 
     @Override
     public boolean save(Animale animale) {
-        if (this.ownerExists(animale.getCfOwner())) {
-            return false;
-        }
-        final String query = "INSERT INTO " + TABLE_NAME + "(Microchip, Nome, Razza, DataNascita, Sesso, CF_PADRONE) VALUES (?,?,?,?)";
+        final String query = "INSERT INTO " + TABLE_NAME + "(Microchip, Nome, Razza, DataNascita, Sesso, CF_PADRONE) VALUES (?,?,?,?,?,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, animale.getMicrochip());
             statement.setString(2, animale.getName());
@@ -152,7 +144,7 @@ public class AnimaleTable implements Table<Animale, Integer> {
     }
 
     public List<Animale> showTopTen() {
-        final String query = "SELECT a.Microchip, a.Nome, COUNT(*) AS NumeroVisite " +
+        final String query = "SELECT a.* " +
                 "FROM " + TABLE_NAME + " a " +
                 "JOIN cartella_clinica cc ON cc.CodAnimale = a.Microchip " +
                 "JOIN (" +
@@ -164,8 +156,8 @@ public class AnimaleTable implements Table<Animale, Integer> {
                 "  UNION ALL" +
                 "  SELECT CodiceCartella FROM esame " +
                 ") AS v ON v.CodiceCartella = cc.CodiceCartella " +
-                "GROUP BY a.Microchip, a.Nome " +
-                "ORDER BY NumeroVisite DESC " +
+                "GROUP BY a.Microchip " +
+                "ORDER BY COUNT(*) DESC " +
                 "LIMIT 10";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             final ResultSet resultSet = statement.executeQuery();

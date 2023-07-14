@@ -65,8 +65,8 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
             while (resultSet.next()) {
                 // To get the values of the columns of the row currently pointed we use the get method
                 final int id = resultSet.getInt("CodiceCartella");
-                final int idAnimal = resultSet.getInt("CodCartella");
-                final Date creationDate = (Date) Utils.sqlDateToDate(resultSet.getDate("DataCreazione"));
+                final int idAnimal = resultSet.getInt("CodAnimale");
+                final java.util.Date creationDate = Utils.sqlDateToDate(resultSet.getDate("DataCreazione"));
                 // After retrieving all the data we create a Student object
                 final CartellaClinica cartellaClinica = new CartellaClinica(id, idAnimal, creationDate);
                 cartelle.add(cartellaClinica);
@@ -87,10 +87,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
 
     @Override
     public boolean save(CartellaClinica cartellaClinica) {
-        if (this.animalExists(cartellaClinica.getCodAnimal())) {
-            return false;
-        }
-        final String query = "INSERT INTO " + TABLE_NAME + "(CodiceCartella, CodAnimale, DataCreazione) VALUES (?,?,?,?)";
+        final String query = "INSERT INTO " + TABLE_NAME + "(CodiceCartella, CodAnimale, DataCreazione) VALUES (?,?,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, cartellaClinica.getCodMedicalRec());
             statement.setInt(2, cartellaClinica.getCodAnimal());
@@ -102,11 +99,6 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
-    }
-
-    private boolean animalExists(final int idAnimal) {
-        final AnimaleTable animaleTable = new AnimaleTable(connection);
-        return animaleTable.findByPrimaryKey(idAnimal).isPresent();
     }
 
     @Override
@@ -272,8 +264,8 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
                 final int idInvoice = resultSet.getInt("NumeroFattura");
                 final String type = resultSet.getString("Tipologia");
                 final Date day = (Date) Utils.sqlDateToDate(resultSet.getDate("Giorno"));
-                final LocalTime startTime = (LocalTime) Utils.sqlTimeToTime(resultSet.getTime("OraInizio"));
-                final LocalTime endTime = (LocalTime) Utils.sqlTimeToTime(resultSet.getTime("OraFine"));
+                final LocalTime startTime = Utils.sqlTimeToTime(resultSet.getTime("OraInizio"));
+                final LocalTime endTime = Utils.sqlTimeToTime(resultSet.getTime("OraFine"));
                 final int idVet = resultSet.getInt("CodVeterinario");
                 final int idMedRecord = resultSet.getInt("CodiceCartella");
                 // After retrieving all the data we create a Student object
@@ -284,20 +276,6 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
         return esami;
     }
 
-    public List<Intervento> showAnimalOperations(final int microchip) {
-        final String query = "SELECT *" +
-                "FROM " + TABLE_NAME +  " cc " +
-                "LEFT JOIN intervento i ON cc.CodiceCartella = i.CodiceCartella " +
-                "WHERE cc.CodAnimale = ?";
-        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setInt(1, microchip);
-            final ResultSet resultSet = statement.executeQuery();
-            return readInterventiFromResultSet(resultSet);
-        } catch (final SQLException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
     public java.util.Date showNextVisit(final Integer microchip) {
         final String query = "SELECT MIN(Giorno) AS ProssimaVisita " +
                 "FROM " +
@@ -306,7 +284,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
                 " WHERE CodiceCartella IN (" +
                 "      SELECT CodiceCartella" +
                 "      FROM " + TABLE_NAME +
-                "      WHERE CodAnimale = (SELECT CodAnimale FROM animale WHERE Microchip = ?)" +
+                "      WHERE CodAnimale = ?" +
                 ")" +
                 " UNION" +
                 " SELECT Giorno" +
@@ -314,7 +292,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
                 " WHERE CodiceCartella IN (" +
                 "       SELECT CodiceCartella" +
                 "       FROM " + TABLE_NAME +
-                "       WHERE CodAnimale = (SELECT CodAnimale FROM animale WHERE Microchip = ?)" +
+                "       WHERE CodAnimale = ?" +
                 " )" +
                 " UNION" +
                 " SELECT Giorno " +
@@ -322,7 +300,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
                 " WHERE CodiceCartella IN (" +
                 "       SELECT CodiceCartella" +
                 "       FROM " + TABLE_NAME +
-                "       WHERE CodAnimale = (SELECT Microchip FROM animale WHERE Microchip = ?)" +
+                "       WHERE CodAnimale = ?" +
                 " )" +
                 " UNION" +
                 " SELECT Giorno " +
@@ -330,7 +308,7 @@ public class CartellaClinicaTable implements Table<CartellaClinica, Integer> {
                 " WHERE CodiceCartella IN (" +
                 "       SELECT CodiceCartella"+
                 "       FROM " + TABLE_NAME +
-                "        WHERE CodAnimale = (SELECT Microchip FROM animale WHERE Microchip = ?)" +
+                "        WHERE CodAnimale = ?" +
                 " ) " +
                 ") AS visite " +
                 "WHERE visite.Giorno > CURDATE();";
