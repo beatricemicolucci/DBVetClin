@@ -96,7 +96,7 @@ public class FatturaTable implements Table<Fattura, Integer> {
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, fattura.getIdInvoice());
             statement.setDate(2, Utils.dateToSqlDate(fattura.getDate()));
-            statement.setFloat(3, fattura.getPrice());
+            statement.setFloat(3, fattura.getAmount());
             statement.setString(4, fattura.getServices());
             statement.setString(5, fattura.getCfOwner());
             statement.executeUpdate();
@@ -123,7 +123,7 @@ public class FatturaTable implements Table<Fattura, Integer> {
                 "WHERE NumeroFattura = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setDate(1, Utils.dateToSqlDate(fattura.getDate()));
-            statement.setFloat(2, fattura.getPrice());
+            statement.setFloat(2, fattura.getAmount());
             statement.setString(3, fattura.getServices());
             statement.setString(4, fattura.getCfOwner());
             statement.setInt(5, fattura.getIdInvoice());
@@ -142,5 +142,48 @@ public class FatturaTable implements Table<Fattura, Integer> {
         } catch (final SQLException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    public List<Fattura> findByDate(final Date date) {
+        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE DataFattura = ?";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setDate(1, Utils.dateToSqlDate(date));
+            final ResultSet resultSet = statement.executeQuery();
+            return readFattureFromResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Fattura> findByCF(final String CF) {
+        final String query = "SELECT * FROM " + TABLE_NAME + " WHERE CF_Padrone = ?";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setString(1, CF);
+            final ResultSet resultSet = statement.executeQuery();
+            return readFattureFromResultSet(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public float calculateAverageExpense(final int year) {
+        final String query = "SELECT AVG(Spesa) AS SpesaMedia FROM " + TABLE_NAME + " WHERE YEAR(DataFattura) = ?";
+        try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
+            statement.setInt(1, year);
+            final ResultSet resultSet = statement.executeQuery();
+            return readAvgExpense(resultSet);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private float readAvgExpense(final ResultSet resultSet) {
+        float expense = 0;
+        try {
+            while (resultSet.next()) {
+                expense = resultSet.getFloat("SpesaMedia");
+            }
+        } catch (final SQLException e) {}
+        return expense;
     }
 }

@@ -75,7 +75,7 @@ public class TabAnimali extends TabController {
         animaleTable = new AnimaleTable(connectionProvider.getMySQLConnection());
         padroneTable = new PadroneTable(connectionProvider.getMySQLConnection());
         cartellaClinicaTable = new CartellaClinicaTable(connectionProvider.getMySQLConnection());
-        //animalsList = FXCollections.observableArrayList(animaleTable.findAll());
+        animalsList = FXCollections.observableArrayList(animaleTable.findAll());
         ObservableList<String> choicesList = FXCollections.observableArrayList("F", "M");
         animalGender.setItems(choicesList);
         animalGender.setValue("F");
@@ -89,7 +89,7 @@ public class TabAnimali extends TabController {
         });
         genderAnimal.setCellValueFactory(new PropertyValueFactory<>("gender"));
         cfOwner.setCellValueFactory(new PropertyValueFactory<>("cfOwner"));
-        //animalTable.getItems().setAll(animalsList);
+        animalTable.getItems().setAll(animalsList);
     }
 
     @FXML

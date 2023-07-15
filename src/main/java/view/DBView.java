@@ -27,6 +27,9 @@ public class DBView extends AbstractView{
     private Tab tabVeterinari;
 
     @FXML
+    private Tab tabFatture;
+
+    @FXML
     public void init() throws IOException {
         super.getStage().sizeToScene();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pages/Padroni.fxml"));
@@ -58,6 +61,11 @@ public class DBView extends AbstractView{
         tabVeterinari.setContent(loader.load());
         TabVeterinari veterinariController = loader.getController();
         veterinariController.init();
+
+        loader = new FXMLLoader(getClass().getResource("/pages/Fatture.fxml"));
+        tabFatture.setContent(loader.load());
+        TabFatture fattureController = loader.getController();
+        fattureController.init();
 
     }
 

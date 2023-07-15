@@ -23,5 +23,8 @@
       <Tab fx:id="tabVeterinari" text="Veterinari">
         <fx:include source="Veterinari.fxml" />
       </Tab>
+      <Tab fx:id="tabFatture" text="Fatture">
+        <fx:include source="Fatture.fxml"/>
+      </Tab>
   </tabs>
 </TabPane>

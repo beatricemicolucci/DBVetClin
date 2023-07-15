@@ -7,15 +7,15 @@ public class Fattura {
 
     private final int idInvoice;
     private final Date date;
-    private final Float price;
+    private final Float amount;
     private final String services;
     private final String cfOwner;
 
 
-    public Fattura(final int idInvoice, final Date date, final Float price, final String services, final String cfOwner) {
+    public Fattura(final int idInvoice, final Date date, final Float amount, final String services, final String cfOwner) {
         this.idInvoice = idInvoice;
         this.date = date;
-        this.price = price;
+        this.amount = amount;
         this.services = services;
         this.cfOwner = cfOwner;
     }
@@ -28,8 +28,8 @@ public class Fattura {
         return date;
     }
 
-    public Float getPrice() {
-        return price;
+    public Float getAmount() {
+        return amount;
     }
 
     public String getCfOwner() {
@@ -45,7 +45,7 @@ public class Fattura {
         return "Fattura{" +
                 "idInvoice=" + idInvoice +
                 ", date=" + date +
-                ", price=" + price +
+                ", amount=" + amount +
                 ", services='" + services + '\'' +
                 ", cfOwner='" + cfOwner + '\'' +
                 '}';
@@ -56,11 +56,11 @@ public class Fattura {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Fattura fattura = (Fattura) o;
-        return getIdInvoice() == fattura.getIdInvoice() && Objects.equals(getDate(), fattura.getDate()) && Objects.equals(getPrice(), fattura.getPrice()) && Objects.equals(getServices(), fattura.getServices()) && Objects.equals(getCfOwner(), fattura.getCfOwner());
+        return getIdInvoice() == fattura.getIdInvoice() && Objects.equals(getDate(), fattura.getDate()) && Objects.equals(getAmount(), fattura.getAmount()) && Objects.equals(getServices(), fattura.getServices()) && Objects.equals(getCfOwner(), fattura.getCfOwner());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdInvoice(), getDate(), getPrice(), getServices(), getCfOwner());
+        return Objects.hash(getIdInvoice(), getDate(), getAmount(), getServices(), getCfOwner());
     }
 }
