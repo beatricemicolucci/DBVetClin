@@ -64,7 +64,7 @@ public class MalattiaTable implements Table<Malattia, String> {
             while (resultSet.next()) {
                 // To get the values of the columns of the row currently pointed we use the get method
                 final String description = resultSet.getString("Descrizione");
-                final int idVet = resultSet.getInt("CodVeterinario");
+                final Optional<Integer> idVet =Optional.ofNullable(resultSet.getInt("CodVeterinario"));
                 final Optional<Date> checkUpDay = Optional.ofNullable(resultSet.getDate("GiornoControllo"));
                 final Optional<LocalTime> checkUpTime = Optional.ofNullable(Utils.sqlTimeToTime(resultSet.getTime("OraInizioControllo")));
                 final Optional<Integer> idExam = Optional.ofNullable(resultSet.getInt("CodEsame"));
@@ -91,10 +91,18 @@ public class MalattiaTable implements Table<Malattia, String> {
         final String query = "INSERT INTO " + TABLE_NAME + "(Descrizione, CodVeterinario, GiornoControllo, OraInizioControllo, CodEsame) VALUES (?,?,?,?,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setString(1, malattia.getDescription());
-            statement.setInt(2, malattia.getIdVet());
-            statement.setDate(3, Utils.dateToSqlDate(malattia.getCheckUpDay().orElse(null)));
-            statement.setTime(4, Utils.timeToSqlTime(malattia.getCheckUpTime().orElse(null)));
-            statement.setInt(5, malattia.getCodExam().orElse(null));
+            if (malattia.getIdVet().isEmpty()) {
+                statement.setNull(2, Types.INTEGER);
+            } else {
+                statement.setInt(2, malattia.getIdVet().get());
+            }
+            statement.setDate(3, malattia.getCheckUpDay().map(Utils::dateToSqlDate).orElse(null));
+            statement.setTime(4, malattia.getCheckUpTime().map(Utils::timeToSqlTime).orElse(null));
+            if (malattia.getCodExam().isEmpty()) {
+                statement.setNull(5, Types.INTEGER);
+            } else {
+                statement.setInt(5, malattia.getCodExam().get());
+            }
             statement.executeUpdate();
             return true;
         } catch (final SQLIntegrityConstraintViolationException e) {
@@ -113,11 +121,19 @@ public class MalattiaTable implements Table<Malattia, String> {
                 "CodEsame = ?" +
                 "WHERE Descrizione = ?";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
-            statement.setInt(1, malattia.getIdVet());
-            statement.setDate(2, Utils.dateToSqlDate(malattia.getCheckUpDay().orElse(null)));
-            statement.setTime(3, Utils.timeToSqlTime(malattia.getCheckUpTime().orElse(null)));
-            statement.setInt(4, malattia.getCodExam().orElse(null));
             statement.setString(5, malattia.getDescription());
+            if (malattia.getIdVet().isEmpty()) {
+                statement.setNull(1, Types.INTEGER);
+            } else {
+                statement.setInt(1, malattia.getIdVet().get());
+            }
+            statement.setDate(2, malattia.getCheckUpDay().map(Utils::dateToSqlDate).orElse(null));
+            statement.setTime(3, malattia.getCheckUpTime().map(Utils::timeToSqlTime).orElse(null));
+            if (malattia.getCodExam().isEmpty()) {
+                statement.setNull(4, Types.INTEGER);
+            } else {
+                statement.setInt(4, malattia.getCodExam().get());
+            }
             return statement.executeUpdate() > 0;
         } catch (final SQLException e) {
             throw new IllegalStateException(e);

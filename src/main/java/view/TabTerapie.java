@@ -238,10 +238,10 @@ public class TabTerapie extends TabController {
             showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
         } else {
             int idVet = Integer.parseInt(idVetFieldCheckUp.getText());
-            Optional<Date> visitDay = Utils.buildDate(checkUpDate.getValue().getDayOfMonth(), checkUpDate.getValue().getMonthValue(), checkUpDate.getValue().getYear());
+            Date visitDay = Utils.buildDate(checkUpDate.getValue().getDayOfMonth(), checkUpDate.getValue().getMonthValue(), checkUpDate.getValue().getYear()).get();
             int idInvoice = Integer.parseInt(idInvoiceField.getText());
             int idMedRecord = Integer.parseInt(idMedRecFieldCheckUp.getText());
-            Optional<LocalTime> startTime = Optional.ofNullable(LocalTime.of(startHourCheckUp.getValue(), startMinCheckUp.getValue()));
+            LocalTime startTime = Optional.ofNullable(LocalTime.of(startHourCheckUp.getValue(), startMinCheckUp.getValue())).get();
             LocalTime endTime = LocalTime.of(endHourCheckUp.getValue(), endMinCheckUp.getValue());
             Date invoiceDate = Utils.buildDate(this.invoiceDate.getValue().getDayOfMonth(), this.invoiceDate.getValue().getMonthValue(), this.invoiceDate.getValue().getYear()).get();
             float amount = Float.parseFloat(amountField.getText());
@@ -254,19 +254,23 @@ public class TabTerapie extends TabController {
                 showPopUp("Padrone non esistente!", null, Alert.AlertType.ERROR);
             } else if (fatturaTable.findByPrimaryKey(idInvoice).isPresent()) {
                 showPopUp("Fattura già registrata", null, Alert.AlertType.ERROR);
-            } else if (controlloTable.findByPrimaryKey(new ThreeKeys<>(idVet, visitDay.get(), startTime.get())).isPresent()){
+            } else if (controlloTable.findByPrimaryKey(new ThreeKeys<>(idVet, visitDay, startTime)).isPresent()){
                 showPopUp("Non è stato possibile registrare la visita!", null, Alert.AlertType.ERROR);
             } else {
                 if (malattiaTable.findByPrimaryKey(disease).isEmpty()) {
-                    Malattia malattia = new Malattia(disease, idVet, visitDay, startTime, Optional.empty());
+                    Malattia malattia = new Malattia(disease, idVet, visitDay, startTime);
                     malattiaTable.save(malattia);
                 }
                 Fattura fattura = new Fattura(idInvoice, invoiceDate, amount, services, cf);
                 fatturaTable.save(fattura);
 
-                Controllo controllo = new Controllo(idVet, visitDay.get(), startTime.get(), idInvoice, endTime, idMedRecord);
+                Controllo controllo = new Controllo(idVet, visitDay, startTime, idInvoice, endTime, idMedRecord);
                 controlloTable.save(controllo);
-                showPopUp("Visita registrata!", null, Alert.AlertType.INFORMATION);
+                if (controlloTable.save(controllo)) {
+                    showPopUp("Visita registrata!", null, Alert.AlertType.INFORMATION);
+                } else {
+                    showPopUp("Qualcosa è andato storto!", null, Alert.AlertType.ERROR);
+                }
             }
         }
 
@@ -303,7 +307,7 @@ public class TabTerapie extends TabController {
                 showPopUp("Non è stato possibile registrare la visita!", null, Alert.AlertType.ERROR);
             } else {
                 if (malattiaTable.findByPrimaryKey(disease).isEmpty()) {
-                    Malattia malattia = new Malattia(disease, idVet, visitDay, startTime, Optional.empty());
+                    Malattia malattia = new Malattia(disease, id);
                     malattiaTable.save(malattia);
                 }
                 Fattura fattura = new Fattura(idInvoice, invoiceDate, amount, services, cf);
@@ -311,7 +315,11 @@ public class TabTerapie extends TabController {
 
                 Esame esame = new Esame(id, idInvoice, type, visitDay.get(), startTime.get(), endTime, idVet, idMedRecord);
                 esameTable.save(esame);
-                showPopUp("Visita registrata!", null, Alert.AlertType.INFORMATION);
+                if (esameTable.save(esame)) {
+                    showPopUp("Visita registrata!", null, Alert.AlertType.INFORMATION);
+                } else {
+                    showPopUp("Qualcosa è andato storto!", null, Alert.AlertType.ERROR);
+                }
             }
         }
 

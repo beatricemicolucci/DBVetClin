@@ -67,7 +67,7 @@ public class EsameTable implements Table<Esame, Integer> {
                 final int id = resultSet.getInt("CodEsame");
                 final int idInvoice = resultSet.getInt("NumeroFattura");
                 final String type = resultSet.getString("Tipologia");
-                final Date day = (Date) Utils.sqlDateToDate(resultSet.getDate("Giorno"));
+                final java.util.Date day = Utils.sqlDateToDate(resultSet.getDate("Giorno"));
                 final LocalTime startTime = Utils.sqlTimeToTime(resultSet.getTime("OraInizio"));
                 final LocalTime endTime = Utils.sqlTimeToTime(resultSet.getTime("OraFine"));
                 final int idVet = resultSet.getInt("CodVeterinario");
@@ -92,13 +92,10 @@ public class EsameTable implements Table<Esame, Integer> {
 
     @Override
     public boolean save(Esame esame) {
-        if (!vetAndMedRecordExist(esame.getCodVet(), esame.getCodMedicalRecord())) {
-            return false;
-        }
         final String query = "INSERT INTO " + TABLE_NAME + "(CodEsame, NumeroFattura, Tipologia, Giorno, OraInizio, OraFine, CodVeterinario, CodiceCartella) VALUES (?,?,?,?,?,?,?,?)";
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, esame.getCodExam());
-            statement.setInt(2, esame.getCodMedicalRecord());
+            statement.setInt(2, esame.getIdInvoice());
             statement.setString(3, esame.getType());
             statement.setDate(4, Utils.dateToSqlDate(esame.getDay()));
             statement.setTime(5, Utils.timeToSqlTime(esame.getStartTime()));
@@ -114,12 +111,6 @@ public class EsameTable implements Table<Esame, Integer> {
         }
     }
 
-    private boolean vetAndMedRecordExist(final int idVet, final int idMedRecord) {
-        VeterinarioTable vet = new VeterinarioTable(connection);
-        CartellaClinicaTable medRecord = new CartellaClinicaTable(connection);
-        return (medRecord.findByPrimaryKey(idMedRecord).isPresent() && vet.findByPrimaryKey(idVet).isPresent());
-    }
-
     @Override
     public boolean update(final Esame esame) {
         final String query = "UPDATE " + TABLE_NAME + " SET " +
@@ -131,9 +122,6 @@ public class EsameTable implements Table<Esame, Integer> {
                 "CodVeterinario = ?," +
                 "CodiceCartella = ?" +
                 "WHERE CodEsame = ?";
-        if (!vetAndMedRecordExist(esame.getCodVet(), esame.getCodMedicalRecord())) {
-            return false;
-        }
         try (final PreparedStatement statement = this.connection.prepareStatement(query)) {
             statement.setInt(1, esame.getIdInvoice());
             statement.setString(2, esame.getType());
