@@ -11,10 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabFatture">
    <children>
-      <TableView fx:id="invoiceTable" layoutX="625.0" layoutY="61.0" prefHeight="525.0" prefWidth="595.0">
+      <TableView fx:id="invoiceTable" layoutX="620.0" layoutY="61.0" prefHeight="525.0" prefWidth="595.0">
         <columns>
           <TableColumn fx:id="idInvoice" prefWidth="112.79998779296875" text="Numero Fattura" />
           <TableColumn fx:id="dateInvoice" prefWidth="104.0" text="Data Fattura" />
@@ -26,9 +25,15 @@
       <AnchorPane layoutX="87.0" layoutY="46.0" prefHeight="555.0" prefWidth="419.0">
          <children>
             <DatePicker fx:id="invoiceDateField" layoutX="122.0" layoutY="87.0" promptText="Data Fatture" />
-            <Button layoutX="162.0" layoutY="130.0" mnemonicParsing="false" onAction="#onYearResearchClick" text="Ricerca fatture " />
+            <Button layoutX="162.0" layoutY="130.0" mnemonicParsing="false" onAction="#onYearResearchClick" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Ricerca fatture ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <TextField fx:id="cfField" layoutX="122.0" layoutY="248.0" prefHeight="26.0" prefWidth="175.0" promptText="CF Padrone" />
-            <Button layoutX="155.0" layoutY="292.0" mnemonicParsing="false" onAction="#onCFResearchClick" prefHeight="26.0" prefWidth="96.0" text="Ricerca Fatture" />
+            <Button layoutX="162.0" layoutY="291.0" mnemonicParsing="false" onAction="#onCFResearchClick" prefHeight="26.0" prefWidth="102.0" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Ricerca Fatture">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
             <Separator layoutX="87.0" layoutY="181.0" prefHeight="0.0" prefWidth="232.0" />
             <ChoiceBox fx:id="yearField" layoutX="115.0" layoutY="433.0" prefHeight="26.0" prefWidth="175.0" />
             <Label layoutX="122.0" layoutY="33.0" prefHeight="53.0" prefWidth="175.0" text="Ricerca le fatture emesse nella data specificata" textAlignment="CENTER" wrapText="true">
@@ -47,7 +52,10 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <Button layoutX="169.0" layoutY="474.0" mnemonicParsing="false" onAction="#onShowClick" text="Visualizza" />
+            <Button layoutX="176.0" layoutY="472.0" mnemonicParsing="false" onAction="#onShowClick" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Visualizza">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
          </children>
       </AnchorPane>
    </children>

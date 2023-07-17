@@ -34,7 +34,10 @@
         <TextField fx:id="medRecordInsert" layoutX="122.0" layoutY="146.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
         <TextField fx:id="vetInsert" layoutX="121.0" layoutY="180.0" promptText="Codice Veterinario" />
         <TextField fx:id="microchipOperation" layoutX="121.0" layoutY="552.0" promptText="Microchip" />
-        <Button layoutX="126.0" layoutY="586.0" mnemonicParsing="false" onAction="#onShowOperationsClick" prefHeight="60.0" prefWidth="136.0" text="Visualizza gli interventi a cui è stato sottoposto un animale" textAlignment="CENTER" wrapText="true" />
+        <Button layoutX="119.0" layoutY="586.0" mnemonicParsing="false" onAction="#onShowOperationsClick" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Visualizza gli interventi a cui è stato sottoposto un animale" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
         <TableView fx:id="operationsTable" layoutX="397.0" layoutY="76.0" prefHeight="476.0" prefWidth="898.0">
             <columns>
                 <TableColumn fx:id="operatingRoomCol" prefWidth="83.19998168945312" text="Sala " />
@@ -47,11 +50,14 @@
                 <TableColumn fx:id="endTimeCol" prefWidth="128.0" text="Ora Fine" />
             </columns>
         </TableView>
-        <Button layoutX="139.0" layoutY="492.0" mnemonicParsing="false" onAction="#onInsertOperationClick" prefHeight="28.0" prefWidth="116.0" text="Inserisci Intervento" textAlignment="CENTER" wrapText="true" />
+        <Button layoutX="130.0" layoutY="493.0" mnemonicParsing="false" onAction="#onInsertOperationClick" prefHeight="28.0" prefWidth="136.0" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Inserisci Intervento" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
         <TextField fx:id="amountInsert" layoutX="123.0" layoutY="389.0" prefHeight="26.0" prefWidth="150.0" promptText="Spesa" />
         <TextField fx:id="servicesInsert" layoutX="123.0" layoutY="424.0" prefHeight="26.0" prefWidth="150.0" promptText="Servizi" />
         <TextField fx:id="cfInvoice" layoutX="125.0" layoutY="458.0" promptText="CF Padrone" />
         <DatePicker fx:id="dateInvoice" layoutX="122.0" layoutY="355.0" prefHeight="26.0" prefWidth="149.0" promptText="Data Fattura" />
-      <Separator layoutX="102.0" layoutY="531.0" prefWidth="200.0" />
+      <Separator layoutX="101.0" layoutY="537.0" prefWidth="200.0" />
     </children>
 </AnchorPane>

@@ -45,7 +45,10 @@
                <Font name="System Italic" size="12.0" />
             </font>
          </Label>
-         <Button layoutX="106.0" layoutY="270.0" mnemonicParsing="false" onAction="#onInsertCheckUpClick" text="Inserisci nuovo controllo" />
+         <Button layoutX="106.0" layoutY="270.0" mnemonicParsing="false" onAction="#onInsertCheckUpClick" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Inserisci nuovo controllo">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
       </children>
    </AnchorPane>
    <AnchorPane layoutX="31.0" layoutY="327.0" prefHeight="354.0" prefWidth="386.0">
@@ -73,7 +76,10 @@
                <Font name="System Italic" size="12.0" />
             </font>
          </Label>
-         <Button layoutX="113.0" layoutY="302.0" mnemonicParsing="false" onAction="#onInsertExamClick" text="Inserisci nuovo esame" />
+         <Button layoutX="113.0" layoutY="302.0" mnemonicParsing="false" onAction="#onInsertExamClick" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Inserisci nuovo esame">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
          <TextField fx:id="typeField" layoutX="197.0" layoutY="203.0" promptText="Tipologia esame" />
          <TextField fx:id="idExamField" layoutX="14.0" layoutY="14.0" promptText="Codice Esame" />
       </children>
@@ -85,11 +91,17 @@
           <TextField fx:id="diseaseField" layoutX="69.0" layoutY="46.0" promptText="Malattia da curare" />
           <TextField fx:id="idVetField" layoutX="69.0" layoutY="78.0" promptText="Codice Veterinario" />
           <TextField fx:id="idMedRecField" layoutX="68.0" layoutY="112.0" prefHeight="26.0" prefWidth="150.0" promptText="Codice Cartella Clinica" />
-          <Button layoutX="93.0" layoutY="262.0" mnemonicParsing="false" onAction="#onInsertClick" text="Inserisci Terapia" />
+          <Button layoutX="93.0" layoutY="262.0" mnemonicParsing="false" onAction="#onInsertClick" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Inserisci Terapia">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
           <Separator layoutX="45.0" layoutY="312.0" prefWidth="200.0" />
           <TextField fx:id="microchipField" layoutX="69.0" layoutY="340.0" prefHeight="26.0" prefWidth="150.0" promptText="Microchip" />
           <TextField fx:id="diseaseShowField" layoutX="69.0" layoutY="374.0" prefHeight="26.0" prefWidth="150.0" promptText="Malattia da curare" />
-          <Button layoutX="77.0" layoutY="408.0" mnemonicParsing="false" onAction="#onShowTherapiesClick" prefHeight="68.0" prefWidth="136.0" text="Visualizza terapie prescritte al paziente per una malattia" textAlignment="CENTER" wrapText="true" />
+          <Button layoutX="77.0" layoutY="408.0" mnemonicParsing="false" onAction="#onShowTherapiesClick" prefHeight="68.0" prefWidth="136.0" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Visualizza terapie prescritte al paziente per una malattia" textAlignment="CENTER" wrapText="true">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Button>
          <TextField fx:id="idMedField" layoutX="69.0" layoutY="149.0" promptText="Farmaco 1 " />
          <TextField fx:id="idMedField2" layoutX="69.0" layoutY="184.0" promptText="Farmaco 2 (opzionale)" />
          <TextField fx:id="idMedField3" layoutX="69.0" layoutY="221.0" promptText="Farmaco 3 (opzionale)" />

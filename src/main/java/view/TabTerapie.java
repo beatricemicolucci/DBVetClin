@@ -29,6 +29,7 @@ public class TabTerapie extends TabController {
     private PadroneTable padroneTable;
     private FarmacoTable farmacoTable;
     private ComposizioneTable composizioneTable;
+    private AnimaleTable animaleTable;
     private ObservableList<Terapia> therapiesList;
 
     @FXML
@@ -169,6 +170,7 @@ public class TabTerapie extends TabController {
         padroneTable = new PadroneTable(connectionProvider.getMySQLConnection());
         farmacoTable = new FarmacoTable(connectionProvider.getMySQLConnection());
         composizioneTable = new ComposizioneTable(connectionProvider.getMySQLConnection());
+        animaleTable = new AnimaleTable(connectionProvider.getMySQLConnection());
 
         SpinnerValueFactory<Integer> valueStartHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
         SpinnerValueFactory<Integer> valueEndHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
@@ -200,7 +202,8 @@ public class TabTerapie extends TabController {
         diseaseCol.setCellValueFactory(new PropertyValueFactory<>("description"));
         idVetCol.setCellValueFactory(new PropertyValueFactory<>("idVet"));
         idMedRecCol.setCellValueFactory(new PropertyValueFactory<>("idMedicalRecord"));
-        therapiesList = FXCollections.observableArrayList();
+        therapiesList = FXCollections.observableArrayList(terapiaTable.findAll());
+        therapiesTable.getItems().setAll(therapiesList);
     }
 
     public void onInsertClick(final ActionEvent actionEvent) {
@@ -262,14 +265,20 @@ public class TabTerapie extends TabController {
 
     public void onShowTherapiesClick(final ActionEvent actionEvent) {
 
-        if (microchipField.getText().isEmpty()) {
+        if (microchipField.getText().isEmpty() || diseaseShowField.getText().isEmpty()) {
             showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
         } else {
             int microchip = Integer.parseInt(microchipField.getText());
             String disease = diseaseShowField.getText();
-
-            therapiesList = FXCollections.observableArrayList(terapiaTable.findTerapieByAnimaleAndMalattia(microchip, disease));
-            therapiesTable.getItems().setAll(therapiesList);
+            if (animaleTable.findByPrimaryKey(microchip).isEmpty()) {
+                showPopUp("Paziente non trovato!", null, Alert.AlertType.ERROR);
+            } else {
+                therapiesList = FXCollections.observableArrayList(terapiaTable.findTerapieByAnimaleAndMalattia(microchip, disease));
+                therapiesTable.getItems().setAll(therapiesList);
+                if (therapiesList.isEmpty()) {
+                    showPopUp("Nessuna terapia trovata!", null, Alert.AlertType.INFORMATION);
+                }
+            }
 
         }
     }

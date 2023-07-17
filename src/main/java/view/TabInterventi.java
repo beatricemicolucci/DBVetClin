@@ -136,18 +136,16 @@ public class TabInterventi extends TabController {
         vetCol.setCellValueFactory(new PropertyValueFactory<>("codVet"));
         startTimeCol.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        operationsList = FXCollections.observableArrayList(interventoTable.findAll());
+        operationsTable.getItems().setAll(operationsList);
 
     }
 
     public void onInsertOperationClick(final ActionEvent e) {
-        int operationRoom = Integer.parseInt(operatingRoomInsert.getText());
+
         String type = typeInsert.getText();
-        int invoice = Integer.parseInt(invoiceOperation.getText());
-        int medRecord = Integer.parseInt(medRecordInsert.getText());
-        int vet = Integer.parseInt(vetInsert.getText());
         LocalTime startTime = LocalTime.of(startHour.getValue(), startMin.getValue());
         LocalTime endTime = LocalTime.of(endHour.getValue(), endMin.getValue());
-        float amount = Float.parseFloat(amountInsert.getText());
         String services = servicesInsert.getText();
         String cf = cfInvoice.getText();
 
@@ -156,6 +154,11 @@ public class TabInterventi extends TabController {
             || dateInvoice.getValue() == null) {
             showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
         } else {
+            int operationRoom = Integer.parseInt(operatingRoomInsert.getText());
+            int invoice = Integer.parseInt(invoiceOperation.getText());
+            int medRecord = Integer.parseInt(medRecordInsert.getText());
+            int vet = Integer.parseInt(vetInsert.getText());
+            float amount = Float.parseFloat(amountInsert.getText());
             Date operationDate = Utils.buildDate(dayInsert.getValue().getDayOfMonth(), dayInsert.getValue().getMonthValue(), dayInsert.getValue().getYear()).get();
             Date invoiceDate = Utils.buildDate(dateInvoice.getValue().getDayOfMonth(), dateInvoice.getValue().getMonthValue(), dateInvoice.getValue().getYear()).get();
 
