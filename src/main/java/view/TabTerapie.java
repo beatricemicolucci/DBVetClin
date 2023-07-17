@@ -27,6 +27,8 @@ public class TabTerapie extends TabController {
     private EsameTable esameTable;
     private FatturaTable fatturaTable;
     private PadroneTable padroneTable;
+    private FarmacoTable farmacoTable;
+    private ComposizioneTable composizioneTable;
     private ObservableList<Terapia> therapiesList;
 
     @FXML
@@ -126,6 +128,15 @@ public class TabTerapie extends TabController {
     private TextField idMedRecField;
 
     @FXML
+    private TextField idMedField;
+
+    @FXML
+    private TextField idMedField2;
+
+    @FXML
+    private TextField idMedField3;
+
+    @FXML
     private TextField microchipField;
 
     @FXML
@@ -156,6 +167,8 @@ public class TabTerapie extends TabController {
         esameTable = new EsameTable(connectionProvider.getMySQLConnection());
         fatturaTable = new FatturaTable(connectionProvider.getMySQLConnection());
         padroneTable = new PadroneTable(connectionProvider.getMySQLConnection());
+        farmacoTable = new FarmacoTable(connectionProvider.getMySQLConnection());
+        composizioneTable = new ComposizioneTable(connectionProvider.getMySQLConnection());
 
         SpinnerValueFactory<Integer> valueStartHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
         SpinnerValueFactory<Integer> valueEndHourFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 24);
@@ -192,13 +205,16 @@ public class TabTerapie extends TabController {
 
     public void onInsertClick(final ActionEvent actionEvent) {
 
-        if (idTherapyField.getText().isEmpty() || diseaseField.getText().isEmpty() || idVetField.getText().isEmpty() || idMedRecField.getText().isEmpty()) {
+        if (idTherapyField.getText().isEmpty() || diseaseField.getText().isEmpty() || idVetField.getText().isEmpty() || idMedRecField.getText().isEmpty()
+            || idMedField.getText().isEmpty()) {
             showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
         } else {
             int idTherapy = Integer.parseInt(idTherapyField.getText());
             String disease = diseaseField.getText();
             int idVet = Integer.parseInt(idVetField.getText());
             int idMedRecord = Integer.parseInt(idMedRecField.getText());
+            int idMed = Integer.parseInt(idMedField.getText());
+
 
             if (veterinarioTable.findByPrimaryKey(idVet).isEmpty()) {
                 showPopUp("Veterinario non esistente!", null, Alert.AlertType.WARNING);
@@ -207,6 +223,34 @@ public class TabTerapie extends TabController {
             } else if (malattiaTable.findByPrimaryKey(disease).isEmpty()) {
                 showPopUp("Malattia non registrata", null, Alert.AlertType.ERROR);
             } else {
+
+                if (farmacoTable.findByPrimaryKey(idMed).isEmpty()) {
+                    Farmaco farmaco = new Farmaco(idMed);
+                    farmacoTable.save(farmaco);
+                    Composizione composizione = new Composizione(idMed, idTherapy);
+                    composizioneTable.save(composizione);
+                }
+
+                if (!idMedField2.getText().isEmpty()) {
+                    int idMed2 = Integer.parseInt(idMedField2.getText());
+                    if (farmacoTable.findByPrimaryKey(idMed2).isEmpty()) {
+                        Farmaco farmaco = new Farmaco(idMed2);
+                        farmacoTable.save(farmaco);
+                        Composizione composizione = new Composizione(idMed, idTherapy);
+                        composizioneTable.save(composizione);
+                    }
+                }
+
+                if (!idMedField3.getText().isEmpty()) {
+                    int idMed3 = Integer.parseInt(idMedField3.getText());
+                    if (farmacoTable.findByPrimaryKey(idMed3).isEmpty()) {
+                        Farmaco farmaco = new Farmaco(idMed3);
+                        farmacoTable.save(farmaco);
+                        Composizione composizione = new Composizione(idMed, idTherapy);
+                        composizioneTable.save(composizione);
+                    }
+                }
+
                 Terapia terapia = new Terapia(idTherapy, disease, idVet, idMedRecord);
                 terapiaTable.save(terapia);
                 therapiesList = FXCollections.observableArrayList(terapiaTable.findAll());
