@@ -21,7 +21,7 @@ use Clinica_veterinaria;
 
 create table ALLERGIA (
      IdAllergia int not null auto_increment,
-     Descrizione varchar(30) not null,
+     Descrizione varchar(40) not null,
      constraint IDALLERGIA primary key (IdAllergia));
 
 create table ALLERGIE_CARTELLA (
@@ -62,7 +62,7 @@ create table CONTROLLO (
 create table ESAME (
      CodEsame int not null auto_increment,
      NumeroFattura int not null,
-     Tipologia varchar(30) not null,
+     Tipologia varchar(40) not null,
      Giorno date not null,
      OraInizio time not null,
      OraFine time not null,
@@ -84,7 +84,7 @@ create table FATTURA (
 
 create table INTERVENTO (
      CodiceSala int not null,
-	 Tipo varchar(20) not null,
+	 Tipo varchar(40) not null,
 	 Giorno date not null,
      OraInizio time not null,
      NumeroFattura int not null,
@@ -94,7 +94,7 @@ create table INTERVENTO (
      constraint IDINTERVENTO primary key (Giorno, OraInizio, CodiceSala));
 
 create table MALATTIA (
-     Descrizione varchar(30) not null,
+     Descrizione varchar(40) not null,
      CodVeterinario int not null,
      GiornoControllo date,
      OraInizioControllo time,
@@ -116,9 +116,9 @@ create table PADRONE (
      Nome varchar(20) not null,
      Cognome varchar(20) not null,
      DataNascita date not null,
-     Indirizzo varchar(30) not null,
+     Indirizzo varchar(40) not null,
      Telefono char(10) not null,
-     IndirizzoEmail varchar(20),
+     IndirizzoEmail varchar(40),
      constraint IDPADRONE_ID primary key (CF));
 
 create table INGREDIENTE (
@@ -149,14 +149,14 @@ create table TECNICO (
      Nome varchar(20) not null,
      Cognome varchar(20) not null,
      DataNascita date not null,
-     Indirizzo varchar(30) not null,
+     Indirizzo varchar(40) not null,
      Telefono char(10) not null,
-     IndirizzoEmail varchar(20),
+     IndirizzoEmail varchar(40),
      constraint IDTECNICO primary key (CodImpiegato));
 
 create table TERAPIA (
      CodiceTerapia int not null auto_increment,
-     DescrizioneMalattia varchar(30) not null,
+     DescrizioneMalattia varchar(40) not null,
      CodVeterinario int not null,
      CodiceCartella int not null,
      constraint IDTERAPIA_ID primary key (CodiceTerapia));
@@ -167,7 +167,7 @@ create table VACCINAZIONE (
      OraInizio time not null,
      NumeroFattura int not null,
      OraFine time not null,
-     Malattia varchar(30) not null,
+     Malattia varchar(40) not null,
      CodiceCartella int not null,
      constraint IDVACCINAZIONE primary key (CodVeterinario, Giorno, OraInizio));
 
@@ -178,9 +178,9 @@ create table VETERINARIO (
      Nome varchar(20) not null,
      Cognome varchar(20) not null,
      DataNascita date not null,
-     Indirizzo varchar(30) not null,
+     Indirizzo varchar(40) not null,
      Telefono char(10) not null,
-     IndirizzoEmail varchar(20),
+     IndirizzoEmail varchar(40),
      constraint IDVETERINARIO_1_ID primary key (CodImpiegato));
 
 -- Constraints Section

@@ -156,4 +156,8 @@ public class TabAnimali extends TabController {
         }
     }
 
+    public void onShowClick(ActionEvent actionEvent) {
+        animalsList = FXCollections.observableArrayList(animaleTable.findAll());
+        animalTable.getItems().setAll(animalsList);
+    }
 }

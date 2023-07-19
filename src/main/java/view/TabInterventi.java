@@ -177,12 +177,18 @@ public class TabInterventi extends TabController {
                             SalaOperatoria salaOperatoria = new SalaOperatoria(operationRoom);
                             salaOperatoriaTable.save(salaOperatoria);
                         }
-                        Fattura fattura = new Fattura(invoice, invoiceDate, amount, services, cf);
-                        fatturaTable.save(fattura);
-                        Intervento intervento = new Intervento(operationRoom, type, operationDate, startTime, invoice, endTime, medRecord, vet);
-                        interventoTable.save(intervento);
-                        operationsList = FXCollections.observableArrayList(interventoTable.findAll());
-                        operationsTable.getItems().setAll(operationsList);
+                        if ( cf.equals(animaleTable.findByPrimaryKey(cartellaClinicaTable.findByPrimaryKey(medRecord).get().getCodAnimal()).get().getCfOwner())) {
+                            Fattura fattura = new Fattura(invoice, invoiceDate, amount, services, cf);
+                            fatturaTable.save(fattura);
+                            Intervento intervento = new Intervento(operationRoom, type, operationDate, startTime, invoice, endTime, medRecord, vet);
+                            if (!interventoTable.save(intervento)) {
+                                showPopUp("Qualcosa e' andato storto!", null, Alert.AlertType.ERROR);
+                            }
+                            operationsList = FXCollections.observableArrayList(interventoTable.findAll());
+                            operationsTable.getItems().setAll(operationsList);
+                        } else {
+                            showPopUp("Qualcosa e' andato storto!", null, Alert.AlertType.ERROR);
+                        }
                     }
                 }
             }
@@ -206,6 +212,12 @@ public class TabInterventi extends TabController {
             }
         }
 
+    }
+
+    @FXML
+    public void onShowClick(ActionEvent e) {
+        operationsList = FXCollections.observableArrayList(interventoTable.findAll());
+        operationsTable.getItems().setAll(operationsList);
     }
 
 

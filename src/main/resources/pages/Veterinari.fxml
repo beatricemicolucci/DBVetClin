@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabVeterinari">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TabVeterinari">
     <TableView fx:id="vetTable" layoutX="279.0" layoutY="48.0" prefHeight="598.0" prefWidth="1118.0">
       <columns>
           <TableColumn fx:id="idCol" prefWidth="69.60003662109375" text="ID" />
@@ -45,4 +45,8 @@
    <TextField fx:id="specializationField2" layoutX="60.0" layoutY="388.0" prefHeight="26.0" prefWidth="170.0" promptText="Specializzazione 2 (opzionale)" />
    <TextField fx:id="specializationField3" layoutX="60.0" layoutY="424.0" prefHeight="26.0" prefWidth="170.0" promptText="Specializzazione 3 (opzionale)" />
    <Separator layoutX="60.0" layoutY="512.0" prefHeight="3.0" prefWidth="178.0" />
+   <Button layoutX="790.0" layoutY="653.0" mnemonicParsing="false" onAction="#onShowClick" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Visualizza tutto" >
+       <font>
+           <Font name="System Bold" size="12.0" />
+       </font></Button>
 </AnchorPane>

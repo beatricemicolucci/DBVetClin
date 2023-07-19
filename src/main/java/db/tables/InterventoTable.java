@@ -77,7 +77,7 @@ public class InterventoTable implements Table<Intervento, ThreeKeys<Date, LocalT
                 final int idVet = resultSet.getInt("CodVeterinario");
                 final int idMedRec = resultSet.getInt("CodiceCartella");
                 // After retrieving all the data we create a Student object
-                final Intervento intervento = new Intervento(idOperatingRoom, type, day, startTime, idInvoice, endTime, idVet, idMedRec);
+                final Intervento intervento = new Intervento(idOperatingRoom, type, day, startTime, idInvoice, endTime, idMedRec, idVet);
                 interventi.add(intervento);
             }
         } catch (final SQLException e) {}

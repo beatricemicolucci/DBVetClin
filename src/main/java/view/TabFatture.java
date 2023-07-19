@@ -109,4 +109,9 @@ public class TabFatture extends TabController {
         float expense = fatturaTable.calculateAverageExpense(yearField.getValue());
         showPopUp("La spesa media relativa all'anno scelto e' di: " + expense, null, Alert.AlertType.INFORMATION);
     }
+
+    public void onShowEverythingClick(ActionEvent actionEvent) {
+        invoiceList = FXCollections.observableArrayList(fatturaTable.findAll());
+        invoiceTable.getItems().setAll(invoiceList);
+    }
 }

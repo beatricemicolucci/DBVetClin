@@ -258,6 +258,7 @@ public class TabTerapie extends TabController {
                 terapiaTable.save(terapia);
                 therapiesList = FXCollections.observableArrayList(terapiaTable.findAll());
                 therapiesTable.getItems().setAll(therapiesList);
+
             }
         }
 
@@ -310,19 +311,20 @@ public class TabTerapie extends TabController {
             } else if (controlloTable.findByPrimaryKey(new ThreeKeys<>(idVet, visitDay, startTime)).isPresent()){
                 showPopUp("Non è stato possibile registrare la visita!", null, Alert.AlertType.ERROR);
             } else {
-                if (malattiaTable.findByPrimaryKey(disease).isEmpty()) {
-                    Malattia malattia = new Malattia(disease, idVet, visitDay, startTime);
-                    malattiaTable.save(malattia);
-                }
                 Fattura fattura = new Fattura(idInvoice, invoiceDate, amount, services, cf);
                 fatturaTable.save(fattura);
 
                 Controllo controllo = new Controllo(idVet, visitDay, startTime, idInvoice, endTime, idMedRecord);
-                controlloTable.save(controllo);
                 if (controlloTable.save(controllo)) {
                     showPopUp("Visita registrata!", null, Alert.AlertType.INFORMATION);
                 } else {
                     showPopUp("Qualcosa è andato storto!", null, Alert.AlertType.ERROR);
+                }
+                if (malattiaTable.findByPrimaryKey(disease).isEmpty()) {
+                    Malattia malattia = new Malattia(disease, idVet, visitDay, startTime);
+                    if (!malattiaTable.save(malattia)) {
+                        showPopUp("Non e' stato possibile registrare la malattia!", null, Alert.AlertType.ERROR);
+                    }
                 }
             }
         }
@@ -376,5 +378,10 @@ public class TabTerapie extends TabController {
             }
         }
 
+    }
+
+    public void onShowClick(ActionEvent actionEvent) {
+        therapiesList = FXCollections.observableArrayList(terapiaTable.findAll());
+        therapiesTable.getItems().setAll(therapiesList);
     }
 }

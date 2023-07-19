@@ -168,4 +168,9 @@ public class TabPadroni extends TabController {
             }
         }
     }
+
+    public void onShowClick(ActionEvent actionEvent) {
+        ownersList = FXCollections.observableArrayList(padroneTable.findAll());
+        ownersTable.getItems().setAll(ownersList);
+    }
 }

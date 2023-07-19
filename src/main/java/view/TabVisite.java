@@ -54,7 +54,6 @@ public class TabVisite extends TabController {
         endTimeCol.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         visitsList = FXCollections.observableArrayList();
-
     }
 
     public void onShowVetVisitsClick(final ActionEvent actionEvent) {
@@ -76,4 +75,6 @@ public class TabVisite extends TabController {
         }
     }
 
+    public void onShowClick(ActionEvent actionEvent) {
+    }
 }

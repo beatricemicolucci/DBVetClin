@@ -43,4 +43,8 @@
         </columns>
     </TableView>
    <TextField fx:id="medRecordField" layoutX="83.0" layoutY="288.0" prefHeight="26.0" prefWidth="176.0" promptText="Codice Cartella Clinica" />
+   <Button layoutX="747.0" layoutY="606.0" mnemonicParsing="false" onAction="#onShowClick" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Visualizza tutto">
+    <font>
+        <Font name="System Bold" size="12.0" />
+    </font></Button>
 </AnchorPane>

@@ -197,4 +197,8 @@ public class TabVeterinari extends TabController{
 
     }
 
+    public void onShowClick(ActionEvent actionEvent) {
+        vetList = FXCollections.observableArrayList(veterinarioTable.findAll());
+        vetTable.getItems().setAll(vetList);
+    }
 }
