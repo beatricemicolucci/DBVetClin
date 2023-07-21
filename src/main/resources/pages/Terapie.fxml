@@ -108,7 +108,7 @@
       </children>
    </AnchorPane>
    <Separator layoutX="479.0" layoutY="34.0" orientation="VERTICAL" prefHeight="590.0" prefWidth="6.0" />
-   <Button layoutX="1016.0" layoutY="631.0" mnemonicParsing="false" onAction="#onShowClick" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Visualizza Tutto" >
+   <Button layoutX="1016.0" layoutY="631.0" mnemonicParsing="false" onAction="#onShowClick" style="-fx-background-color: CBE9D4; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0, 0, 3);" text="Visualizza Tutto">
        <font>
            <Font name="System Bold" size="12.0" />
        </font></Button>
