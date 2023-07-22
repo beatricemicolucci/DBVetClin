@@ -144,39 +144,43 @@ public class TabVeterinari extends TabController{
             Optional<String> specialization2 = Optional.ofNullable(specializationField2.getText());
             Optional<String> specialization3 = Optional.ofNullable(specializationField3.getText());
 
-            if (veterinarioTable.findByPrimaryKey(id).isPresent()) {
-                showPopUp("Veterinario già registrato!", null, Alert.AlertType.WARNING);
+            if (cf.length() != 16 || telephone.length() != 10) {
+                showPopUp("Qualcosa e' andato storto!", null, Alert.AlertType.ERROR);
             } else {
-                Veterinario veterinario = new Veterinario(id, office, cf, name, lastName, birthDate, address, telephone, email);
-                veterinarioTable.save(veterinario);
-                if (specialization.isPresent()) {
-                    if (specializzazioneTable.findByPrimaryKey(specialization.get()).isEmpty()) {
-                        Specializzazione specializzazione = new Specializzazione(specialization.get());
-                        specializzazioneTable.save(specializzazione);
+                if (veterinarioTable.findByPrimaryKey(id).isPresent()) {
+                    showPopUp("Veterinario gia' registrato!", null, Alert.AlertType.WARNING);
+                } else {
+                    Veterinario veterinario = new Veterinario(id, office, cf, name, lastName, birthDate, address, telephone, email);
+                    veterinarioTable.save(veterinario);
+                    if (specialization.isPresent()) {
+                        if (specializzazioneTable.findByPrimaryKey(specialization.get()).isEmpty()) {
+                            Specializzazione specializzazione = new Specializzazione(specialization.get());
+                            specializzazioneTable.save(specializzazione);
+                        }
+                        Competenza competenza = new Competenza(specialization.get(), id);
+                        competenzaTable.save(competenza);
                     }
-                    Competenza competenza = new Competenza(specialization.get(), id);
-                    competenzaTable.save(competenza);
-                }
 
-                if (specialization2.isPresent()) {
-                    if (specializzazioneTable.findByPrimaryKey(specialization2.get()).isEmpty()) {
-                        Specializzazione specializzazione = new Specializzazione(specialization2.get());
-                        specializzazioneTable.save(specializzazione);
+                    if (specialization2.isPresent()) {
+                        if (specializzazioneTable.findByPrimaryKey(specialization2.get()).isEmpty()) {
+                            Specializzazione specializzazione = new Specializzazione(specialization2.get());
+                            specializzazioneTable.save(specializzazione);
+                        }
+                        Competenza competenza = new Competenza(specialization2.get(), id);
+                        competenzaTable.save(competenza);
                     }
-                    Competenza competenza = new Competenza(specialization2.get(), id);
-                    competenzaTable.save(competenza);
-                }
 
-                if (specialization3.isPresent()) {
-                    if (specializzazioneTable.findByPrimaryKey(specialization3.get()).isEmpty()) {
-                        Specializzazione specializzazione = new Specializzazione(specialization3.get());
-                        specializzazioneTable.save(specializzazione);
+                    if (specialization3.isPresent()) {
+                        if (specializzazioneTable.findByPrimaryKey(specialization3.get()).isEmpty()) {
+                            Specializzazione specializzazione = new Specializzazione(specialization3.get());
+                            specializzazioneTable.save(specializzazione);
+                        }
+                        Competenza competenza = new Competenza(specialization3.get(), id);
+                        competenzaTable.save(competenza);
                     }
-                    Competenza competenza = new Competenza(specialization3.get(), id);
-                    competenzaTable.save(competenza);
+                    vetList = FXCollections.observableArrayList(veterinarioTable.findAll());
+                    vetTable.getItems().setAll(vetList);
                 }
-                vetList = FXCollections.observableArrayList(veterinarioTable.findAll());
-                vetTable.getItems().setAll(vetList);
             }
         }
 

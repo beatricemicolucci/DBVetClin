@@ -163,10 +163,10 @@ public class TabInterventi extends TabController {
             Date invoiceDate = Utils.buildDate(dateInvoice.getValue().getDayOfMonth(), dateInvoice.getValue().getMonthValue(), dateInvoice.getValue().getYear()).get();
 
             if (fatturaTable.findByPrimaryKey(invoice).isPresent()) {
-                showPopUp("Fattura già registrata", null, Alert.AlertType.WARNING);
+                showPopUp("Fattura gia' registrata", null, Alert.AlertType.WARNING);
             } else {
                 if (interventoTable.findByPrimaryKey(new ThreeKeys<>(operationDate, startTime, operationRoom)).isPresent()) {
-                    showPopUp("Intervento già registrato!", null, Alert.AlertType.WARNING);
+                    showPopUp("Intervento gia' registrato!", null, Alert.AlertType.WARNING);
                 } else {
                     if (padroneTable.findByPrimaryKey(cf).isEmpty()) {
                         showPopUp("Padrone non esistente!", null, Alert.AlertType.WARNING);

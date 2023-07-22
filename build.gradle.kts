@@ -1,6 +1,10 @@
+import org.gradle.kotlin.dsl.application
+
 plugins {
+    application
     id("java")
     id("org.openjfx.javafxplugin") version "0.0.9"
+    id("com.github.johnrengelman.shadow") version "7.1.0"
 }
 
 group = "org.example"
@@ -35,4 +39,18 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks {
+    shadowJar {
+        manifest {
+            attributes["Main-Class"] = "DBVetClin"
+        }
+    }
+}
+
+application {
+    // Define the main class for the application
+
+    mainClass.set("DBVetClin")
 }

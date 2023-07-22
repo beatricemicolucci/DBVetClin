@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class WelcomePage extends AbstractView{
@@ -18,33 +19,15 @@ public class WelcomePage extends AbstractView{
     private String username = "root";
     private String password = "Beatrice02@";
     private Stage stage;
+    private String fileSeparator = System.getProperty("file.separator");
     @FXML
     private ImageView welcomeImage;
 
     public void init(Stage stage) {
-        welcomeImage.setImage(new Image("/images/dogs.jpg"));
+        welcomeImage.setImage(new Image((getClass().getResource("/images/dogs.jpg")).toExternalForm()));
+
+        //welcomeImage.setImage(new Image(fileSeparator + "images" + fileSeparator + "dogs.jpg"));
         this.stage = stage;
-        /*try (Connection connection = DriverManager.getConnection(url, username, password);
-             Statement statement = connection.createStatement()) {
-
-            String scriptPath = "src/main/resources/scriptSQL/PROGETTO_CLINICA.ddl";
-            StringBuilder script = new StringBuilder();
-            String line;
-
-            try (BufferedReader reader = new BufferedReader(new FileReader(scriptPath))) {
-                while ((line = reader.readLine()) != null) {
-                    script.append(line).append("\n");
-                }
-            }
-
-            int rowsAffected = statement.executeUpdate(script.toString());
-
-            System.out.println("Script executed successfully! Rows affected: " + rowsAffected);
-
-        } catch (Exception e) {
-            System.out.println("Error executing script: " + e.getMessage());
-        }*/
-
     }
 
     @FXML

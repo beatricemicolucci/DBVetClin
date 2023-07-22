@@ -307,9 +307,9 @@ public class TabTerapie extends TabController {
             } else if (padroneTable.findByPrimaryKey(cf).isEmpty()) {
                 showPopUp("Padrone non esistente!", null, Alert.AlertType.ERROR);
             } else if (fatturaTable.findByPrimaryKey(idInvoice).isPresent()) {
-                showPopUp("Fattura già registrata", null, Alert.AlertType.ERROR);
+                showPopUp("Fattura gia' registrata", null, Alert.AlertType.ERROR);
             } else if (controlloTable.findByPrimaryKey(new ThreeKeys<>(idVet, visitDay, startTime)).isPresent()){
-                showPopUp("Non è stato possibile registrare la visita!", null, Alert.AlertType.ERROR);
+                showPopUp("Non e' stato possibile registrare la visita!", null, Alert.AlertType.ERROR);
             } else {
                 Fattura fattura = new Fattura(idInvoice, invoiceDate, amount, services, cf);
                 fatturaTable.save(fattura);
@@ -318,7 +318,7 @@ public class TabTerapie extends TabController {
                 if (controlloTable.save(controllo)) {
                     showPopUp("Visita registrata!", null, Alert.AlertType.INFORMATION);
                 } else {
-                    showPopUp("Qualcosa è andato storto!", null, Alert.AlertType.ERROR);
+                    showPopUp("Qualcosa e' andato storto!", null, Alert.AlertType.ERROR);
                 }
                 if (malattiaTable.findByPrimaryKey(disease).isEmpty()) {
                     Malattia malattia = new Malattia(disease, idVet, visitDay, startTime);
@@ -357,9 +357,9 @@ public class TabTerapie extends TabController {
             } else if (padroneTable.findByPrimaryKey(cf).isEmpty()) {
                 showPopUp("Padrone non esistente!", null, Alert.AlertType.ERROR);
             } else if (fatturaTable.findByPrimaryKey(idInvoice).isPresent()) {
-                showPopUp("Fattura già registrata", null, Alert.AlertType.ERROR);
+                showPopUp("Fattura gia' registrata", null, Alert.AlertType.ERROR);
             } else if (esameTable.findByPrimaryKey(id).isPresent()){
-                showPopUp("Non è stato possibile registrare la visita!", null, Alert.AlertType.ERROR);
+                showPopUp("Non e' stato possibile registrare la visita!", null, Alert.AlertType.ERROR);
             } else {
                 if (malattiaTable.findByPrimaryKey(disease).isEmpty()) {
                     Malattia malattia = new Malattia(disease, id);
@@ -373,7 +373,7 @@ public class TabTerapie extends TabController {
                 if (esameTable.save(esame)) {
                     showPopUp("Visita registrata!", null, Alert.AlertType.INFORMATION);
                 } else {
-                    showPopUp("Qualcosa è andato storto!", null, Alert.AlertType.ERROR);
+                    showPopUp("Qualcosa e' andato storto!", null, Alert.AlertType.ERROR);
                 }
             }
         }

@@ -28,7 +28,6 @@ public class DBView extends AbstractView{
 
     @FXML
     private Tab tabFatture;
-
     @FXML
     public void init() throws IOException {
         super.getStage().sizeToScene();

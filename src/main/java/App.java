@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import view.WelcomePage;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 public class App extends Application {
 
@@ -19,7 +20,7 @@ public class App extends Application {
         //primaryStage.setResizable(true);
         primaryStage.setTitle("DBVetClin");
 
-        final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("pages/WelcomePage.fxml"));
+        final FXMLLoader loader = new FXMLLoader(ClassLoader.getSystemResource("pages/welcomePage.fxml"));
         Parent root = null;
 
         try {

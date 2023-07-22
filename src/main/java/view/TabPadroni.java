@@ -119,13 +119,17 @@ public class TabPadroni extends TabController {
             showPopUp("Inserisci tutti i campi!", null, Alert.AlertType.WARNING);
         } else {
             Date birthDate = Utils.buildDate(ownerBirthDate.getValue().getDayOfMonth(), ownerBirthDate.getValue().getMonthValue(), ownerBirthDate.getValue().getYear()).get();
-            Padrone padrone = new Padrone(cf, name, lastName, birthDate, address, telephone, email);
-            if (padroneTable.findByPrimaryKey(cf).isPresent()) {
-                showPopUp("Padrone esistente!", null, Alert.AlertType.WARNING);
+            if (cf.length() != 16 || telephone.length() != 10) {
+                showPopUp("Qualcosa e' andato storto!", null, Alert.AlertType.ERROR);
             } else {
-                padroneTable.save(padrone);
-                ownersList = FXCollections.observableArrayList(padroneTable.findAll());
-                ownersTable.getItems().setAll(ownersList);
+                Padrone padrone = new Padrone(cf, name, lastName, birthDate, address, telephone, email);
+                if (padroneTable.findByPrimaryKey(cf).isPresent()) {
+                    showPopUp("Padrone esistente!", null, Alert.AlertType.WARNING);
+                } else {
+                    padroneTable.save(padrone);
+                    ownersList = FXCollections.observableArrayList(padroneTable.findAll());
+                    ownersTable.getItems().setAll(ownersList);
+                }
             }
         }
     }

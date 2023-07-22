@@ -63,7 +63,7 @@ INSERT INTO sala_operatoria (CodiceSala) VALUES(3);
 INSERT INTO sala_operatoria (CodiceSala) VALUES(5);
 
 INSERT INTO intervento (CodiceSala, Tipo, Giorno, OraInizio, NumeroFattura, OraFine, CodVeterinario, CodiceCartella) VALUES (10, 'Chirurgia oftalmica', '2024-01-10', '14:00:00', 4, '16:00:00', 3, 8);
-INSERT INTO intervento (CodiceSala, Tipo, Giorno, OraInizio, NumeroFattura, OraFine, CodVeterinario, CodiceCartella) VALUES (3, 'Chirurgia gastrointestinale', '2024-01-10', '15:00:00', 4, '17:00:00', 3, 4);
+INSERT INTO intervento (CodiceSala, Tipo, Giorno, OraInizio, NumeroFattura, OraFine, CodVeterinario, CodiceCartella) VALUES (3, 'Chirurgia gastrointestinale', '2023-08-01', '15:00:00', 5, '17:00:00', 3, 4);
 INSERT INTO intervento (CodiceSala, Tipo, Giorno, OraInizio, NumeroFattura, OraFine, CodVeterinario, CodiceCartella) VALUES (5, 'Chirurgia cardiaca', '2022-03-20', '10:00:00', 12, '13:00:00', 4, 7);
 
 INSERT INTO malattia (Descrizione, CodVeterinario, GiornoControllo, OraInizioControllo, CodEsame) VALUES ('Iperplasia endometriale', null, null, null, 2);
